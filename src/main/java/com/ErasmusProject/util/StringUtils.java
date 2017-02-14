@@ -6,8 +6,21 @@ import java.util.ArrayList;
 /**
  * Created by Komp on 13.2.2017.
  */
-public class StringParseUtils {
+public class StringUtils {
 
+    public static String URL = "http://localhost:3030/ds";
+    public static String URLdataset = "http://localhost:3030/ds/data";
+    public static String URLupdate = "http://localhost:3030/ds/update";
+    public static String URLquery = "http://localhost:3030/ds/query";
+    public static String namespace = "";
+    public static String ontFile = "";
+
+    public static String[] formFieldsShort = {"birthday", "countryOfBirth", "placeOfBirth",
+                                         "gender", "citizenship", "streetAddress", "postalCode", "city",
+                                         "country", "telephone", "email"};
+    public static String[] formFieldsLong = {"surname", "firstName", "birthday", "countryOfBirth", "placeOfBirth",
+            "gender", "citizenship", "streetAddress", "postalCode", "city",
+            "country", "telephone", "email"};
     /**
      * Formats jena statements into SPARQL INSERT
      * @param template
@@ -17,7 +30,7 @@ public class StringParseUtils {
     public static String createTripleFromStatement(String template, String statement)
     {
         String retVal = new String(template);
-        String[] spo = statement.replace("[", "").replace("]","").replace(","," ").split("  ");
+        String[] spo = statement.replace("[", "").replace("]","").replace(","," ").replace("\"","").split("  ");
         for(String part: spo)
         {
             retVal += "<" + part + ">" + " ";

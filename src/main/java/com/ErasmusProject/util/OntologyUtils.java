@@ -1,18 +1,12 @@
 package com.ErasmusProject.util;
 
-import org.apache.jena.ontology.DatatypeProperty;
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.ObjectProperty;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.ontology.*;
 import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.query.DatasetAccessorFactory;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -101,22 +95,33 @@ public class OntologyUtils {
     }
 
     /**
+     * Executes multiple updates
+     * @param serviceURI
+     * @param updates
+     */
+    public static void execMassUpdate(String serviceURI, ArrayList<String> updates)
+    {
+        for(String update: updates)
+        {
+            execUpdate(serviceURI, update);
+        }
+    }
+
+    /**
      * Creates a list of SPARQL insert statements, for each individual
      * @param m1 - OntModel with added individuals
      * @param m2 - default OntModel
      * @param namespace - ontology namespace
      * @return - returns a list of SPARQL insert statements
      */
-    public static ArrayList<String> getIndividualsForInsert(OntModel m1, OntModel m2, String namespace)
-    {
+    public static ArrayList<String> getIndividualsForInsert(OntModel m1, OntModel m2, String namespace) {
         String insert_template = "INSERT DATA"
                 + "{ ";
         ArrayList<String> retVal = new ArrayList<String>();
         Model om2 = m1.difference(m2);
         StmtIterator it = om2.listStatements();
-        while(it.hasNext())
-        {
-            retVal.add(StringParseUtils.createTripleFromStatement(insert_template,it.next().toString()));
+        while (it.hasNext()) {
+            retVal.add(StringUtils.createTripleFromStatement(insert_template, it.next().toString()));
         }
         return retVal;
     }
@@ -140,11 +145,60 @@ public class OntologyUtils {
             RDFNode x = soln.get("x");
             RDFNode r = soln.get("r");
             RDFNode y = soln.get("y");
-            retVal.add(StringParseUtils.parseResult(x,r,x,namespaces));
+            retVal.add(StringUtils.parseResult(x,r,x,namespaces));
 
         }
 
         return retVal;
+    }
+
+    /**
+     * Adds an individual to the OntModel
+     * @param className
+     * @param model
+     * @param namespace
+     * @return
+     */
+    public static OntModel addIndividual(String className, OntModel model, String namespace)
+    {
+        OntClass oclass = model.getOntClass(namespace + className);
+        Individual ind = model.createIndividual(namespace + className, oclass);
+        return model;
+    }
+
+    /**
+     * Sets the value of an ObjectProperty for an individual of given OntModel
+     * @param propName
+     * @param model
+     * @param namespace
+     * @param indName
+     * @param propVal
+     * @return
+     */
+    public static OntModel addObjectProperty(String propName, OntModel model, String namespace, String indName, String propVal)
+    {
+        Individual ind = model.getIndividual(namespace + indName);
+        Individual prop = model.getIndividual(namespace + propVal);
+        ObjectProperty obp = model.getObjectProperty(propName);
+        ind.setPropertyValue(obp, prop);
+        return model;
+    }
+
+    /**
+     * Sets the value of an DatatypeProperty for an individual of given OntModel
+     * @param propName
+     * @param model
+     * @param namespace
+     * @param indName
+     * @param val
+     * @return
+     */
+    public static OntModel addDatatypeProperty(String propName, OntModel model, String namespace, String indName, String val)
+    {
+        Individual ind = model.getIndividual(namespace + indName);
+        DatatypeProperty dp = model.getDatatypeProperty(namespace + propName);
+        ind.setPropertyValue(dp, model.createTypedLiteral(val));
+        return model;
     }
 
 
