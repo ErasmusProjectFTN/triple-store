@@ -159,10 +159,10 @@ public class OntologyUtils {
      * @param namespace
      * @return
      */
-    public static OntModel addIndividual(String className, OntModel model, String namespace)
+    public static OntModel addIndividual(String className, OntModel model, String namespace, String id)
     {
         OntClass oclass = model.getOntClass(namespace + className);
-        Individual ind = model.createIndividual(namespace + className, oclass);
+        Individual ind = model.createIndividual(namespace + id, oclass);
         return model;
     }
 

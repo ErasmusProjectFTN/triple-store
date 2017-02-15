@@ -12,7 +12,7 @@ public class StringUtils {
     public static String URLdataset = "http://localhost:3030/ds/data";
     public static String URLupdate = "http://localhost:3030/ds/update";
     public static String URLquery = "http://localhost:3030/ds/query";
-    public static String namespace = "";
+    public static String namespace = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
     public static String ontFile = "student.owl";
 
     public static String[] formFieldsShort = {"birthday", "countryOfBirth", "placeOfBirth",

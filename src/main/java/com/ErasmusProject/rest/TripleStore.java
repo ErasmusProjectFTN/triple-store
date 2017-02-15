@@ -48,12 +48,12 @@ public class TripleStore {
         try {
             String indName = name + surname;
             OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset, StringUtils.namespace);
-            model = OntologyUtils.addIndividual("Student", model, StringUtils.namespace);
+            model = OntologyUtils.addIndividual("Student", model, StringUtils.namespace, indName);
             model = OntologyUtils.addDatatypeProperty("birthday", model, StringUtils.namespace, indName, dob);
-            model = OntologyUtils.addDatatypeProperty("countryofBirth", model, StringUtils.namespace, indName, cob);
+            model = OntologyUtils.addDatatypeProperty("countryOfBirth", model, StringUtils.namespace, indName, cob);
             model = OntologyUtils.addDatatypeProperty("placeOfBirth", model, StringUtils.namespace, indName, pob);
             model = OntologyUtils.addDatatypeProperty("gender", model, StringUtils.namespace, indName, gender);
-            model = OntologyUtils.addDatatypeProperty("citizenchip", model, StringUtils.namespace, indName, nat);
+            model = OntologyUtils.addDatatypeProperty("citizenship", model, StringUtils.namespace, indName, nat);
             model = OntologyUtils.addDatatypeProperty("streetAddress", model, StringUtils.namespace, indName, san);
             model = OntologyUtils.addDatatypeProperty("postalCode", model, StringUtils.namespace, indName, pcode);
             model = OntologyUtils.addDatatypeProperty("city", model, StringUtils.namespace, indName, city);
