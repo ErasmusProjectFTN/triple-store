@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.io.IOException;
 
@@ -17,6 +19,16 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/add")
 public class TripleStore {
+
+    @PostConstruct
+    public void initFuseki()
+    {
+        try {
+            OntologyUtils.reloadModel(OntologyUtils.createOntModel(StringUtils.ontFile),StringUtils.URL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/student")
     public Response addStudent(@RequestParam("surname") String surname,
@@ -33,7 +45,6 @@ public class TripleStore {
                                @RequestParam("telephone") String tel,
                                @RequestParam("email") String email)
     {
-
         try {
             String indName = name + surname;
             OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset, StringUtils.namespace);
