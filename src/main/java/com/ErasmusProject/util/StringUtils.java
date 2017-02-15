@@ -13,7 +13,7 @@ public class StringUtils {
     public static String URLupdate = "http://localhost:3030/ds/update";
     public static String URLquery = "http://localhost:3030/ds/query";
     public static String namespace = "";
-    public static String ontFile = "";
+    public static String ontFile = "student.owl";
 
     public static String[] formFieldsShort = {"birthday", "countryOfBirth", "placeOfBirth",
                                          "gender", "citizenship", "streetAddress", "postalCode", "city",
