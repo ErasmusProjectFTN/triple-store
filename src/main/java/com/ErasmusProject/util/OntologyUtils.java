@@ -32,7 +32,8 @@ public class OntologyUtils {
      * @return - returns the newly created OntModel
      */
     public static OntModel createOntModel(String file) {
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF);
+        //model.setStrictMode(false);
         model.read(file);
         return model;
     }
@@ -62,7 +63,7 @@ public class OntologyUtils {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         dm.write(bos);
         ByteArrayInputStream ios = new ByteArrayInputStream(bos.toByteArray());
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM_RDFS_INF);
         model.read(ios, namespace);
         return model;
     }
