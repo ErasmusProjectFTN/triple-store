@@ -60,8 +60,7 @@ public class TripleStore {
             model = OntologyUtils.addDatatypeProperty("country", model, StringUtils.namespace, indName, cor);
             model = OntologyUtils.addDatatypeProperty("telephone", model, StringUtils.namespace, indName, tel);
             model = OntologyUtils.addDatatypeProperty("email", model, StringUtils.namespace, indName, email);
-            ArrayList<String> individualsForInsert = OntologyUtils.getIndividualsForInsert(model, OntologyUtils.createOntModel(StringUtils.ontFile), StringUtils.namespace);
-            OntologyUtils.execMassUpdate(StringUtils.URLupdate, individualsForInsert);
+            OntologyUtils.reloadModel(model, StringUtils.URL);
         } catch (IOException e) {
             e.printStackTrace();
         }
