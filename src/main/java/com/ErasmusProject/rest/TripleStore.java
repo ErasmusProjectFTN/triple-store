@@ -1,12 +1,8 @@
 package com.ErasmusProject.rest;
-import com.ErasmusProject.util.OntologyUtils;
-import com.ErasmusProject.util.Response;
-import com.ErasmusProject.util.StringUtils;
+import com.ErasmusProject.util.*;
 import org.apache.jena.ontology.OntModel;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -17,7 +13,7 @@ import java.io.IOException;
  */
 
 @RestController
-@RequestMapping("/add")
+@RequestMapping("/student")
 public class TripleStore {
 
     @PostConstruct
@@ -30,7 +26,12 @@ public class TripleStore {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/student")
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.registerCustomEditor(QueryType.class, new QueryTypeConverter());
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
     public Response addStudent(@RequestParam("surname") String surname,
                                @RequestParam("name") String name,
                                @RequestParam("dateOfBirth") String dob,
@@ -65,6 +66,33 @@ public class TripleStore {
             e.printStackTrace();
         }
         return new Response("Hello", "World");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/query")
+    public ArrayList<QueryResult> queryStudents(@RequestParam("value") String val,
+                              @RequestParam("type") QueryType type)
+    {
+
+        ArrayList<String> namespaces = new ArrayList<String>();
+        ArrayList<QueryResult> retVal = null;
+        namespaces.add(StringUtils.namespace);
+
+        switch(type)
+        {
+            case SUBJECT:
+                String subject = "<" + StringUtils.namespace + val + ">";
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlTemplate,subject,"?p","?o","?p","\""+StringUtils.namespace+"\""), namespaces, type, val);
+                break;
+            case PREDICATE:
+                String predicate = "<" + StringUtils.namespace + val + ">";
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlTemplate,"?s",predicate,"?o","?s","\""+StringUtils.namespace+"\""), namespaces, type, val);
+                break;
+            case OBJECT:
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlTemplate,"?s","?p","\"" + val + "\"","?p","\""+StringUtils.namespace+"\""), namespaces, type, val);
+                break;
+        }
+
+        return retVal;
     }
 
 }

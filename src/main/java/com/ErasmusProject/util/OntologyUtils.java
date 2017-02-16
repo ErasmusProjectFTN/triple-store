@@ -128,28 +128,47 @@ public class OntologyUtils {
     }
 
     /**
-     * Executes SPARQL query and formats results, by removing namespaces
+     * Executes SPARQL query
      * @param serviceURI
      * @param query
-     * @param namespaces - list of namespaces used by the ontology
      * @return
      */
-    public static ArrayList<QueryResult> execSelectAndReturn(String serviceURI, String query, ArrayList<String> namespaces) {
+    public static ResultSet execSelect(String serviceURI, String query) {
         QueryExecution q = QueryExecutionFactory.sparqlService(serviceURI,
                 query);
         ResultSet results = q.execSelect();
+        return results;
+    }
 
+    public static ArrayList<QueryResult> formatedSelect(String serviceURI, String query, ArrayList<String> namespaces, QueryType type, String parameter)
+    {
         ArrayList<QueryResult> retVal = new ArrayList<QueryResult>();
+        ResultSet results = execSelect(serviceURI, query);
+
+        String[] spo = new String[2];
+
+        switch(type)
+        {
+            case SUBJECT:
+                spo[0] = "p";
+                spo[1] = "o";
+                break;
+            case PREDICATE:
+                spo[0] = "s";
+                spo[1] = "o";
+                break;
+            case OBJECT:
+                spo[0] = "s";
+                spo[1] = "p";
+        }
 
         while (results.hasNext()) {
             QuerySolution soln = results.nextSolution();
-            RDFNode x = soln.get("x");
-            RDFNode r = soln.get("r");
-            RDFNode y = soln.get("y");
-            retVal.add(StringUtils.parseResult(x,r,x,namespaces));
+            RDFNode x = soln.get(spo[0]);
+            RDFNode r = soln.get(spo[1]);
+            retVal.add(StringUtils.parseResult(x, r, parameter, type, namespaces));
 
         }
-
         return retVal;
     }
 
