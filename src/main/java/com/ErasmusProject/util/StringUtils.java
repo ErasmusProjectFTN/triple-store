@@ -12,16 +12,14 @@ public class StringUtils {
     public static String URLdataset = "http://localhost:3030/ds/data";
     public static String URLupdate = "http://localhost:3030/ds/update";
     public static String URLquery = "http://localhost:3030/ds/query";
-    public static String namespace = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
-    public static String ontFile = "student.owl";
+    public static String namespaceStudent = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
+    public static String namespaceMlo = "http://www.semanticweb.org/nina/ontologies/2016/11/mlo#";
+    public static String namespaceEcts = "http://www.semanticweb.org/nina/ontologies/2016/11/ects#";
+    public static String namespaceW3c = "^^http://www.w3.org/2001/XMLSchema#integer";
+    public static String studentFile = "student.owl";
+    public static String ectsFile = "ectsMloMerged_individuals.owl";
     public static String sparqlTemplate = "SELECT * WHERE{%s %s  %s FILTER(STRSTARTS(STR(%s), %s))}";
 
-    public static String[] formFieldsShort = {"birthday", "countryOfBirth", "placeOfBirth",
-                                         "gender", "citizenship", "streetAddress", "postalCode", "city",
-                                         "country", "telephone", "email"};
-    public static String[] formFieldsLong = {"surname", "firstName", "birthday", "countryOfBirth", "placeOfBirth",
-            "gender", "citizenship", "streetAddress", "postalCode", "city",
-            "country", "telephone", "email"};
     /**
      * Formats jena statements into SPARQL INSERT
      * @param template
@@ -41,7 +39,7 @@ public class StringUtils {
     }
 
     /**
-     * Formats SPARQL query results by removing namespace
+     * Formats SPARQL query results by removing namespaceStudent
      * @param x
      * @param y
      * @return

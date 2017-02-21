@@ -54,7 +54,7 @@ public class OntologyUtils {
      * Transformes Model into OntModel
      *
      * @param serviceURI - dataset location
-     * @param namespace  - ontology namespace
+     * @param namespace  - ontology namespaceStudent
      * @return - returns OntModel
      * @throws IOException
      */
@@ -112,7 +112,7 @@ public class OntologyUtils {
      * Creates a list of SPARQL insert statements, for each individual
      * @param m1 - OntModel with added individuals
      * @param m2 - default OntModel
-     * @param namespace - ontology namespace
+     * @param namespace - ontology namespaceStudent
      * @return - returns a list of SPARQL insert statements
      */
     public static ArrayList<String> getIndividualsForInsert(OntModel m1, OntModel m2, String namespace) {
@@ -140,6 +140,16 @@ public class OntologyUtils {
         return results;
     }
 
+
+    /**
+     * Execute SPARQL query and format results
+     * @param serviceURI
+     * @param query
+     * @param namespaces
+     * @param type
+     * @param parameter
+     * @return
+     */
     public static ArrayList<QueryResult> formatedSelect(String serviceURI, String query, ArrayList<String> namespaces, QueryType type, String parameter)
     {
         ArrayList<QueryResult> retVal = new ArrayList<QueryResult>();
@@ -220,6 +230,5 @@ public class OntologyUtils {
         ind.setPropertyValue(dp, model.createTypedLiteral(val));
         return model;
     }
-
 
 }
