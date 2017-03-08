@@ -10,6 +10,8 @@ import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
 
+import org.apache.jena.ontology.DatatypeProperty;
+import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Komp on 21.2.2017.
@@ -98,6 +101,80 @@ public class EctsStore {
 			model = OntologyUtils.addDatatypeProperty("GeneralInformationOnStudentAffairsOffice", model, StringUtils.namespaceEcts, identifier, generalInformationOnStudentAffairsOffice);
 			model = OntologyUtils.addDatatypeProperty("GeneralInformationOnStudentAssociations", model, StringUtils.namespaceEcts, identifier, generalInformationOnStudentAssociations);
 			model = OntologyUtils.addDatatypeProperty("GeneralInformationOnStudyFacilities", model, StringUtils.namespaceEcts, identifier, generalInformationOnStudyFacilities);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseInstitution(identifier, institutionName);
+	}
+	
+	/*
+	 * Modifikovanje institucije
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/modifyInstitution")
+	public ResponseInstitution modifyInstitution(@RequestParam(value="identifier", required=true) String identifier,
+											  @RequestParam(value="institutionName", required=false, defaultValue="") String institutionName,
+											  @RequestParam(value="institutionalECTScoordinator", required=false, defaultValue="") String institutionalECTScoordinator,
+											  @RequestParam(value="institutionStatus", required=false, defaultValue="") String institutionStatus,
+											  @RequestParam(value="institutionType", required=false, defaultValue="") String institutionType,
+											  @RequestParam(value="institutionAddress", required=false, defaultValue="") String institutionAddress,
+											  @RequestParam(value="url", required=false, defaultValue="") String url,
+											  @RequestParam(value="institutionMainUniversityRegulations", required=false, defaultValue="") String institutionMainUniversityRegulations,
+											  @RequestParam(value="institutionGeneralDescription", required=false, defaultValue="") String institutionGeneralDescription,
+											  @RequestParam(value="institutionAcademicAuthorities", required=false, defaultValue="") String institutionAcademicAuthorities,
+											  @RequestParam(value="institutionAcademicCalendar", required=false, defaultValue="") String institutionAcademicCalendar,
+											  @RequestParam(value="institutionAdmissionProcedures", required=false, defaultValue="") String institutionAdmissionProcedures,
+											  @RequestParam(value="generalInformationForStudents", required=false, defaultValue="") String generalInformationForStudents,
+											  @RequestParam(value="generalInformationForMobileStudents", required=false, defaultValue="") String generalInformationForMobileStudents,
+											  @RequestParam(value="generalInformationOnAccommodation", required=false, defaultValue="") String generalInformationOnAccommodation,
+											  @RequestParam(value="generalInformationOnCostOfLiving", required=false, defaultValue="") String generalInformationOnCostOfLiving,
+											  @RequestParam(value="generalInformationOnExtramuralAndLeisureFacilities", required=false, defaultValue="") String generalInformationOnExtramuralAndLeisureFacilities,
+											  @RequestParam(value="generalInformationOnFacilitiesForStudentsWithSpecialNeeds", required=false, defaultValue="") String generalInformationOnFacilitiesForStudentsWithSpecialNeeds,
+											  @RequestParam(value="generalInformationOnFinancialSupport", required=false, defaultValue="") String generalInformationOnFinancialSupport,
+											  @RequestParam(value="generalInformationOnInsurance", required=false, defaultValue="") String generalInformationOnInsurance,
+											  @RequestParam(value="generalInformationOnInternationalProgrammes", required=false, defaultValue="") String generalInformationOnInternationalProgrammes,
+											  @RequestParam(value="generalInformationOnInternships", required=false, defaultValue="") String generalInformationOnInternships,
+											  @RequestParam(value="generalInformationOnLanguageCourses", required=false, defaultValue="") String generalInformationOnLanguageCourses,
+											  @RequestParam(value="generalInformationOnMeals", required=false, defaultValue="") String generalInformationOnMeals,
+											  @RequestParam(value="generalInformationOnMedicalFacilities", required=false, defaultValue="") String generalInformationOnMedicalFacilities,
+											  @RequestParam(value="generalInformationOnSportsFacilities", required=false, defaultValue="") String generalInformationOnSportsFacilities,
+											  @RequestParam(value="generalInformationOnStudentAffairsOffice", required=false, defaultValue="") String generalInformationOnStudentAffairsOffice,
+											  @RequestParam(value="generalInformationOnStudentAssociations", required=false, defaultValue="") String generalInformationOnStudentAssociations,
+											  @RequestParam(value="generalInformationOnStudyFacilities", required=false, defaultValue="") String generalInformationOnStudyFacilities)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			Individual ind = model.getIndividual(StringUtils.namespaceEcts + identifier);
+			HashMap<String, String> propertyValues = new HashMap<>();
+			propertyValues.put("InstitutionName", institutionName);
+			propertyValues.put("InstitutionalEctsCoordinator", institutionalECTScoordinator);
+			propertyValues.put("InstitutionStatus", institutionStatus);
+			propertyValues.put("InstitutionType", institutionType);
+			propertyValues.put("Url", url);
+			propertyValues.put("Location", institutionAddress);
+			propertyValues.put("InstitutionMainUniversityRegulations", institutionMainUniversityRegulations);
+			propertyValues.put("InstitutionGeneralDescription", institutionGeneralDescription);
+			propertyValues.put("InstitutionAcademicAuthorities", institutionAcademicAuthorities);
+			propertyValues.put("InstitutionAcademicCalendar", institutionAcademicCalendar);
+			propertyValues.put("InstitutionAdmissionProcedures", institutionAdmissionProcedures);
+			propertyValues.put("GeneralInformationForStudents", generalInformationForStudents);
+			propertyValues.put("GeneralInformationForMobileStudents", generalInformationForMobileStudents);
+			propertyValues.put("GeneralInformationOnAccommodation", generalInformationOnAccommodation);
+			propertyValues.put("GeneralInformationOnCostOfLiving", generalInformationOnCostOfLiving);
+			propertyValues.put("GeneralInformationOnExtraMuralAndLeisureFacilities", generalInformationOnExtramuralAndLeisureFacilities);
+			propertyValues.put("GeneralInformationOnFacilitiesForStudentsWithSpecialNeeds", generalInformationOnFacilitiesForStudentsWithSpecialNeeds);
+			propertyValues.put("GeneralInformationOnFinancialSupport", generalInformationOnFinancialSupport);
+			propertyValues.put("GeneralInformationOnInsurance", generalInformationOnInsurance);
+			propertyValues.put("GeneralInformationOnInternationalProgrammes", generalInformationOnInternationalProgrammes);
+			propertyValues.put("GeneralInformationOnInternships", generalInformationOnInternships);
+			propertyValues.put("GeneralInformationOnLanguageCourses", generalInformationOnLanguageCourses);
+			propertyValues.put("GeneralInformationOnMeals", generalInformationOnMeals);
+			propertyValues.put("GeneralInformationOnMedicalFacilities", generalInformationOnMedicalFacilities);
+			propertyValues.put("GeneralInformationOnSportsFacilities", generalInformationOnSportsFacilities);
+			propertyValues.put("GeneralInformationOnStudentAffairsOffice", generalInformationOnStudentAffairsOffice);
+			propertyValues.put("GeneralInformationOnStudentAssociations", generalInformationOnStudentAssociations);
+			propertyValues.put("GeneralInformationOnStudyFacilities", generalInformationOnStudyFacilities);
+			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
 			e.printStackTrace();
