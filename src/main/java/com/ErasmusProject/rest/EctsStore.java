@@ -213,6 +213,24 @@ public class EctsStore {
 		return new ResponseProgrammeInstance(degreeUnitCode);
 	}
 	
+	/**
+	 * Uklanjanje instance programa
+	 * @param degreeUnitCode id instance programa
+	 * @return status uspesnosti
+	 */
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeDegreeInstance")
+	public String removeDegreeInstance(@RequestParam(value = "degreeUnitCode", required=true) String degreeUnitCode)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.removeIndividual("DegreeProgrammeInstance", model, StringUtils.namespaceEcts, degreeUnitCode);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "Degree programme instance with id: " + degreeUnitCode + " is removed.";
+	}
+	
 	/*
 	 * Dodavanje specifikacije kursa
 	 * */
@@ -246,6 +264,24 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 		return new ResponseCourseSpecification(courseUnitCode, courseUnitTitle);
+	}
+	
+	/**
+	 * Uklanjanje specifikacije kursa
+	 * @param courseUnitCode id specifikacije kursa
+	 * @return status uspesnosti
+	 */
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeCourseSpecification")
+	public String removeCourseSpecification(@RequestParam(value = "courseUnitCode", required=true) String courseUnitCode)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.removeIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "Degree course specification with id: " + courseUnitCode + " is removed.";
 	}
 	
 	/*
@@ -296,6 +332,24 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 		return new ResponseCourseInstance(courseUnitCode);
+	}
+	
+	/**
+	 * Uklanjanje instance kursa
+	 * @param courseUnitCode id instance kursa
+	 * @return status uspesnosti
+	 */
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeCourseInstance")
+	public String removeCourseInstance(@RequestParam(value = "courseUnitCode", required=true) String courseUnitCode)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.removeIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "Degree course instance with id: " + courseUnitCode + " is removed.";
 	}
 	
 
