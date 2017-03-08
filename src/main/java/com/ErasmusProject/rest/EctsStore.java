@@ -3,6 +3,7 @@ package com.ErasmusProject.rest;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
+import com.ErasmusProject.util.ResponseCourseSpecification;
 import com.ErasmusProject.util.ResponseInstitution;
 import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
@@ -173,6 +174,41 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 		return new ResponseProgrammeInstance(degreeUnitCode);
+	}
+	
+	/*
+	 * Dodavanje instance programa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/addCourseSpecification")
+	public ResponseCourseSpecification addCourseSpecification(  @RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
+															@RequestParam(value="courseUnitTitle", required=true) String courseUnitTitle,
+															@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
+															@RequestParam(value="courseUnitLevel", required=false, defaultValue="") String courseUnitLevel,
+															@RequestParam(value="url", required=false, defaultValue="") String url,
+															@RequestParam(value="courseUnitYearOfStudy", required=false, defaultValue="") String courseUnitYearOfStudy,
+															@RequestParam(value="credit", required=false, defaultValue="") String credit,
+															@RequestParam(value="courseUnitContent", required=false, defaultValue="") String courseUnitContent,
+															@RequestParam(value="courseLocation", required=false, defaultValue="") String courseLocation,
+															@RequestParam(value="qualification", required=false, defaultValue="") String qualification)
+	
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.addIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitCode", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitCode);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitTitle", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTitle);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitType", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitType);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitLevel", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitLevel);
+			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, courseUnitCode, url);
+			model = OntologyUtils.addDatatypeProperty("Credit", model, StringUtils.namespaceEcts, courseUnitCode, credit);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitContent", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitContent);
+			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, courseUnitCode, courseLocation);
+			model = OntologyUtils.addDatatypeProperty("Qualification", model, StringUtils.namespaceEcts, courseUnitCode, qualification);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseCourseSpecification(courseUnitCode, courseUnitTitle);
 	}
 	
 	
