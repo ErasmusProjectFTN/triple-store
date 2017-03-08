@@ -14,16 +14,8 @@ public class ResponseProgrammeSpecification {
 	public String getDegreeUnitCode() {
 		return degreeUnitCode;
 	}
-
-	public void setDegreeUnitCode(String degreeUnitCode) {
-		this.degreeUnitCode = degreeUnitCode;
-	}
-
+	
 	public String getDegreeProgrammeTitle() {
 		return degreeProgrammeTitle;
 	}
-
-	public void setDegreeProgrammeTitle(String degreeProgrammeTitle) {
-		this.degreeProgrammeTitle = degreeProgrammeTitle;
-	}	
 }

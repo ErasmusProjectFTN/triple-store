@@ -4,6 +4,7 @@ import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
 import com.ErasmusProject.util.ResponseInstitution;
+import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
 
@@ -134,6 +135,47 @@ public class EctsStore {
 		}
 		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
 	}
+	
+	/*
+	 * Dodavanje instance programa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/addProgrammeInstance")
+	public ResponseProgrammeInstance addProgrammeInstance(  @RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+															@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+															@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
+															@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
+															@RequestParam(value="location", required=false, defaultValue="") String location,
+															@RequestParam(value="url", required=false, defaultValue="") String url,
+															@RequestParam(value="places", required=false, defaultValue="") String places,
+															@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+															@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
+															@RequestParam(value="start", required=false, defaultValue="") String start,
+															@RequestParam(value="duration", required=false, defaultValue="") String duration,
+															@RequestParam(value="cost", required=false, defaultValue="") String cost)
+	
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.addIndividual("DegreeProgrammeInstance", model, StringUtils.namespaceEcts, degreeUnitCode);
+			model = OntologyUtils.addDatatypeProperty("DegreeUnitCode", model, StringUtils.namespaceEcts, degreeUnitCode, degreeUnitCode);
+			model = OntologyUtils.addDatatypeProperty("Prerequisite", model, StringUtils.namespaceEcts, degreeUnitCode, prerequisite);
+			model = OntologyUtils.addDatatypeProperty("DepartmentalEctsCoordinator", model, StringUtils.namespaceEcts, degreeUnitCode, departmentalEctsCoordinator);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeFinalExamination", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeFinalExamination);
+			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, degreeUnitCode, location);
+			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, degreeUnitCode, url);
+			model = OntologyUtils.addDatatypeProperty("Places", model, StringUtils.namespaceEcts, degreeUnitCode, places);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeExaminationAndAssessmentRegulations", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeExaminationAndAssessmentRegulations);
+			model = OntologyUtils.addDatatypeProperty("Start", model, StringUtils.namespaceEcts, degreeUnitCode, start);
+			model = OntologyUtils.addDatatypeProperty("Duration", model, StringUtils.namespaceEcts, degreeUnitCode, duration);
+			model = OntologyUtils.addDatatypeProperty("Cost", model, StringUtils.namespaceEcts, degreeUnitCode, cost);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseProgrammeInstance(degreeUnitCode);
+	}
+	
+	
 	
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
