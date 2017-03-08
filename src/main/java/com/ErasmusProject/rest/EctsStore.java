@@ -105,6 +105,19 @@ public class EctsStore {
 		return new ResponseInstitution(identifier, institutionName);
 	}
 	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeInstitution")
+	public String removeInstitution(@RequestParam(value = "identifier", required=true) String id)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.removeIndividual("LearningOpportunityProvider", model, StringUtils.namespaceEcts, id);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "Learning Opportunity Provider with id: " + id + " is removed.";
+	}
+	
 	/*
 	 * Dodavanje specifikacije programa
 	 * */
@@ -261,7 +274,6 @@ public class EctsStore {
 		}
 		return new ResponseCourseInstance(courseUnitCode);
 	}
-	
 	
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")

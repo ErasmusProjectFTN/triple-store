@@ -183,6 +183,21 @@ public class OntologyUtils {
     }
 
     /**
+     * Removes an individual to the OntModel
+     * @param className
+     * @param model
+     * @param namespace
+     * @return
+     */
+    public static OntModel removeIndividual(String className, OntModel model, String namespace, String id)
+    {
+        OntClass oclass = model.getOntClass(namespace + className);
+        Individual ind = model.getIndividual(namespace + id);
+        model.removeAll(ind, null, null);
+        return model;
+    }
+    
+    /**
      * Adds an individual to the OntModel
      * @param className
      * @param model
