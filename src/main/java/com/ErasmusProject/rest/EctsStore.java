@@ -4,6 +4,7 @@ import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
 import com.ErasmusProject.util.ResponseInstitution;
+import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
 
 import org.apache.jena.ontology.OntModel;
@@ -99,6 +100,39 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 		return new ResponseInstitution(identifier, institutionName);
+	}
+	
+	/*
+	 * Dodavanje specifikacije programa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/addProgrammeSpecification")
+	public ResponseProgrammeSpecification addProgrammeSpecification(  @RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+																	  @RequestParam(value="degreeProgrammeTitle", required=true) String degreeProgrammeTitle,
+																	  @RequestParam(value="location", required=false, defaultValue="") String location,
+																	  @RequestParam(value="qualification", required=false, defaultValue="") String qualification,
+																	  @RequestParam(value="url", required=false, defaultValue="") String url,
+																	  @RequestParam(value="credit", required=false, defaultValue="") String credit,
+																	  @RequestParam(value="degreeProgrammeAccessToFurtherStudies", required=false, defaultValue="") String degreeProgrammeAccessToFurtherStudies,
+																	  @RequestParam(value="degreeProgrammeEducationalAndProfessionalGoals", required=false, defaultValue="") String degreeProgrammeEducationalAndProfessionalGoals,
+																	  @RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.addIndividual("DegreeProgrammeSpecification", model, StringUtils.namespaceEcts, degreeUnitCode);
+			model = OntologyUtils.addDatatypeProperty("DegreeUnitCode", model, StringUtils.namespaceEcts, degreeUnitCode, degreeUnitCode);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeTitle", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeTitle);
+			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, degreeUnitCode, location);
+			model = OntologyUtils.addDatatypeProperty("Qualification", model, StringUtils.namespaceEcts, degreeUnitCode, qualification);
+			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, degreeUnitCode, url);
+			model = OntologyUtils.addDatatypeProperty("Credit", model, StringUtils.namespaceEcts, degreeUnitCode, credit);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeAccessToFurtherStudies", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeAccessToFurtherStudies);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeEducationAndProfessionalGoals", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeEducationalAndProfessionalGoals);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeStructureDiagram", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeStructureDiagram);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
 	}
 	
 
