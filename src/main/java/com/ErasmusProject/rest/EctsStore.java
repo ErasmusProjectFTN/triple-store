@@ -247,7 +247,7 @@ public class EctsStore {
 																	  @RequestParam(value="degreeProgrammeAccessToFurtherStudies", required=false, defaultValue="") String degreeProgrammeAccessToFurtherStudies,
 																	  @RequestParam(value="degreeProgrammeEducationalAndProfessionalGoals", required=false, defaultValue="") String degreeProgrammeEducationalAndProfessionalGoals,
 																	  @RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram)
-{
+		{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
 			Individual ind = model.getIndividual(StringUtils.namespaceEcts + degreeUnitCode);
@@ -320,6 +320,47 @@ public class EctsStore {
 			model = OntologyUtils.addDatatypeProperty("Start", model, StringUtils.namespaceEcts, degreeUnitCode, start);
 			model = OntologyUtils.addDatatypeProperty("Duration", model, StringUtils.namespaceEcts, degreeUnitCode, duration);
 			model = OntologyUtils.addDatatypeProperty("Cost", model, StringUtils.namespaceEcts, degreeUnitCode, cost);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseProgrammeInstance(degreeUnitCode);
+	}
+	
+	/*
+	 * Modifikovanje instance programa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/modifyProgrammeInstance")
+	public ResponseProgrammeInstance modifyProgrammeInstance(@RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+															@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+															@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
+															@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
+															@RequestParam(value="location", required=false, defaultValue="") String location,
+															@RequestParam(value="url", required=false, defaultValue="") String url,
+															@RequestParam(value="places", required=false, defaultValue="") String places,
+															@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+															@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
+															@RequestParam(value="start", required=false, defaultValue="") String start,
+															@RequestParam(value="duration", required=false, defaultValue="") String duration,
+															@RequestParam(value="cost", required=false, defaultValue="") String cost)
+
+{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			Individual ind = model.getIndividual(StringUtils.namespaceEcts + degreeUnitCode);
+			HashMap<String, String> propertyValues = new HashMap<>();
+			propertyValues.put("Prerequisite", prerequisite);
+			propertyValues.put("DepartmentalEctsCoordinator", departmentalEctsCoordinator);
+			propertyValues.put("DegreeProgrammeFinalExamination", degreeProgrammeFinalExamination);
+			propertyValues.put("Location", location);
+			propertyValues.put("Url", url);
+			propertyValues.put("Places", places);
+			propertyValues.put("LanguageOfInstruction", languageOfInstruction);
+			propertyValues.put("DegreeProgrammeExaminationAndAssessmentRegulations", degreeProgrammeExaminationAndAssessmentRegulations);
+			propertyValues.put("Start", start);
+			propertyValues.put("Duration", duration);
+			propertyValues.put("Cost", cost);
+			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
 			e.printStackTrace();
