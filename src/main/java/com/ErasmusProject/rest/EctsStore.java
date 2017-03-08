@@ -105,6 +105,11 @@ public class EctsStore {
 		return new ResponseInstitution(identifier, institutionName);
 	}
 	
+	/**
+	 * Uklanjanje institucije
+	 * @param id institucije
+	 * @return status uspesnosti
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/removeInstitution")
 	public String removeInstitution(@RequestParam(value = "identifier", required=true) String id)
 	{
@@ -149,6 +154,24 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
+	}
+	
+	/**
+	 * Uklanjanje specifikacije programa
+	 * @param degreeUnitCode id specifikacije programa
+	 * @return status uspesnosti
+	 */
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeDegreeSpecification")
+	public String removeDegreeSpecification(@RequestParam(value = "degreeUnitCode", required=true) String degreeUnitCode)
+	{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			model = OntologyUtils.removeIndividual("DegreeProgrammeSpecification", model, StringUtils.namespaceEcts, degreeUnitCode);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "Degree programme specification with id: " + degreeUnitCode + " is removed.";
 	}
 	
 	/*

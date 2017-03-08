@@ -183,7 +183,7 @@ public class OntologyUtils {
     }
 
     /**
-     * Removes an individual to the OntModel
+     * Removes an individual from the OntModel
      * @param className
      * @param model
      * @param namespace
