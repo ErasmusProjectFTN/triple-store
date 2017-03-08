@@ -421,6 +421,43 @@ public class EctsStore {
 		return new ResponseCourseSpecification(courseUnitCode, courseUnitTitle);
 	}
 	
+	/*
+	 * Modifikovanje specifikacije kursa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/modifyCourseSpecification")
+	public ResponseCourseSpecification modifyCourseSpecification(@RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
+																@RequestParam(value="courseUnitTitle", required=false, defaultValue="") String courseUnitTitle,
+																@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
+																@RequestParam(value="courseUnitLevel", required=false, defaultValue="") String courseUnitLevel,
+																@RequestParam(value="url", required=false, defaultValue="") String url,
+																@RequestParam(value="courseUnitYearOfStudy", required=false, defaultValue="") String courseUnitYearOfStudy,
+																@RequestParam(value="credit", required=false, defaultValue="") String credit,
+																@RequestParam(value="courseUnitContent", required=false, defaultValue="") String courseUnitContent,
+																@RequestParam(value="courseLocation", required=false, defaultValue="") String courseLocation,
+																@RequestParam(value="qualification", required=false, defaultValue="") String qualification)
+
+		{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			Individual ind = model.getIndividual(StringUtils.namespaceEcts + courseUnitCode);
+			HashMap<String, String> propertyValues = new HashMap<>();
+			propertyValues.put("CourseUnitTitle", courseUnitTitle);
+			propertyValues.put("CourseUnitType", courseUnitType);
+			propertyValues.put("CourseUnitLevel", courseUnitLevel);
+			propertyValues.put("Url", url);
+			propertyValues.put("CourseUnitYearOfStudy", courseUnitYearOfStudy);
+			propertyValues.put("Credit", credit);
+			propertyValues.put("CourseUnitContent", courseUnitContent);
+			propertyValues.put("Location", courseLocation);
+			propertyValues.put("Qualification", qualification);
+			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseCourseSpecification(courseUnitCode, courseUnitTitle);
+	}
+	
 	/**
 	 * Uklanjanje specifikacije kursa
 	 * @param courseUnitCode id specifikacije kursa
