@@ -526,6 +526,57 @@ public class EctsStore {
 		return new ResponseCourseInstance(courseUnitCode);
 	}
 	
+	/*
+	 * Modifikovanje instance kursa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/modifyCourseInstance")
+	public ResponseCourseInstance modifyCourseInstance(@RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
+														@RequestParam(value="lecturer", required=false, defaultValue="") String lecturer,
+														@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+														@RequestParam(value="places", required=false, defaultValue="") String places,
+														@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
+														@RequestParam(value="url", required=false, defaultValue="") String url,
+														@RequestParam(value="courseUnitTermPattern", required=true, defaultValue="Semester") String courseUnitTermPattern,
+														@RequestParam(value="courseUnitCompetence", required=false, defaultValue="") String courseUnitCompetence,
+														@RequestParam(value="courseUnitLearningOutcome", required=false, defaultValue="") String courseUnitLearningOutcome,
+														@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+														@RequestParam(value="courseUnitRecommendedReading", required=false, defaultValue="") String courseUnitRecommendedReading,
+														@RequestParam(value="courseUnitTeachingMethods", required=false, defaultValue="") String courseUnitTeachingMethods,
+														@RequestParam(value="courseUnitAssessmentMethods", required=false, defaultValue="") String courseUnitAssessmentMethods,
+														@RequestParam(value="location", required=false, defaultValue="") String location,
+														@RequestParam(value="start", required=false, defaultValue="") String start,
+														@RequestParam(value="duration", required=false, defaultValue="") String duration,
+														@RequestParam(value="cost", required=false, defaultValue="") String cost)
+
+		{	
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			Individual ind = model.getIndividual(StringUtils.namespaceEcts + courseUnitCode);
+			HashMap<String, String> propertyValues = new HashMap<>();
+			propertyValues.put("Lecturer", lecturer);
+			propertyValues.put("LanguageOfInstruction", languageOfInstruction);
+			propertyValues.put("Places", places);
+			propertyValues.put("CourseUnitType", courseUnitType);
+			propertyValues.put("Url", url);
+			propertyValues.put("CourseUnitTermPattern", courseUnitTermPattern);
+			propertyValues.put("CourseUnitCompetence", courseUnitCompetence);
+			propertyValues.put("CourseUnitLearningOutcome", courseUnitLearningOutcome);
+			propertyValues.put("Prerequisite", prerequisite);
+			propertyValues.put("CourseUnitRecommendedReading", courseUnitRecommendedReading);
+			propertyValues.put("CourseUnitTeachingMethods", courseUnitTeachingMethods);
+			propertyValues.put("CourseUnitAssessmentMethods", courseUnitAssessmentMethods);
+			propertyValues.put("Location", location);
+			propertyValues.put("Start", start);
+			propertyValues.put("Duration", duration);
+			propertyValues.put("Cost", cost);
+			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseCourseInstance(courseUnitCode);
+	}
+	
 	/**
 	 * Uklanjanje instance kursa
 	 * @param courseUnitCode id instance kursa
