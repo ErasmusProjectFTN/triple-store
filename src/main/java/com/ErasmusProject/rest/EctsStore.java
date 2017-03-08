@@ -233,6 +233,43 @@ public class EctsStore {
 		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
 	}
 	
+
+	/*
+	 * Modifikovanje specifikacije programa
+	 * */
+	@RequestMapping(method = RequestMethod.POST, value="/modifyProgrammeSpecification")
+	public ResponseProgrammeSpecification modifyProgrammeSpecification(@RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+																	  @RequestParam(value="degreeProgrammeTitle", required=false, defaultValue="") String degreeProgrammeTitle,
+																	  @RequestParam(value="location", required=false, defaultValue="") String location,
+																	  @RequestParam(value="qualification", required=false, defaultValue="") String qualification,
+																	  @RequestParam(value="url", required=false, defaultValue="") String url,
+																	  @RequestParam(value="credit", required=false, defaultValue="") String credit,
+																	  @RequestParam(value="degreeProgrammeAccessToFurtherStudies", required=false, defaultValue="") String degreeProgrammeAccessToFurtherStudies,
+																	  @RequestParam(value="degreeProgrammeEducationalAndProfessionalGoals", required=false, defaultValue="") String degreeProgrammeEducationalAndProfessionalGoals,
+																	  @RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram)
+{
+		try{
+			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
+			Individual ind = model.getIndividual(StringUtils.namespaceEcts + degreeUnitCode);
+			HashMap<String, String> propertyValues = new HashMap<>();
+			propertyValues.put("DegreeProgrammeTitle", degreeProgrammeTitle);
+			propertyValues.put("Location", location);
+			propertyValues.put("Qualification", qualification);
+			propertyValues.put("Url", url);
+			propertyValues.put("Credit", credit);
+			propertyValues.put("DegreeProgrammeAccessToFurtherStudies", degreeProgrammeAccessToFurtherStudies);
+			propertyValues.put("DegreeProgrammeEducationAndProfessionalGoals", degreeProgrammeEducationalAndProfessionalGoals);
+			propertyValues.put("DegreeProgrammeStructureDiagram", degreeProgrammeStructureDiagram);
+			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
+			OntologyUtils.reloadModel(model, StringUtils.URL);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
+	}
+	
+	
+	
 	/**
 	 * Uklanjanje specifikacije programa
 	 * @param degreeUnitCode id specifikacije programa
