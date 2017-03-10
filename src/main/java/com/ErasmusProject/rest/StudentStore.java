@@ -39,7 +39,7 @@ public class StudentStore {
     public Response addStudent(@RequestParam("surname") String surname,
                                @RequestParam("name") String name,
                                @RequestParam("dateOfBirth") String dob,
-                               @RequestParam("countryofBirth") String cob,
+                               @RequestParam("countryOfBirth") String cob,
                                @RequestParam("placeOfBirth") String pob,
                                @RequestParam("gender") String gender,
                                @RequestParam("nationality") String nat,
