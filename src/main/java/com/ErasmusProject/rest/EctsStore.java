@@ -597,7 +597,7 @@ public class EctsStore {
 	
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
-    public ArrayList<QueryResult> queryStudents(@RequestParam("value") String val,
+    public ArrayList<QueryResult> queryProgrammes(@RequestParam("value") String val,
                                                 @RequestParam("type") QueryType type)
     {
 
@@ -620,6 +620,36 @@ public class EctsStore {
                 break;
             case OBJECT:
                 retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlTemplate,"?s","?p","\"" + val + "\"","?p","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
+                break;
+        }
+
+        return retVal;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/queryContains")
+    public ArrayList<QueryResult> queryContainsProgrammes(@RequestParam("value") String val,
+                                                @RequestParam("type") QueryType type)
+    {
+
+        ArrayList<String> namespaces = new ArrayList<String>();
+        ArrayList<QueryResult> retVal = null;
+        namespaces.add(StringUtils.namespaceEcts);
+        namespaces.add(StringUtils.namespaceStudent);
+        namespaces.add(StringUtils.namespaceW3c);
+
+
+        switch(type)
+        {
+            case SUBJECT:
+                String subject = "<" + StringUtils.namespaceEcts + val + ">";
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,subject,"?p","?o","?p","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
+                break;
+            case PREDICATE:
+                String predicate = "<" + StringUtils.namespaceEcts + val + ">";
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,"?s",predicate,"?o","?s","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
+                break;
+            case OBJECT:
+                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,"?s","?p","\"" + val + "\"","?p","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
                 break;
         }
 

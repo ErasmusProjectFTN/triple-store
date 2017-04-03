@@ -8,10 +8,10 @@ import java.util.ArrayList;
  */
 public class StringUtils {
 
-    public static String URL = "http://localhost:3030/ds";
-    public static String URLdataset = "http://localhost:3030/ds/data";
-    public static String URLupdate = "http://localhost:3030/ds/update";
-    public static String URLquery = "http://localhost:3030/ds/query";
+    public static String URL = "http://localhost:3030/inf";
+    public static String URLdataset = "http://localhost:3030/inf/data";
+    public static String URLupdate = "http://localhost:3030/inf/update";
+    public static String URLquery = "http://localhost:3030/inf";
     public static String namespaceStudent = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
     public static String namespaceMlo = "http://www.semanticweb.org/nina/ontologies/2016/11/mlo#";
     public static String namespaceEcts = "http://www.semanticweb.org/nina/ontologies/2016/11/ects#";
@@ -19,7 +19,7 @@ public class StringUtils {
     public static String studentFile = "student.owl";
     public static String ectsFile = "ectsMloMerged_individuals.owl";
     public static String sparqlTemplate = "SELECT * WHERE{%s %s  %s FILTER(STRSTARTS(STR(%s), %s))}";
-
+    public static String sparqlContainsTemplate = "SELECT * WHERE{%s %s  %s FILTER(CONTAINS(STR(%s), %s))}";
     /**
      * Formats jena statements into SPARQL INSERT
      * @param template
