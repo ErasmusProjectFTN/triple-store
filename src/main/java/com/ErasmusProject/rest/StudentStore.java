@@ -1,7 +1,9 @@
 package com.ErasmusProject.rest;
 import com.ErasmusProject.util.*;
+import org.apache.jena.base.Sys;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,15 @@ import java.io.IOException;
 @RequestMapping("/student")
 public class StudentStore {
 
+    @Autowired
+    private Conf conf;
+
     @PostConstruct
     public void initFuseki()
     {
+        System.out.println("\n\n"+conf.getInitialize()+"\n\n");
+        if(!conf.getInitialize()) return;
+        System.out.println("\n\nPROSAO\n\n");
         try {
             Model student = OntologyUtils.createOntModel(StringUtils.studentFile);
             Model ects = OntologyUtils.createOntModel(StringUtils.ectsFile);

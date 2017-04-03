@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.ErasmusProject.app","com.ErasmusProject.rest"})
+@ComponentScan(basePackages = { "com.ErasmusProject.app","com.ErasmusProject.rest", "com.ErasmusProject.util"})
 public class TripleStoreServiceApplication {
 
 	public static void main(String[] args) {
