@@ -13,7 +13,7 @@ public class StringUtils {
     public static String URLupdate = "http://localhost:3030/inf/update";
     //public static String URLquery = "http://localhost:3030/inf/query";
     //URLquery constant for inf configuration
-    public static String URLquery = "http://localhost:3030/inf";
+    public static String URLquery = "http://localhost:3030/inf/sparql";
     public static String namespaceStudent = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
     public static String namespaceMlo = "http://www.semanticweb.org/nina/ontologies/2016/11/mlo#";
     public static String namespaceEcts = "http://www.semanticweb.org/nina/ontologies/2016/11/ects#";
