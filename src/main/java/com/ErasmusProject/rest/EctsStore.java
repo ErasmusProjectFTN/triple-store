@@ -1,5 +1,6 @@
 package com.ErasmusProject.rest;
 
+import com.ErasmusProject.model.Institution;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
@@ -604,7 +605,6 @@ public class EctsStore {
         ArrayList<String> namespaces = new ArrayList<String>();
         ArrayList<QueryResult> retVal = null;
         namespaces.add(StringUtils.namespaceEcts);
-        namespaces.add(StringUtils.namespaceStudent);
         namespaces.add(StringUtils.namespaceW3c);
 
 
@@ -626,33 +626,44 @@ public class EctsStore {
         return retVal;
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/queryContains")
-    public ArrayList<QueryResult> queryContainsProgrammes(@RequestParam("value") String val,
-                                                @RequestParam("type") QueryType type)
+    @RequestMapping(method = RequestMethod.GET, value="/getInstitutions")
+    public ArrayList<Institution> getInstitutions()
     {
-
-        ArrayList<String> namespaces = new ArrayList<String>();
+    	ArrayList<String> namespaces = new ArrayList<String>();
         ArrayList<QueryResult> retVal = null;
         namespaces.add(StringUtils.namespaceEcts);
-        namespaces.add(StringUtils.namespaceStudent);
         namespaces.add(StringUtils.namespaceW3c);
-
-
-        switch(type)
-        {
-            case SUBJECT:
-                String subject = "<" + StringUtils.namespaceEcts + val + ">";
-                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,subject,"?p","?o","?p","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
-                break;
-            case PREDICATE:
-                String predicate = "<" + StringUtils.namespaceEcts + val + ">";
-                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,"?s",predicate,"?o","?s","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
-                break;
-            case OBJECT:
-                retVal = OntologyUtils.formatedSelect(StringUtils.URLquery, String.format(StringUtils.sparqlContainsTemplate,"?s","?p","\"" + val + "\"","?p","\""+StringUtils.namespaceEcts +"\""), namespaces, type, val);
-                break;
-        }
-
-        return retVal;
+        
+        retVal = queryProgrammes("InstitutionCode", QueryType.PREDICATE);
+        
+        ArrayList<Institution> institutions = new ArrayList<>();
+        
+        String identifier="", institutionName="", institutionStatus="", institutionType="", institutionAddress="", url=""; 
+        ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+        Institution institution = null;
+        
+        
+        for (QueryResult queryResult : retVal) {
+        	identifier = queryResult.getSubject();
+        	results = queryProgrammes(identifier, QueryType.SUBJECT);
+        	for (QueryResult queryResult2 : results) {
+				if (queryResult2.getPredicate().equals("InstitutionCode"))
+					identifier = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionName"))
+					institutionName = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionStatus"))
+					institutionStatus = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionType"))
+					institutionType = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionAddress"))
+					institutionAddress = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("url"))
+					url = queryResult2.getObject();
+			}
+        	institution = new Institution(identifier, institutionName, institutionStatus, institutionType, institutionAddress, url);
+        	institutions.add(institution);
+		}
+        
+        return institutions;
     }
 }
