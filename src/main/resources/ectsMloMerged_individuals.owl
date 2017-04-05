@@ -951,7 +951,7 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <!-- http://purl.org/dc/elements/1.1/course_unit_1 -->
 
-    <owl:NamedIndividual rdf:about="http://purl.org/dc/elements/1.1/course_unit_1">
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/nina/ontologies/2016/11/ects#course_unit_1">
         <rdf:type rdf:resource="&ects;CourseUnitSpecification"/>
         <CourseUnitCode></CourseUnitCode>
         <CourseUnitLevel></CourseUnitLevel>

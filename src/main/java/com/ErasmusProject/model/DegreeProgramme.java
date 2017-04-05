@@ -13,12 +13,12 @@ public class DegreeProgramme {
 	private String language;
 	private String location;
 	private String qualification;
-	private Integer credit;
+	private Double credit;
 	private String url;
 	
 	
 	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String language, String location,
-			String qualification, Integer credit, String url) {
+			String qualification, Double credit, String url) {
 		super();
 		this.degreeUnitCode = degreeUnitCode;
 		this.degreeProgrammeTitle = degreeProgrammeTitle;
@@ -80,12 +80,12 @@ public class DegreeProgramme {
 	}
 
 
-	public Integer getCredit() {
+	public Double getCredit() {
 		return credit;
 	}
 
 
-	public void setCredit(Integer credit) {
+	public void setCredit(Double credit) {
 		this.credit = credit;
 	}
 
