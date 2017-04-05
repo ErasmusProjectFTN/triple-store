@@ -994,9 +994,9 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;degree_programme_1">
         <rdf:type rdf:resource="&ects;DegreeProgrammeSpecification"/>
+        <DegreeProgrammeTitle>Computing and Control Engineering</DegreeProgrammeTitle>
         <DegreeUnitCode>123</DegreeUnitCode>
         <Qualification>Bachelor with Honours in Electrical and Computer Engineering (B.Elec.Comp.Eng.)</Qualification>
-        <DegreeProgrammeTitle>Computer and Control Engineering</DegreeProgrammeTitle>
         <LearningOpportunityType>DegreeProgramme</LearningOpportunityType>
         <specifies rdf:resource="&ects;degree_programme_instance_1"/>
     </owl:NamedIndividual>

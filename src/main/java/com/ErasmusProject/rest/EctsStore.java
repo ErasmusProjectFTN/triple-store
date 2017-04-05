@@ -1,5 +1,6 @@
 package com.ErasmusProject.rest;
 
+import com.ErasmusProject.model.DegreeProgramme;
 import com.ErasmusProject.model.Institution;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
@@ -10,10 +11,14 @@ import com.ErasmusProject.util.ResponseInstitution;
 import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
+import com.ctc.wstx.util.StringUtil;
 
 import org.apache.jena.ontology.DatatypeProperty;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.RDFNode;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -598,7 +603,7 @@ public class EctsStore {
 	
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
-    public ArrayList<QueryResult> queryProgrammes(@RequestParam("value") String val,
+    public ArrayList<QueryResult> query(@RequestParam("value") String val,
                                                 @RequestParam("type") QueryType type)
     {
 
@@ -626,6 +631,10 @@ public class EctsStore {
         return retVal;
     }
     
+    /**
+     * Get institutions
+     * @return institutions from db
+     */
     @RequestMapping(method = RequestMethod.GET, value="/getInstitutions")
     public ArrayList<Institution> getInstitutions()
     {
@@ -634,18 +643,17 @@ public class EctsStore {
         namespaces.add(StringUtils.namespaceEcts);
         namespaces.add(StringUtils.namespaceW3c);
         
-        retVal = queryProgrammes("InstitutionCode", QueryType.PREDICATE);
+        retVal = query("InstitutionCode", QueryType.PREDICATE);
         
         ArrayList<Institution> institutions = new ArrayList<>();
         
         String identifier="", institutionName="", institutionStatus="", institutionType="", institutionAddress="", url=""; 
         ArrayList<QueryResult> results = new ArrayList<QueryResult>();
-        Institution institution = null;
         
         
         for (QueryResult queryResult : retVal) {
         	identifier = queryResult.getSubject();
-        	results = queryProgrammes(identifier, QueryType.SUBJECT);
+        	results = query(identifier, QueryType.SUBJECT);
         	for (QueryResult queryResult2 : results) {
 				if (queryResult2.getPredicate().equals("InstitutionCode"))
 					identifier = queryResult2.getObject();
@@ -657,13 +665,77 @@ public class EctsStore {
 					institutionType = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("InstitutionAddress"))
 					institutionAddress = queryResult2.getObject();
-				else if (queryResult2.getPredicate().equals("url"))
+				else if (queryResult2.getPredicate().equals("Url"))
 					url = queryResult2.getObject();
 			}
-        	institution = new Institution(identifier, institutionName, institutionStatus, institutionType, institutionAddress, url);
-        	institutions.add(institution);
+        	institutions.add(new Institution(identifier, institutionName, institutionStatus, institutionType, institutionAddress, url));
 		}
         
         return institutions;
+    }
+    
+    /**
+     * Get programmes
+     * @return programmes from db
+     */
+    @RequestMapping(method = RequestMethod.GET, value="/getProgrammes")
+    public ArrayList<DegreeProgramme> getProgrammes()
+    {
+    	ArrayList<String> namespaces = new ArrayList<String>();
+        ArrayList<QueryResult> retVal = null;
+        namespaces.add(StringUtils.namespaceEcts);
+        namespaces.add(StringUtils.namespaceW3c);
+        
+        // get programme specification ids
+        String query = "SELECT * WHERE{?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + StringUtils.namespaceEcts + "DegreeProgrammeSpecification>}";
+        ResultSet results = OntologyUtils.execSelect(StringUtils.URLquery, query);
+        
+        System.out.println(results);
+        ArrayList<String> degreeProgrammeIds = new ArrayList<String>();
+        
+        String degreeUnitCode="", degreeProgrammeTitle="", language="", location="", qualification="",url="";
+        Integer credit = -1;
+        ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<DegreeProgramme>();
+        ArrayList<String> degreeProgrammeInstances = new ArrayList<>();
+        // get programme specification data
+        // get programme instance data
+        while (results.hasNext()) {
+            QuerySolution soln = results.nextSolution();
+            String degreeProgramme = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+            retVal = query(degreeProgramme, QueryType.SUBJECT);
+            degreeProgrammeInstances = new ArrayList<>();
+            for (QueryResult queryResult2 : retVal) {
+            	if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
+					degreeProgrammeTitle = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Qualification"))
+					qualification = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
+					credit = Integer.parseInt(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("specifies")){
+					degreeProgrammeInstances.add(queryResult2.getObject());
+				}
+			}
+            for (String degreeProgrammeInstanceName : degreeProgrammeInstances){
+    			System.out.println(degreeProgrammeInstanceName);
+                retVal = query(degreeProgrammeInstanceName, QueryType.SUBJECT);
+                for(QueryResult queryResult2 : retVal){
+                	System.out.println(queryResult2.getSubject());
+                	System.out.println(queryResult2.getPredicate());
+                	System.out.println(queryResult2.getObject());
+                	System.out.println("*************************");
+                	if (queryResult2.getPredicate().equals("DegreeUnitCode"))
+    					degreeUnitCode = queryResult2.getObject();
+    				else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
+    					language = queryResult2.getObject();
+    				else if (queryResult2.getPredicate().equals("Location"))
+    					location = queryResult2.getObject();
+    				else if (queryResult2.getPredicate().equals("url")){
+    					url = queryResult2.getObject();
+    				}
+                }
+            	degreeProgrammes.add(new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language, location, qualification, credit, url));	
+    		}
+        }
+        return degreeProgrammes;
     }
 }
