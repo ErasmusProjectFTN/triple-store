@@ -671,7 +671,117 @@ public class EctsStore {
         
         return institutions;
     }
-    
+
+    @RequestMapping(method = RequestMethod.GET, value="/getInstitution")
+    public Institution getInstitution(@RequestParam("identifier")String institutionCode){
+    	ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+    	
+    	String query = "SELECT * WHERE{?s <http://www.semanticweb.org/nina/ontologies/2016/11/ects#InstitutionCode> \"" + institutionCode + "\"}";
+        ResultSet result = OntologyUtils.execSelect(StringUtils.URLquery, query);
+        QuerySolution soln = result.nextSolution();
+        String identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        String institutionName = "";
+        String institutionStatus= "";
+        String institutionType= "";
+        String institutionAddress= "";
+        String url= "";
+        String institutionalECTScoordinator= "";
+        String mainUniversityRegulations= "";
+        String institutionGeneralDescription= "";
+        String institutionAcademicAuthorities= "";
+        String institutionAcademicCalendar= "";
+        String institutionAdmissionProcedures= "";
+        String generalInformationForStudents= "";
+        String generalInformationForMobileStudetns= "";
+        String generalInformationOnAccommodation= "";
+        String generalInformationOnCostOfLiving= "";
+        String generalInformationOnExtramuralAndLeisureFacilities= "";
+        String generalInformationOnFacilitiesForStudentsWithSpecialNeeds= "";
+        String generalInformationOnFinancialSupport= "";
+        String generalInformationOnInsturance= "";
+        String generalInformationOnInternationalProgrammes= "";
+        String generalInformationOnInternships= "";
+        String generalInformationonLanguageCourses= "";
+        String generalInformationOnMeals= "";
+        String generalInformationOnMedicalFacilities= "";
+        String generalInformationOnSportsFacilities= "";
+        String generalInformationOnStudentAffairsOffice= "";
+        String generalInformationOnStudentAssociations= "";
+        String generalInformationOnStudyFacilities= "";
+
+        results = query(identifier, QueryType.SUBJECT);
+        for (QueryResult queryResult2 : results) {
+    		if (queryResult2.getPredicate().equals("InstitutionName"))
+    			institutionName = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionStatus"))
+    			institutionStatus = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionType"))
+    			institutionType = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionAddress"))
+    			institutionAddress = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionalEctsCoordinator"))
+    			institutionalECTScoordinator = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionMainUniversityRegulations"))
+    			mainUniversityRegulations = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionGeneralDescription"))
+    			institutionGeneralDescription = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionAcademicAuthorities"))
+    			institutionAcademicAuthorities = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionAcademicCalendar"))
+    			institutionAcademicCalendar = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("InstitutionAdmissionProcedures"))
+    			institutionAdmissionProcedures = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationForStudents"))
+    			generalInformationForStudents = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationForMobileStudetns"))
+    			generalInformationForMobileStudetns = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnAccommodation"))
+    			generalInformationOnAccommodation = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnCostOfLiving"))
+    			generalInformationOnCostOfLiving = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnExtraMuralAndLeisureFacilities"))
+    			generalInformationOnExtramuralAndLeisureFacilities = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnFacilitiesForStudentsWithSpecialNeeds"))
+    			generalInformationOnFacilitiesForStudentsWithSpecialNeeds = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnFinancialSupport"))
+    			generalInformationOnFinancialSupport = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnInsturance"))
+    			generalInformationOnInsturance = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnInternationalProgrammes"))
+    			generalInformationOnInternationalProgrammes = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnInternships"))
+    			generalInformationOnInternships = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationonLanguageCourses"))
+    			generalInformationonLanguageCourses = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnMeals"))
+    			generalInformationOnMeals = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnMedicalFacilities"))
+    			generalInformationOnMedicalFacilities = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnSportsFacilities"))
+    			generalInformationOnSportsFacilities = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnStudentAffairsOffice"))
+    			generalInformationOnStudentAffairsOffice = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("generalInformationOnStudentAssociations"))
+    			generalInformationOnStudentAssociations = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("GeneralInformationOnStudyFacilities"))
+    			generalInformationOnStudyFacilities = queryResult2.getObject();
+    	}
+    	return new Institution(institutionCode, institutionName, institutionStatus, institutionType,
+				    			institutionAddress, url, institutionalECTScoordinator,
+				    			mainUniversityRegulations, institutionGeneralDescription,
+				    			institutionAcademicAuthorities, institutionAcademicCalendar,
+				    			institutionAdmissionProcedures, generalInformationForStudents,
+				    			generalInformationForMobileStudetns, generalInformationOnAccommodation,
+				    			generalInformationOnCostOfLiving, generalInformationOnExtramuralAndLeisureFacilities,
+				    			generalInformationOnFacilitiesForStudentsWithSpecialNeeds,
+				    			generalInformationOnFinancialSupport, generalInformationOnInsturance,
+				    			generalInformationOnInternationalProgrammes, generalInformationOnInternships,
+				    			generalInformationonLanguageCourses, generalInformationOnMeals,
+				    			generalInformationOnMedicalFacilities, generalInformationOnSportsFacilities,
+				    			generalInformationOnStudentAffairsOffice, generalInformationOnStudentAssociations,
+				    			generalInformationOnStudyFacilities);
+    }
+
     /**
      * Get programmes
      * @return programmes from db
