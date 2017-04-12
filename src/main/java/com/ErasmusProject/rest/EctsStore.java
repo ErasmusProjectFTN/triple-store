@@ -676,7 +676,7 @@ public class EctsStore {
     public Institution getInstitution(@RequestParam("identifier")String institutionCode){
     	ArrayList<QueryResult> results = new ArrayList<QueryResult>();
     	
-    	String query = "SELECT * WHERE{?s <http://www.semanticweb.org/nina/ontologies/2016/11/ects#InstitutionCode> \"" + institutionCode + "\"}";
+    	String query = "SELECT * WHERE{?s <" + StringUtils.namespaceEcts + "InstitutionCode> \"" + institutionCode + "\"}";
         ResultSet result = OntologyUtils.execSelect(StringUtils.URLquery, query);
         QuerySolution soln = result.nextSolution();
         String identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
@@ -810,7 +810,9 @@ public class EctsStore {
             retVal = query(degreeProgramme, QueryType.SUBJECT);
             degreeProgrammeInstances = new ArrayList<>();
             for (QueryResult queryResult2 : retVal) {
-            	if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
+            	if (queryResult2.getPredicate().equals("DegreeUnitCode"))
+					degreeUnitCode = queryResult2.getObject();
+            	else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
 					degreeProgrammeTitle = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Qualification"))
 					qualification = queryResult2.getObject();
@@ -837,6 +839,101 @@ public class EctsStore {
     		}
         }
         return degreeProgrammes;
+    }
+    
+    /**
+     * Get programme
+     * @return programme from db
+     */
+    @RequestMapping(method = RequestMethod.GET, value="/getProgramme")
+    public DegreeProgramme getProgramme(@RequestParam("identifier")String institutionCode)
+    {
+    	ArrayList<String> namespaces = new ArrayList<String>();
+        ArrayList<QueryResult> retVal = null;
+        namespaces.add(StringUtils.namespaceEcts);
+        namespaces.add(StringUtils.namespaceW3c);
+        
+        // get programme specification ids
+        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "DegreeUnitCode> \""+institutionCode+"\"}";
+        System.out.println(query);
+        ResultSet result = OntologyUtils.execSelect(StringUtils.URLquery, query);
+        System.out.println(result.hasNext());
+
+        QuerySolution soln = result.next();
+        System.out.println("-------------");
+        System.out.println(soln.toString());
+        System.out.println(soln.get("s").toString());
+        System.out.println("-------------");
+        String identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        
+        String degreeUnitCode=institutionCode, degreeProgrammeTitle="", language="", location="", qualification="",url="",
+	        	prerequisite="", departmentalECTScoordinator="",degreeProgrammeFinalExamination="", places="",
+	        	degreeProgrammeExaminationAndAssessmentRegulations="",start="",duration="", cost="",
+	        	degreeProgrammeAccessToFurtherStudies="",degreeProgrammeEducationalAndProessionalGoals="", degreeProgrammeStructureDiagram="";
+        Double credit = -1.0;
+        ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<DegreeProgramme>();
+        ArrayList<String> degreeProgrammeInstances = new ArrayList<>();
+        // get programme instance data
+        retVal = query(identifier, QueryType.SUBJECT);
+        for (QueryResult queryResult2 : retVal) {
+        	System.out.println(queryResult2.getPredicate());
+        	if (queryResult2.getPredicate().equals("DegreeProgrammeExaminationAndAssessmentRegulations"))
+    			degreeProgrammeExaminationAndAssessmentRegulations = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("DegreeProgrammeFinalExamination"))
+    			degreeProgrammeFinalExamination = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Cost"))
+    			cost = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Duration"))
+    			duration = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Start"))
+    			start = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Location"))
+    			location = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("DepartmentalEctsCoordinator"))
+    			departmentalECTScoordinator = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Url"))
+    			url = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
+    			language = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Places"))
+    			places = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Prerequisite"))
+    			prerequisite = queryResult2.getObject();
+        }
+        // get programme specification data
+        String query2 = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "specifies> <"+ StringUtils.namespaceEcts + identifier +">}";
+        ResultSet result2 = OntologyUtils.execSelect(StringUtils.URLquery, query2);
+
+        QuerySolution soln2 = result2.nextSolution();
+        String programmeSpecificationIdentifier = soln2.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        System.out.println(programmeSpecificationIdentifier);
+        retVal = query(programmeSpecificationIdentifier, QueryType.SUBJECT);
+        
+        for (QueryResult queryResult2 : retVal) {
+        	System.out.println(queryResult2.getPredicate());
+        	if (queryResult2.getPredicate().equals("Credit"))
+    			credit = Double.valueOf(queryResult2.getObject());
+    		else if (queryResult2.getPredicate().equals("DegreeProgrammeAcccessToFurtherStudies"))
+    			degreeProgrammeAccessToFurtherStudies = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("DegreeProgrammeEducationAndProfessionalGoals"))
+    			degreeProgrammeEducationalAndProessionalGoals = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("DegreeProgrammeStructureDiagram"))
+    			degreeProgrammeStructureDiagram = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
+    			degreeProgrammeTitle = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Location"))
+    			location = location.equals("")?queryResult2.getObject():location;
+    		else if (queryResult2.getPredicate().equals("Qualification"))
+    			qualification = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Url"))
+    			url = url.equals("")?queryResult2.getObject():url;
+        }
+        return new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language, location,
+					    			qualification, credit, url, prerequisite, departmentalECTScoordinator,
+					    			degreeProgrammeFinalExamination, places,
+					    			degreeProgrammeExaminationAndAssessmentRegulations, start, duration, cost,
+					    			degreeProgrammeAccessToFurtherStudies, degreeProgrammeEducationalAndProessionalGoals,
+					    			degreeProgrammeStructureDiagram);
     }
     
     /**
