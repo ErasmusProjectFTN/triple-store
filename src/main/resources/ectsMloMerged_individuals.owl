@@ -954,12 +954,12 @@ Typically the web page of the provider or course.</rdfs:comment>
     <owl:NamedIndividual rdf:about="&ects;course_unit_1">
         <rdf:type rdf:resource="&ects;CourseUnitSpecification"/>
         <CourseUnitYearOfStudy></CourseUnitYearOfStudy>
+        <CourseUnitCode>589</CourseUnitCode>
         <LearningOpportunityType>CourseUnit</LearningOpportunityType>
-        <CourseUnitTitle></CourseUnitTitle>
         <Credit></Credit>
         <CourseUnitLevel></CourseUnitLevel>
         <CourseUnitType></CourseUnitType>
-        <CourseUnitCode></CourseUnitCode>
+        <CourseUnitTitle>Matematicka analiza</CourseUnitTitle>
         <CourseUnitContent></CourseUnitContent>
         <specifies rdf:resource="&ects;course_unit_instance_1"/>
     </owl:NamedIndividual>
@@ -979,7 +979,7 @@ Typically the web page of the provider or course.</rdfs:comment>
         <LanguageOfInstruction></LanguageOfInstruction>
         <Lecturer></Lecturer>
         <CourseUnitRecommendedReading></CourseUnitRecommendedReading>
-        <CourseUnitCode></CourseUnitCode>
+        <CourseUnitCode>987</CourseUnitCode>
         <CourseUnitTeachingMethods></CourseUnitTeachingMethods>
         <LearningOpportunityType>CourseUnit</LearningOpportunityType>
         <CourseUnitLearningOutcome></CourseUnitLearningOutcome>
@@ -1227,14 +1227,6 @@ Application forms for incoming students for academic 2016/2017 for POSTGRADUATE 
      -->
 
     <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;LearningOpportunityInstance"/>
-            <rdf:Description rdf:about="&ects;LearningOpportunityProvider"/>
-            <rdf:Description rdf:about="&ects;LearningOpportunitySpecification"/>
-        </owl:members>
-    </rdf:Description>
-    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&ects;degree_programme_1"/>
@@ -1243,6 +1235,14 @@ Application forms for incoming students for academic 2016/2017 for POSTGRADUATE 
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&ects;LearningOpportunityInstance"/>
+            <rdf:Description rdf:about="&ects;LearningOpportunityProvider"/>
+            <rdf:Description rdf:about="&ects;LearningOpportunitySpecification"/>
+        </owl:members>
     </rdf:Description>
 </rdf:RDF>
 

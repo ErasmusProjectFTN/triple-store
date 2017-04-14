@@ -817,7 +817,7 @@ public class EctsStore {
 				else if (queryResult2.getPredicate().equals("Qualification"))
 					qualification = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
-					credit = Double.parseDouble(queryResult2.getObject());
+					credit = queryResult2.getObject().equals("")?-1:Double.parseDouble(queryResult2.getObject());
 				else if (queryResult2.getPredicate().equals("specifies")){
 					degreeProgrammeInstances.add(queryResult2.getObject());
 				}
@@ -846,7 +846,7 @@ public class EctsStore {
      * @return programme from db
      */
     @RequestMapping(method = RequestMethod.GET, value="/getProgramme")
-    public DegreeProgramme getProgramme(@RequestParam("identifier")String institutionCode)
+    public DegreeProgramme getProgramme(@RequestParam("identifier")String programmeCode)
     {
     	ArrayList<String> namespaces = new ArrayList<String>();
         ArrayList<QueryResult> retVal = null;
@@ -854,7 +854,7 @@ public class EctsStore {
         namespaces.add(StringUtils.namespaceW3c);
         
         // get programme specification ids
-        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "DegreeUnitCode> \""+institutionCode+"\"}";
+        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "DegreeUnitCode> \""+programmeCode+"\"}";
         System.out.println(query);
         ResultSet result = OntologyUtils.execSelect(StringUtils.URLquery, query);
         System.out.println(result.hasNext());
@@ -866,13 +866,11 @@ public class EctsStore {
         System.out.println("-------------");
         String identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
         
-        String degreeUnitCode=institutionCode, degreeProgrammeTitle="", language="", location="", qualification="",url="",
+        String degreeUnitCode=programmeCode, degreeProgrammeTitle="", language="", location="", qualification="",url="",
 	        	prerequisite="", departmentalECTScoordinator="",degreeProgrammeFinalExamination="", places="",
 	        	degreeProgrammeExaminationAndAssessmentRegulations="",start="",duration="", cost="",
 	        	degreeProgrammeAccessToFurtherStudies="",degreeProgrammeEducationalAndProessionalGoals="", degreeProgrammeStructureDiagram="";
         Double credit = -1.0;
-        ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<DegreeProgramme>();
-        ArrayList<String> degreeProgrammeInstances = new ArrayList<>();
         // get programme instance data
         retVal = query(identifier, QueryType.SUBJECT);
         for (QueryResult queryResult2 : retVal) {
@@ -912,7 +910,7 @@ public class EctsStore {
         for (QueryResult queryResult2 : retVal) {
         	System.out.println(queryResult2.getPredicate());
         	if (queryResult2.getPredicate().equals("Credit"))
-    			credit = Double.valueOf(queryResult2.getObject());
+    			credit = queryResult2.getObject().equals("")?-1:Double.valueOf(queryResult2.getObject());
     		else if (queryResult2.getPredicate().equals("DegreeProgrammeAcccessToFurtherStudies"))
     			degreeProgrammeAccessToFurtherStudies = queryResult2.getObject();
     		else if (queryResult2.getPredicate().equals("DegreeProgrammeEducationAndProfessionalGoals"))
@@ -973,7 +971,7 @@ public class EctsStore {
 				else if (queryResult2.getPredicate().equals("CourseUnitLevel"))
 					courseUnitLevel = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
-					credit = Double.parseDouble(queryResult2.getObject());
+					credit = queryResult2.getObject().equals("")?-1:Double.parseDouble(queryResult2.getObject());
 				else if (queryResult2.getPredicate().equals("specifies")){
 					courseUnitInstances.add(queryResult2.getObject());
 				}
@@ -997,5 +995,125 @@ public class EctsStore {
     		}
         }
         return courseUnits;
+    }
+    
+    /**
+     * Get course
+     * @return course from db
+     */
+    @RequestMapping(method = RequestMethod.GET, value="/getCourse")
+    public CourseUnit getCourse(@RequestParam("identifier")String courseCode)
+    {
+    	ArrayList<String> namespaces = new ArrayList<String>();
+        ArrayList<QueryResult> retVal = null;
+        namespaces.add(StringUtils.namespaceEcts);
+        namespaces.add(StringUtils.namespaceW3c);
+        
+        // get programme specification ids
+        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "CourseUnitCode> \""+courseCode+"\"}";
+        System.out.println(query);
+        ResultSet result = OntologyUtils.execSelect(StringUtils.URLquery, query);
+        System.out.println(result.hasNext());
+
+        QuerySolution soln = result.next();
+        System.out.println("-------------");
+        System.out.println(soln.toString());
+        System.out.println(soln.get("s").toString());
+        System.out.println("-------------");
+        String identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        
+        String courseUnitCode = courseCode;
+    	String courseUnitTitle = "";
+    	String courseUnitType = "";
+    	String courseUnitLevel = "";
+    	String url = "";
+    	String courseUnitYearOfStudy = "";
+    	String courseUnitContent = "";
+    	String courseLocation = "";
+    	String qualification = "";
+    	String lecturer = "";
+    	String languageOfInstruction = "";
+    	String places = "";
+    	String courseUnitTermPattern = "";
+    	String courseUnitCompetence = "";
+    	String courseUnitLearningOutcome = "";
+    	String prerequisite = "";
+    	String courseUnitRecommendedReading = "";
+    	String courseUnitTeachingMethods = "";
+    	String courseUnitAssessmentMethods = "";
+    	String start = "";
+    	String duration = "";
+    	String cost = "";
+        Double credit = -1.0;
+        
+        // get programme instance data
+        retVal = query(identifier, QueryType.SUBJECT);
+        for (QueryResult queryResult2 : retVal) {
+        	System.out.println(queryResult2.getPredicate());
+        	if (queryResult2.getPredicate().equals("CourseUnitAssessmentMethods"))
+    			courseUnitAssessmentMethods = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Cost"))
+    			cost = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitRecommendedReading"))
+    			courseUnitRecommendedReading = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitTeachingMethods"))
+    			courseUnitTeachingMethods = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Start"))
+    			start = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Duration"))
+    			duration = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitTermPattern"))
+    			courseUnitTermPattern = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
+    			languageOfInstruction = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Lecturer"))
+    			lecturer = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Location"))
+    			courseLocation = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitCompetence"))
+    			courseUnitCompetence = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitLearningOutcome"))
+    			courseUnitLearningOutcome = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Places"))
+    			places = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Prerequisite"))
+    			prerequisite = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitType"))
+    			courseUnitType = queryResult2.getObject();
+        }
+        // get programme specification data
+        String query2 = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "specifies> <"+ StringUtils.namespaceEcts + identifier +">}";
+        ResultSet result2 = OntologyUtils.execSelect(StringUtils.URLquery, query2);
+
+        QuerySolution soln2 = result2.nextSolution();
+        String courseSpecificationIdentifier = soln2.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        System.out.println(courseSpecificationIdentifier);
+        retVal = query(courseSpecificationIdentifier, QueryType.SUBJECT);
+        
+        for (QueryResult queryResult2 : retVal) {
+        	System.out.println(queryResult2.getPredicate());
+        	if (queryResult2.getPredicate().equals("CourseUnitTitle"))
+    			courseUnitTitle = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Credit"))
+    			credit = queryResult2.getObject().equals("")?-1:Double.valueOf(queryResult2.getObject());
+    		else if (queryResult2.getPredicate().equals("CourseUnitLevel"))
+    			courseUnitLevel = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitYearOfStudy"))
+    			courseUnitYearOfStudy = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("Location"))
+    			courseLocation = courseLocation.equals("")?queryResult2.getObject():courseLocation;
+    		else if (queryResult2.getPredicate().equals("Qualification"))
+    			qualification = queryResult2.getObject();
+    		else if (queryResult2.getPredicate().equals("CourseUnitType"))
+    			courseUnitType = courseUnitType.equals("")?queryResult2.getObject():courseUnitType;
+    		else if (queryResult2.getPredicate().equals("Url"))
+    			url = url.equals("")?queryResult2.getObject():url;
+        }
+        return new CourseUnit(courseUnitCode, courseUnitTitle, courseUnitType, courseUnitLevel,
+    			credit, url, courseUnitYearOfStudy, courseUnitContent, courseLocation,
+    			qualification, lecturer, languageOfInstruction, places,
+    			courseUnitTermPattern, courseUnitCompetence, courseUnitLearningOutcome,
+    			prerequisite, courseUnitRecommendedReading, courseUnitTeachingMethods,
+    			courseUnitAssessmentMethods, start, duration, cost);
     }
 }
