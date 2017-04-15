@@ -1134,8 +1134,27 @@ public class EctsStore {
 		}
     	
     	
-    	   // get programme specification ids
-        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "InstitutionCode> \""+insS.getId()+"\"}";
+    	String conditionStatus = insS.getStatus().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionStatus> ?status.";
+    	String conditionAddress = insS.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionAddress> ?address.";
+    	String conditionType = insS.getType().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionType> ?type.";
+    	
+    	String status = insS.getStatus().equals("")?"":"&& 		   CONTAINS(?status, \""+ insS.getStatus().toLowerCase() +"\")";
+    	String address = insS.getLocation().equals("")?"":"&& 		   CONTAINS(?address, \""+ insS.getLocation().toLowerCase() +"\")";
+    	String type = insS.getType().equals("")?"":"&& 		   CONTAINS(?type, \""+ insS.getType().toLowerCase() +"\")";
+    	
+        String query = "SELECT DISTINCT ?s" 
+        		+" WHERE {"
+        		+" ?s <" + StringUtils.namespaceEcts + "InstitutionCode> ?id."
+        		+" ?s <" + StringUtils.namespaceEcts + "InstitutionName> ?name."
+        		+ conditionStatus
+        		+ conditionAddress
+        		+ conditionType
+        		+" FILTER (CONTAINS(LCASE(STR(?id)), \"" + insS.getId().toLowerCase() + "\") &&"
+        		+" 		   CONTAINS(?name, \""+ insS.getName().toLowerCase() +"\")"
+        		+ status
+        		+ address
+        		+ type
+        		+ ")}";
         System.out.println(query);
         ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
 

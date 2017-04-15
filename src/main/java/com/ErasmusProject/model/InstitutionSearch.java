@@ -22,6 +22,11 @@ public class InstitutionSearch {
 		this.location = location;
 	}
 	public InstitutionSearch() {
+		this.id = "";
+		this.name = "";
+		this.status = "";
+		this.type = "";
+		this.location = "";
 	}
 	public String getId() {
 		return id;
