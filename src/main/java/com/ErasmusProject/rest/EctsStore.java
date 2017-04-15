@@ -3,6 +3,7 @@ package com.ErasmusProject.rest;
 import com.ErasmusProject.model.CourseUnit;
 import com.ErasmusProject.model.DegreeProgramme;
 import com.ErasmusProject.model.Institution;
+import com.ErasmusProject.model.InstitutionSearch;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
@@ -12,6 +13,7 @@ import com.ErasmusProject.util.ResponseInstitution;
 import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
@@ -1115,5 +1117,54 @@ public class EctsStore {
     			courseUnitTermPattern, courseUnitCompetence, courseUnitLearningOutcome,
     			prerequisite, courseUnitRecommendedReading, courseUnitTeachingMethods,
     			courseUnitAssessmentMethods, start, duration, cost);
+    }
+    
+    // search
+    
+    @RequestMapping(method = RequestMethod.GET, value="/searchInstitutions")
+    public ArrayList<Institution> searchInstitutions(@RequestParam("institution") String institution){
+    	ArrayList<Institution> institutions = new ArrayList<Institution>();
+    	System.out.println(institution);
+    	ObjectMapper mapper = new ObjectMapper();
+    	InstitutionSearch insS = new InstitutionSearch();
+    	try {
+			insS = mapper.readValue(institution, InstitutionSearch.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	   // get programme specification ids
+        String query = "SELECT ?s WHERE {?s <" + StringUtils.namespaceEcts + "InstitutionCode> \""+insS.getId()+"\"}";
+        System.out.println(query);
+        ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
+
+        String identifier="", institutionName="", institutionStatus="", institutionType="", institutionAddress="", url=""; 
+        ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+        QuerySolution soln = null;
+        
+        
+        while (retVal.hasNext()) {
+        	 soln = retVal.next();
+             identifier = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        	results = query(identifier, QueryType.SUBJECT);
+        	for (QueryResult queryResult2 : results) {
+				if (queryResult2.getPredicate().equals("InstitutionCode"))
+					identifier = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionName"))
+					institutionName = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionStatus"))
+					institutionStatus = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionType"))
+					institutionType = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("InstitutionAddress"))
+					institutionAddress = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Url"))
+					url = queryResult2.getObject();
+			}
+        	institutions.add(new Institution(identifier, institutionName, institutionStatus, institutionType, institutionAddress, url));
+		}
+    	
+    	return institutions;
     }
 }
