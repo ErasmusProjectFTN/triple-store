@@ -4,6 +4,7 @@ import com.ErasmusProject.model.CourseUnit;
 import com.ErasmusProject.model.DegreeProgramme;
 import com.ErasmusProject.model.Institution;
 import com.ErasmusProject.model.InstitutionSearch;
+import com.ErasmusProject.model.ProgrammeSearch;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
@@ -1120,7 +1121,7 @@ public class EctsStore {
     }
     
     // search
-    
+    //institutions
     @RequestMapping(method = RequestMethod.GET, value="/searchInstitutions")
     public ArrayList<Institution> searchInstitutions(@RequestParam("institution") String institution){
     	ArrayList<Institution> institutions = new ArrayList<Institution>();
@@ -1135,12 +1136,12 @@ public class EctsStore {
     	
     	
     	String conditionStatus = insS.getStatus().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionStatus> ?status.";
-    	String conditionAddress = insS.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionAddress> ?address.";
+    	String conditionAddress = insS.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Location> ?address.";
     	String conditionType = insS.getType().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "InstitutionType> ?type.";
     	
-    	String status = insS.getStatus().equals("")?"":"&& 		   CONTAINS(?status, \""+ insS.getStatus().toLowerCase() +"\")";
-    	String address = insS.getLocation().equals("")?"":"&& 		   CONTAINS(?address, \""+ insS.getLocation().toLowerCase() +"\")";
-    	String type = insS.getType().equals("")?"":"&& 		   CONTAINS(?type, \""+ insS.getType().toLowerCase() +"\")";
+    	String status = insS.getStatus().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?status)), \""+ insS.getStatus().toLowerCase() +"\")";
+    	String address = insS.getLocation().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?address)), \""+ insS.getLocation().toLowerCase() +"\")";
+    	String type = insS.getType().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?type)), \""+ insS.getType().toLowerCase() +"\")";
     	
         String query = "SELECT DISTINCT ?s" 
         		+" WHERE {"
@@ -1150,7 +1151,7 @@ public class EctsStore {
         		+ conditionAddress
         		+ conditionType
         		+" FILTER (CONTAINS(LCASE(STR(?id)), \"" + insS.getId().toLowerCase() + "\") &&"
-        		+" 		   CONTAINS(?name, \""+ insS.getName().toLowerCase() +"\")"
+        		+" 		   CONTAINS(LCASE(STR(?name)), \""+ insS.getName().toLowerCase() +"\")"
         		+ status
         		+ address
         		+ type
@@ -1176,7 +1177,7 @@ public class EctsStore {
 					institutionStatus = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("InstitutionType"))
 					institutionType = queryResult2.getObject();
-				else if (queryResult2.getPredicate().equals("InstitutionAddress"))
+				else if (queryResult2.getPredicate().equals("Location"))
 					institutionAddress = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Url"))
 					url = queryResult2.getObject();
@@ -1185,5 +1186,90 @@ public class EctsStore {
 		}
     	
     	return institutions;
+    }
+    
+    //programmes
+    @RequestMapping(method = RequestMethod.GET, value="/searchProgrammes")
+    public ArrayList<DegreeProgramme> searchProgrammes(@RequestParam("programme") String programme){
+    	ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<DegreeProgramme>();
+    	System.out.println(programme);
+    	ObjectMapper mapper = new ObjectMapper();
+    	ProgrammeSearch ps = new ProgrammeSearch();
+    	try {
+			ps = mapper.readValue(programme, ProgrammeSearch.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	String conditionQualification = ps.getQualification().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Qualification> ?qualification.";
+    	String conditionLocation = ps.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Location> ?location.";
+    	String conditionCost = ps.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Cost> ?cost.";
+    	String conditionCredits = ps.getCredits().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Credit> ?credit.";
+    	String conditionDuration = ps.getDuration().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "Duration> ?duration.";
+    	String conditionLanguage = ps.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "LanguageOfInstruction> ?language.";
+    	String conditionPrerequisite = ps.getPrerequisite().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Prerequisite> ?prerequisite.";
+
+    	
+    	String qualification = ps.getQualification().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?qualification)), \""+ ps.getQualification().toLowerCase() +"\")";
+    	String location = ps.getLocation().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?location)), \""+ ps.getLocation().toLowerCase() +"\")";
+    	String cost = ps.getCost().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?cost)), \""+ ps.getCost().toString().toLowerCase() +"\")";
+    	String credits = ps.getCredits().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?credit)), \""+ ps.getCredits().toString().toLowerCase() +"\")";
+    	String duration = ps.getDuration().equals(-1)?"":"&& 		   CONTAINS(LCASE(STR(?duration)), \""+ ps.getDuration().toString().toLowerCase() +"\")";
+    	String language = ps.getLanguage().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?language)), \""+ ps.getLanguage().toLowerCase() +"\")";
+    	String prerequisite = ps.getPrerequisite().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?prerequisite)), \""+ ps.getPrerequisite().toLowerCase() +"\")";
+
+    	
+        String query = "SELECT DISTINCT ?s" 
+        		+" WHERE {"
+        		+" ?s <" + StringUtils.namespaceEcts + "DegreeUnitCode> ?id."
+        		+" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeTitle> ?name."
+        		+ conditionQualification
+        		+ conditionLocation
+        		+ conditionCost
+        		+ conditionCredits
+        		+ conditionDuration
+        		+ conditionLanguage
+        		+ conditionPrerequisite
+        		+" FILTER (CONTAINS(LCASE(STR(?id)), \"" + ps.getId().toLowerCase() + "\") &&"
+        		+" 		   CONTAINS(LCASE(STR(?name)), \""+ ps.getTitle().toLowerCase() +"\")"
+        		+ qualification
+        		+ location
+        		+ cost
+        		+ credits
+        		+ duration
+        		+ language
+        		+ prerequisite
+        		+ ")}";
+        System.out.println(query);
+        ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
+
+        String degreeUnitCode="", degreeProgrammeTitle="", language1="", location1="", qualification1="",url="";
+        Double credit = -1.0;
+        ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+        QuerySolution soln = null;
+        
+        
+        while (retVal.hasNext()) {
+        	 soln = retVal.next();
+             degreeUnitCode = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+        	results = query(degreeUnitCode, QueryType.SUBJECT);
+        	for (QueryResult queryResult2 : results) {
+				if (queryResult2.getPredicate().equals("DegreeUnitCode"))
+					degreeUnitCode = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
+					degreeProgrammeTitle = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
+					language1 = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Location"))
+					location1 = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Qualification"))
+					qualification1 = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Url"))
+					url = queryResult2.getObject();
+			}
+        	degreeProgrammes.add(new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language, location, qualification, credit, url));
+		}
+    	return degreeProgrammes;
     }
 }
