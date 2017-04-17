@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 /**
  * Created by Komp on 21.2.2017.
@@ -46,7 +45,7 @@ public class EctsStore {
 
 
 	/*
-	 * Dodavanje nove institucije
+	 * Add institution
 	 * */
 	@RequestMapping(method = RequestMethod.POST, value="/addInstitution")
 	public ResponseInstitution addInstitution(@RequestParam(value="identifier", required=true) String identifier,
@@ -118,9 +117,39 @@ public class EctsStore {
 		return new ResponseInstitution(identifier, institutionName);
 	}
 
-	/*
-	 * Modifikovanje institucije
-	 * */
+	/**
+	 * Modify institution
+	 * @param identifier
+	 * @param institutionName
+	 * @param institutionalECTScoordinator
+	 * @param institutionStatus
+	 * @param institutionType
+	 * @param institutionAddress
+	 * @param url
+	 * @param institutionMainUniversityRegulations
+	 * @param institutionGeneralDescription
+	 * @param institutionAcademicAuthorities
+	 * @param institutionAcademicCalendar
+	 * @param institutionAdmissionProcedures
+	 * @param generalInformationForStudents
+	 * @param generalInformationForMobileStudents
+	 * @param generalInformationOnAccommodation
+	 * @param generalInformationOnCostOfLiving
+	 * @param generalInformationOnExtramuralAndLeisureFacilities
+	 * @param generalInformationOnFacilitiesForStudentsWithSpecialNeeds
+	 * @param generalInformationOnFinancialSupport
+	 * @param generalInformationOnInsurance
+	 * @param generalInformationOnInternationalProgrammes
+	 * @param generalInformationOnInternships
+	 * @param generalInformationOnLanguageCourses
+	 * @param generalInformationOnMeals
+	 * @param generalInformationOnMedicalFacilities
+	 * @param generalInformationOnSportsFacilities
+	 * @param generalInformationOnStudentAffairsOffice
+	 * @param generalInformationOnStudentAssociations
+	 * @param generalInformationOnStudyFacilities
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST, value="/modifyInstitution")
 	public ResponseInstitution modifyInstitution(@RequestParam(value="identifier", required=true) String identifier,
 			@RequestParam(value="institutionName", required=false, defaultValue="") String institutionName,
@@ -193,9 +222,9 @@ public class EctsStore {
 	}
 
 	/**
-	 * Uklanjanje institucije
-	 * @param id institucije
-	 * @return status uspesnosti
+	 * Remove institution
+	 * @param institution id
+	 * @return status
 	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/removeInstitution")
 	public String removeInstitution(@RequestParam(value = "identifier", required=true) String id)
@@ -800,50 +829,37 @@ public class EctsStore {
 		namespaces.add(StringUtils.namespaceEcts);
 		namespaces.add(StringUtils.namespaceW3c);
 
-		// get programme specification ids
-		String query = "SELECT * WHERE{?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + StringUtils.namespaceEcts + "DegreeProgrammeSpecification>}";
-		ResultSet results = OntologyUtils.execSelect(StringUtils.URLquery, query);
+		retVal = query("DegreeUnitCode", QueryType.PREDICATE);
 
-		String degreeUnitCode="", degreeProgrammeTitle="", language="", location="", qualification="",url="";
-		Double credit = -1.0;
-		ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<DegreeProgramme>();
-		ArrayList<String> degreeProgrammeInstances = new ArrayList<>();
-		// get programme specification data
-		// get programme instance data
-		while (results.hasNext()) {
-			QuerySolution soln = results.nextSolution();
-			String degreeProgramme = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
-			retVal = query(degreeProgramme, QueryType.SUBJECT);
-			degreeProgrammeInstances = new ArrayList<>();
-			for (QueryResult queryResult2 : retVal) {
+		ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<>();
+
+		String identifier="", title="", language="", location="", qualification="", url="";
+		Double credits = -1.0;
+		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+
+
+		for (QueryResult queryResult : retVal) {
+			identifier = queryResult.getSubject();
+			results = query(identifier, QueryType.SUBJECT);
+			for (QueryResult queryResult2 : results) {
 				if (queryResult2.getPredicate().equals("DegreeUnitCode"))
-					degreeUnitCode = queryResult2.getObject();
+					identifier = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
-					degreeProgrammeTitle = queryResult2.getObject();
+					title = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("DegreeProgrammeLanguageOfInstruction"))
+					language = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Location"))
+					location = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Qualification"))
 					qualification = queryResult2.getObject();
-				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
-					credit = queryResult2.getObject().equals("")?-1:Double.parseDouble(queryResult2.getObject());
-				else if (queryResult2.getPredicate().equals("specifies")){
-					degreeProgrammeInstances.add(queryResult2.getObject());
-				}
+				else if (queryResult2.getPredicate().equals("Url"))
+					url = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("DegreeProgrammeCredit"))
+					credits = queryResult2.getObject().equals("")?-1.0:Double.valueOf(queryResult2.getObject());
 			}
-			for (String degreeProgrammeInstanceName : degreeProgrammeInstances){
-				retVal = query(degreeProgrammeInstanceName, QueryType.SUBJECT);
-				for(QueryResult queryResult2 : retVal){
-					if (queryResult2.getPredicate().equals("DegreeUnitCode"))
-						degreeUnitCode = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
-						language = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("Location"))
-						location = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("Url")){
-						url = queryResult2.getObject();
-					}
-				}
-				degreeProgrammes.add(new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language, location, qualification, credit, url));	
-			}
+			degreeProgrammes.add(new DegreeProgramme(identifier, title, language, location, qualification, credits, url));
 		}
+
 		return degreeProgrammes;
 	}
 
@@ -952,55 +968,36 @@ public class EctsStore {
 		namespaces.add(StringUtils.namespaceEcts);
 		namespaces.add(StringUtils.namespaceW3c);
 
-		// get programme specification ids
-		String query = "SELECT * WHERE{?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + StringUtils.namespaceEcts + "CourseUnitSpecification>}";
-		ResultSet results = OntologyUtils.execSelect(StringUtils.URLquery, query);
+		retVal = query("CourseUnitCode", QueryType.PREDICATE);
 
-		String courseUnitCode="", courseUnitTitle="", courseUnitType="", courseUnitLevel="", url="";
-		Double credit = -1.0;
-		ArrayList<CourseUnit> courseUnits = new ArrayList<CourseUnit>();
-		ArrayList<String> courseUnitInstances = new ArrayList<>();
-		// get course specification data
-		while (results.hasNext()) {
-			QuerySolution soln = results.nextSolution();
-			String courseUnit = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
-			System.out.println(courseUnit);
-			retVal = query(courseUnit, QueryType.SUBJECT);
-			courseUnitInstances = new ArrayList<>();
-			for (QueryResult queryResult2 : retVal) {
-				System.out.println(queryResult2.getSubject());
-				System.out.println(queryResult2.getPredicate());
-				System.out.println(queryResult2.getObject());
-				if (queryResult2.getPredicate().equals("CourseUnitTitle"))
-					courseUnitTitle = queryResult2.getObject();
+		ArrayList<CourseUnit> courses = new ArrayList<>();
+
+		String identifier="", title="", type="", level="", url="";
+		Double credits = -1.0;
+		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+
+
+		for (QueryResult queryResult : retVal) {
+			identifier = queryResult.getSubject();
+			results = query(identifier, QueryType.SUBJECT);
+			for (QueryResult queryResult2 : results) {
+				if (queryResult2.getPredicate().equals("CourseUnitCode"))
+					identifier = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseUnitTitle"))
+					title = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseUnitType"))
+					type = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("CourseUnitLevel"))
-					courseUnitLevel = queryResult2.getObject();
-				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
-					credit = queryResult2.getObject().equals("")?-1:Double.parseDouble(queryResult2.getObject());
-				else if (queryResult2.getPredicate().equals("specifies")){
-					courseUnitInstances.add(queryResult2.getObject());
-				}
+					level = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("Url"))
+					url = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseCredit"))
+					credits = queryResult2.getObject().equals("")?-1.0:Double.valueOf(queryResult2.getObject());
 			}
-			// get course instance data
-			for (String courseUnitInstanceName : courseUnitInstances){
-				retVal = query(courseUnitInstanceName, QueryType.SUBJECT);
-				for(QueryResult queryResult2 : retVal){
-
-					System.out.println(queryResult2.getSubject());
-					System.out.println(queryResult2.getPredicate());
-					System.out.println(queryResult2.getObject());
-					if (queryResult2.getPredicate().equals("CourseUnitCode"))
-						courseUnitCode = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("CourseUnitType"))
-						courseUnitType = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("Url")){
-						url = queryResult2.getObject();
-					}
-				}
-				courseUnits.add(new CourseUnit(courseUnitCode, courseUnitTitle, courseUnitType, courseUnitLevel, credit, url));	
-			}
+			courses.add(new CourseUnit(identifier, title, type, level, credits, url));
 		}
-		return courseUnits;
+
+		return courses;
 	}
 
 	/**
