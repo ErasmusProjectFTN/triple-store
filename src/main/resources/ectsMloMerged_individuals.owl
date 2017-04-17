@@ -1123,6 +1123,9 @@ Typically the web page of the provider or course.</rdfs:comment>
         <DegreeProgrammeTitle>Computing and Control Engineering
 </DegreeProgrammeTitle>
         <DegreeUnitCode>E2</DegreeUnitCode>
+        <contains rdf:resource="&ects;courseUnit4"/>
+        <contains rdf:resource="&ects;courseUnit5"/>
+        <contains rdf:resource="&ects;courseUnit6"/>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
     
@@ -1134,6 +1137,9 @@ Typically the web page of the provider or course.</rdfs:comment>
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
         <DegreeUnitCode>E1</DegreeUnitCode>
         <DegreeProgrammeTitle>Electronics</DegreeProgrammeTitle>
+        <contains rdf:resource="&ects;courseUnit1"/>
+        <contains rdf:resource="&ects;courseUnit2"/>
+        <contains rdf:resource="&ects;courseUnit3"/>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
     
@@ -1177,11 +1183,40 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;provider2">
         <rdf:type rdf:resource="&ects;LearningOpportunityProvider"/>
+        <InstitutionCode>PMF</InstitutionCode>
         <offers rdf:resource="&ects;courseUnit5"/>
         <offers rdf:resource="&ects;courseUnit6"/>
         <offers rdf:resource="&ects;degreeProgramme3"/>
         <offers rdf:resource="&ects;degreeProgramme4"/>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&ects;courseUnit1"/>
+            <rdf:Description rdf:about="&ects;courseUnit2"/>
+            <rdf:Description rdf:about="&ects;courseUnit3"/>
+            <rdf:Description rdf:about="&ects;courseUnit4"/>
+            <rdf:Description rdf:about="&ects;courseUnit5"/>
+            <rdf:Description rdf:about="&ects;courseUnit6"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
+            <rdf:Description rdf:about="&ects;provider1"/>
+            <rdf:Description rdf:about="&ects;provider2"/>
+        </owl:distinctMembers>
+    </rdf:Description>
 </rdf:RDF>
 
 

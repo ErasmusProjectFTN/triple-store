@@ -1202,6 +1202,17 @@ public class EctsStore {
 		}
 
 
+		String subQuery = "{SELECT distinct ?id1 ?title ?s"
+				+	" WHERE {"
+				+	  " ?course <"+StringUtils.namespaceEcts+"isContained> ?s."
+				+	  " {SELECT ?course ?title ?id1"
+				+	    " WHERE {"
+				+	     " ?course <"+StringUtils.namespaceEcts+"CourseUnitTitle> ?title."
+				+	      " ?course <"+StringUtils.namespaceEcts+"CourseUnitCode> ?id1."
+				+	      " FILTER" 
+				+	        " (CONTAINS(lcase(str(?title)), \"" + ps.getContainsCourse() +"\"))"
+				+	    " }}}}";
+
 		String conditionQualification = ps.getQualification().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Qualification> ?qualification.";
 		String conditionLocation = ps.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Location> ?location.";
 		String conditionCost = ps.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeCost> ?cost.";
@@ -1209,6 +1220,7 @@ public class EctsStore {
 		String conditionDuration = ps.getDuration().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeDuration> ?duration.";
 		String conditionLanguage = ps.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeLanguageOfInstruction> ?language.";
 		String conditionPrerequisite = ps.getPrerequisite().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammePrerequisite> ?prerequisite.";
+		String conditionContains = ps.getContainsCourse().equals("")?"":subQuery;
 
 
 		String qualification = ps.getQualification().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?qualification)), \""+ ps.getQualification().toLowerCase() +"\")";
@@ -1231,6 +1243,7 @@ public class EctsStore {
 				+ conditionDuration
 				+ conditionLanguage
 				+ conditionPrerequisite
+				+ conditionContains
 				+" FILTER (CONTAINS(LCASE(STR(?id)), \"" + ps.getId().toLowerCase() + "\") &&"
 				+" 		   CONTAINS(LCASE(STR(?name)), \""+ ps.getTitle().toLowerCase() +"\")"
 				+ qualification
@@ -1288,8 +1301,6 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 
-		//String conditionId = cs.getId().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitCode> ?id.";
-		//String conditionTitle = cs.getTitle().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitTitle> ?title.";
 		String condititonType = cs.getType().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitType> ?type.";
 		String conditionUnitLevel = cs.getUnitLevel().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitLevel> ?level.";
 		String conditionYearOfStudy = cs.getYearOfStudy().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitYearOfStudy> ?yearOfStudy.";
@@ -1299,8 +1310,6 @@ public class EctsStore {
 		String conditionCost = cs.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "CourseCost> ?cost.";
 		String conditionTermPattern = cs.getTermPattern().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitTermPattern> ?termPattern.";
 
-		//String id = cs.getId().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?id)), \""+ cs.getId().toLowerCase() +"\")";
-		//String title = cs.getTitle().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?title)), \""+ cs.getTitle().toLowerCase() +"\")";
 		String type = cs.getType().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?type)), \""+ cs.getType().toLowerCase() +"\")";
 		String unitLevel = cs.getUnitLevel().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?level)), \""+ cs.getUnitLevel().toLowerCase() +"\")";
 		String yearOfStudy = cs.getYearOfStudy().equals(-1)?"":"&& 		   CONTAINS(LCASE(STR(?yearOfStudy)), \""+ cs.getYearOfStudy().toString().toLowerCase() +"\")";
