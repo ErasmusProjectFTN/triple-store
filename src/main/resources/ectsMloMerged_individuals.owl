@@ -175,6 +175,7 @@
     <!-- http://purl.org/dc/elements/1.1/identifier -->
 
     <owl:DatatypeProperty rdf:about="http://purl.org/dc/elements/1.1/identifier">
+        <rdfs:domain rdf:resource="&ects;LearningOpportunityObject"/>
         <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
     </owl:DatatypeProperty>
     
@@ -224,15 +225,8 @@
 
     <owl:DatatypeProperty rdf:about="&ects;CourseUnitCode">
         <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
+        <rdfs:domain rdf:resource="&ects;CourseUnitInstance"/>
         <rdfs:range rdf:resource="&rdfs;Resource"/>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&ects;CourseUnitInstance"/>
-                    <rdf:Description rdf:about="&ects;CourseUnitSpecification"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -431,15 +425,8 @@
 
     <owl:DatatypeProperty rdf:about="&ects;DegreeUnitCode">
         <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
+        <rdfs:domain rdf:resource="&ects;DegreeProgrammeInstance"/>
         <rdfs:range rdf:resource="&rdfs;Resource"/>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&ects;DegreeProgrammeInstance"/>
-                    <rdf:Description rdf:about="&ects;DegreeProgrammeSpecification"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
     </owl:DatatypeProperty>
     
 
@@ -954,7 +941,6 @@ Typically the web page of the provider or course.</rdfs:comment>
     <owl:NamedIndividual rdf:about="&ects;course_unit_1">
         <rdf:type rdf:resource="&ects;CourseUnitSpecification"/>
         <CourseUnitYearOfStudy></CourseUnitYearOfStudy>
-        <CourseUnitCode>589</CourseUnitCode>
         <LearningOpportunityType>CourseUnit</LearningOpportunityType>
         <Credit></Credit>
         <CourseUnitLevel></CourseUnitLevel>
@@ -995,7 +981,6 @@ Typically the web page of the provider or course.</rdfs:comment>
     <owl:NamedIndividual rdf:about="&ects;degree_programme_1">
         <rdf:type rdf:resource="&ects;DegreeProgrammeSpecification"/>
         <DegreeProgrammeTitle>Computing and Control Engineering</DegreeProgrammeTitle>
-        <DegreeUnitCode>123</DegreeUnitCode>
         <Qualification>Bachelor with Honours in Electrical and Computer Engineering (B.Elec.Comp.Eng.)</Qualification>
         <LearningOpportunityType>DegreeProgramme</LearningOpportunityType>
         <specifies rdf:resource="&ects;degree_programme_instance_1"/>
@@ -1007,7 +992,6 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;degree_programme_2">
         <rdf:type rdf:resource="&ects;DegreeProgrammeSpecification"/>
-        <DegreeUnitCode>234</DegreeUnitCode>
         <LearningOpportunityType>DegreeProgramme</LearningOpportunityType>
         <Qualification>Bachelor with Honours in Mechatronics</Qualification>
         <DegreeProgrammeTitle>Mechatronics</DegreeProgrammeTitle>
@@ -1022,7 +1006,6 @@ Typically the web page of the provider or course.</rdfs:comment>
         <rdf:type rdf:resource="&ects;DegreeProgrammeSpecification"/>
         <rdf:type rdf:resource="&ects;LearningOpportunitySpecification"/>
         <Qualification>Bachelor with Honours in Informatics</Qualification>
-        <DegreeUnitCode>123</DegreeUnitCode>
         <LearningOpportunityType>DegreeProgramme</LearningOpportunityType>
         <DegreeProgrammeTitle>Mathematics and Informatics</DegreeProgrammeTitle>
         <specifies rdf:resource="&ects;degree_programme_instance_3"/>
@@ -1035,6 +1018,7 @@ Typically the web page of the provider or course.</rdfs:comment>
     <owl:NamedIndividual rdf:about="&ects;degree_programme_instance_1">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
         <DegreeProgrammeFinalExamination></DegreeProgrammeFinalExamination>
+        <DegreeUnitCode>123</DegreeUnitCode>
         <Prerequisite></Prerequisite>
         <LearningOpportunityType>DegreeProgramme</LearningOpportunityType>
         <DepartmentalEctsCoordinator></DepartmentalEctsCoordinator>
@@ -1042,7 +1026,6 @@ Typically the web page of the provider or course.</rdfs:comment>
         <Start></Start>
         <Duration></Duration>
         <Location></Location>
-        <DegreeUnitCode></DegreeUnitCode>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
     
@@ -1052,7 +1035,7 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;degree_programme_instance_2">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
-        <DegreeUnitCode>1111</DegreeUnitCode>
+        <DegreeUnitCode>456</DegreeUnitCode>
     </owl:NamedIndividual>
     
 
@@ -1061,6 +1044,7 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;degree_programme_instance_3">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
+        <DegreeUnitCode>789</DegreeUnitCode>
     </owl:NamedIndividual>
     
 
@@ -1227,6 +1211,14 @@ Application forms for incoming students for academic 2016/2017 for POSTGRADUATE 
      -->
 
     <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&ects;LearningOpportunityInstance"/>
+            <rdf:Description rdf:about="&ects;LearningOpportunityProvider"/>
+            <rdf:Description rdf:about="&ects;LearningOpportunitySpecification"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
         <rdf:type rdf:resource="&owl;AllDifferent"/>
         <owl:distinctMembers rdf:parseType="Collection">
             <rdf:Description rdf:about="&ects;degree_programme_1"/>
@@ -1235,14 +1227,6 @@ Application forms for incoming students for academic 2016/2017 for POSTGRADUATE 
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
-        <owl:members rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;LearningOpportunityInstance"/>
-            <rdf:Description rdf:about="&ects;LearningOpportunityProvider"/>
-            <rdf:Description rdf:about="&ects;LearningOpportunitySpecification"/>
-        </owl:members>
     </rdf:Description>
 </rdf:RDF>
 
