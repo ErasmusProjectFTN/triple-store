@@ -1184,6 +1184,7 @@ Typically the web page of the provider or course.</rdfs:comment>
     <owl:NamedIndividual rdf:about="&ects;provider2">
         <rdf:type rdf:resource="&ects;LearningOpportunityProvider"/>
         <InstitutionCode>PMF</InstitutionCode>
+        <InstitutionName>Faculty of Sciences</InstitutionName>
         <offers rdf:resource="&ects;courseUnit5"/>
         <offers rdf:resource="&ects;courseUnit6"/>
         <offers rdf:resource="&ects;degreeProgramme3"/>

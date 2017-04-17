@@ -22,10 +22,10 @@ public class DegreeProgramme {
 	private String places;
 	private String degreeProgrammeExaminationAndAssessmentRegulations;
 	private String start;
-	private String duration;
+	private Integer duration;
 	private String cost;
 	private String degreeProgrammeAccessToFurtherStudies;
-	private String degreeProgrammeEducationalAndProessionalGoals;
+	private String degreeProgrammeEducationalAndProfessionalGoals;
 	private String degreeProgrammeStructureDiagram;
 	
 	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String language, String location,
@@ -43,8 +43,8 @@ public class DegreeProgramme {
 	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String language, String location,
 			String qualification, Double credit, String url, String prerequisite, String departmentalECTScoordinator,
 			String degreeProgrammeFinalExamination, String places,
-			String degreeProgrammeExaminationAndAssessmentRegulations, String start, String duration, String cost,
-			String degreeProgrammeAccessToFurtherStudies, String degreeProgrammeEducationalAndProessionalGoals,
+			String degreeProgrammeExaminationAndAssessmentRegulations, String start, Integer duration, String cost,
+			String degreeProgrammeAccessToFurtherStudies, String degreeProgrammeEducationalAndProfessionalGoals,
 			String degreeProgrammeStructureDiagram) {
 		super();
 		this.degreeUnitCode = degreeUnitCode;
@@ -63,7 +63,7 @@ public class DegreeProgramme {
 		this.duration = duration;
 		this.cost = cost;
 		this.degreeProgrammeAccessToFurtherStudies = degreeProgrammeAccessToFurtherStudies;
-		this.degreeProgrammeEducationalAndProessionalGoals = degreeProgrammeEducationalAndProessionalGoals;
+		this.degreeProgrammeEducationalAndProfessionalGoals = degreeProgrammeEducationalAndProfessionalGoals;
 		this.degreeProgrammeStructureDiagram = degreeProgrammeStructureDiagram;
 	}
 
@@ -187,11 +187,11 @@ public class DegreeProgramme {
 		this.start = start;
 	}
 
-	public String getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
@@ -212,11 +212,11 @@ public class DegreeProgramme {
 	}
 
 	public String getDegreeProgrammeEducationalAndProessionalGoals() {
-		return degreeProgrammeEducationalAndProessionalGoals;
+		return degreeProgrammeEducationalAndProfessionalGoals;
 	}
 
 	public void setDegreeProgrammeEducationalAndProessionalGoals(String degreeProgrammeEducationalAndProessionalGoals) {
-		this.degreeProgrammeEducationalAndProessionalGoals = degreeProgrammeEducationalAndProessionalGoals;
+		this.degreeProgrammeEducationalAndProfessionalGoals = degreeProgrammeEducationalAndProessionalGoals;
 	}
 
 	public String getDegreeProgrammeStructureDiagram() {
@@ -236,7 +236,7 @@ public class DegreeProgramme {
 				+ ", places=" + places + ", degreeProgrammeExaminationAndAssessmentRegulations="
 				+ degreeProgrammeExaminationAndAssessmentRegulations + ", start=" + start + ", duration=" + duration
 				+ ", cost=" + cost + ", degreeProgrammeAccessToFurtherStudies=" + degreeProgrammeAccessToFurtherStudies
-				+ ", degreeProgrammeEducationalAndProessionalGoals=" + degreeProgrammeEducationalAndProessionalGoals
+				+ ", degreeProgrammeEducationalAndProessionalGoals=" + degreeProgrammeEducationalAndProfessionalGoals
 				+ ", degreeProgrammeStructureDiagram=" + degreeProgrammeStructureDiagram + ", getDegreeUnitCode()="
 				+ getDegreeUnitCode() + ", getDegreeProgrammeTitle()=" + getDegreeProgrammeTitle() + ", getLanguage()="
 				+ getLanguage() + ", getLocation()=" + getLocation() + ", getQualification()=" + getQualification()

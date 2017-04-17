@@ -24,8 +24,8 @@ public class CourseUnit {
 	private String courseUnitTeachingMethods;
 	private String courseUnitAssessmentMethods;
 	private String start;
-	private String duration;
-	private String cost;
+	private Integer duration;
+	private Double cost;
 	
 	public CourseUnit(String courseUnitCode, String courseUnitTitle, String courseUnitType, String courseUnitLevel,
 			Double credit, String url) {
@@ -44,7 +44,7 @@ public class CourseUnit {
 			String qualification, String lecturer, String languageOfInstruction, String places,
 			String courseUnitTermPattern, String courseUnitCompetence, String courseUnitLearningOutcome,
 			String prerequisite, String courseUnitRecommendedReading, String courseUnitTeachingMethods,
-			String courseUnitAssessmentMethods, String start, String duration, String cost) {
+			String courseUnitAssessmentMethods, String start, Integer duration, Double cost) {
 		super();
 		this.courseUnitCode = courseUnitCode;
 		this.courseUnitTitle = courseUnitTitle;
@@ -260,22 +260,22 @@ public class CourseUnit {
 	}
 
 
-	public String getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
 
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
 
-	public String getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
 
-	public void setCost(String cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 
