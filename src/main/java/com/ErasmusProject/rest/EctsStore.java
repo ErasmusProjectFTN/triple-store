@@ -1204,11 +1204,11 @@ public class EctsStore {
 
 		String conditionQualification = ps.getQualification().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Qualification> ?qualification.";
 		String conditionLocation = ps.getLocation().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Location> ?location.";
-		String conditionCost = ps.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Cost> ?cost.";
-		String conditionCredits = ps.getCredits().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Credit> ?credit.";
-		String conditionDuration = ps.getDuration().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "Duration> ?duration.";
-		String conditionLanguage = ps.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "LanguageOfInstruction> ?language.";
-		String conditionPrerequisite = ps.getPrerequisite().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "Prerequisite> ?prerequisite.";
+		String conditionCost = ps.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeCost> ?cost.";
+		String conditionCredits = ps.getCredits().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeCredit> ?credit.";
+		String conditionDuration = ps.getDuration().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeDuration> ?duration.";
+		String conditionLanguage = ps.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammeLanguageOfInstruction> ?language.";
+		String conditionPrerequisite = ps.getPrerequisite().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "DegreeProgrammePrerequisite> ?prerequisite.";
 
 
 		String qualification = ps.getQualification().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?qualification)), \""+ ps.getQualification().toLowerCase() +"\")";
@@ -1288,19 +1288,19 @@ public class EctsStore {
 			e.printStackTrace();
 		}
 
-		String conditionId = cs.getId().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitCode> ?id.";
-		String conditionTitle = cs.getTitle().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitTitle> ?title.";
+		//String conditionId = cs.getId().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitCode> ?id.";
+		//String conditionTitle = cs.getTitle().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitTitle> ?title.";
 		String condititonType = cs.getType().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitType> ?type.";
 		String conditionUnitLevel = cs.getUnitLevel().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitLevel> ?level.";
 		String conditionYearOfStudy = cs.getYearOfStudy().equals(-1)?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitYearOfStudy> ?yearOfStudy.";
-		String conditionCredits = cs.getCredits().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Credit> ?credit.";
-		String conditionDuration = cs.getDuration().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Duration> ?duration.";
-		String conditionLanguage = cs.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "LanguageOfInstruction> ?language.";
-		String conditionCost = cs.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "Cost> ?cost.";
+		String conditionCredits = cs.getCredits().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "CourseCredit> ?credit.";
+		String conditionDuration = cs.getDuration().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitDuration> ?duration.";
+		String conditionLanguage = cs.getLanguage().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitLanguageOfInstruction> ?language.";
+		String conditionCost = cs.getCost().equals(-1.0)?"":" ?s <" + StringUtils.namespaceEcts + "CourseCost> ?cost.";
 		String conditionTermPattern = cs.getTermPattern().equals("")?"":" ?s <" + StringUtils.namespaceEcts + "CourseUnitTermPattern> ?termPattern.";
 
-		String id = cs.getId().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?id)), \""+ cs.getId().toLowerCase() +"\")";
-		String title = cs.getTitle().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?title)), \""+ cs.getTitle().toLowerCase() +"\")";
+		//String id = cs.getId().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?id)), \""+ cs.getId().toLowerCase() +"\")";
+		//String title = cs.getTitle().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?title)), \""+ cs.getTitle().toLowerCase() +"\")";
 		String type = cs.getType().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?type)), \""+ cs.getType().toLowerCase() +"\")";
 		String unitLevel = cs.getUnitLevel().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?level)), \""+ cs.getUnitLevel().toLowerCase() +"\")";
 		String yearOfStudy = cs.getYearOfStudy().equals(-1)?"":"&& 		   CONTAINS(LCASE(STR(?yearOfStudy)), \""+ cs.getYearOfStudy().toString().toLowerCase() +"\")";
@@ -1310,138 +1310,63 @@ public class EctsStore {
 		String cost = cs.getCost().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?cost)), \""+ cs.getCost().toString().toLowerCase() +"\")";
 		String termPattern = cs.getTermPattern().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?termPattern)), \""+ cs.getTermPattern().toLowerCase() +"\")";
 
-		String filter11 = "", filter12 = "", filter21 = "", filter22 = "";
-		if (!(id.equals("") && type.equals("") && duration.equals("") && language.equals("") && cost.equals("") && termPattern.equals(""))){
-			filter11 = " FILTER (";
-			filter12 = ")";
-		}
-		
-		if (!(title.equals("") && type.equals("") && unitLevel.equals("") && yearOfStudy.equals("") && credits.equals("") && duration.equals(""))){
-			filter21 = " FILTER (";
-			filter22 = ")";
-		}	
-		
-		String filter1 = id + type + duration + language + cost + termPattern;
-		if (!filter1.equals("")){
-			filter1 = filter1.substring(2, filter1.length());
-			System.out.println(filter1);
-		}
-		
-		String filter2 = title + type + unitLevel + yearOfStudy + credits + duration;
-		if (!filter2.equals("")){
-			filter2 = filter2.substring(2, filter2.length());
-			System.out.println(filter2);
-		}
-		
-		// course instance
-		String query1 = "SELECT DISTINCT ?s" 
+	
+		String query = "SELECT DISTINCT ?s" 
 				+" WHERE {"
-				+ conditionId
-				+ condititonType
-				+ conditionDuration
-				+ conditionLanguage
-				+ conditionCost
-				+ conditionTermPattern
-				// filters
-				+ filter11
-				+ filter1
-				+ filter12
-				+"}";
-		//course specification
-		String query2 = "SELECT DISTINCT ?s" 
-				+" WHERE {"
-				+ conditionTitle
+				+" ?s <" + StringUtils.namespaceEcts + "CourseUnitCode> ?id."
+				+" ?s <" + StringUtils.namespaceEcts + "CourseUnitTitle> ?title."
 				+ condititonType
 				+ conditionUnitLevel
 				+ conditionYearOfStudy
 				+ conditionCredits
 				+ conditionDuration
-				//filters
-				+ filter21
-				+ filter2
-				+ filter22
-				+ "}";
-		String query = "SELECT DISTINCT ?s WHERE{{" + query1 + "} UNION {" + query2 + "}}";
-
+				+ conditionLanguage
+				+ conditionCost
+				+ conditionTermPattern
+				+" FILTER (CONTAINS(LCASE(STR(?id)), \"" + cs.getId().toLowerCase() + "\") &&"
+				+" 		   CONTAINS(LCASE(STR(?title)), \""+ cs.getTitle().toLowerCase() +"\")"
+				+ type
+				+ unitLevel
+				+ yearOfStudy
+				+ credits
+				+ duration
+				+ language
+				+ cost
+				+ termPattern
+				+ ")}";
 		System.out.println(query);
 		ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
 
 		String courseUnitCode = "", courseUnitTitle = "", courseUnitType = "", courseUnitLevel = "", url = "";
 		Double credit = -1.0;
+		
+		
 		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
 		QuerySolution soln = null;
 		boolean specifies = false;
 		ArrayList<String> courseUnitSpecifications = new ArrayList<String>();
+		
+		
 		while (retVal.hasNext()) {
-			specifies = false;
 			soln = retVal.next();
-			if (soln.get("s")!= null){
-				courseUnitCode = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
-				results = query(courseUnitCode, QueryType.SUBJECT);
-				for (QueryResult queryResult2 : results) {
-					if (queryResult2.getPredicate().equals("specifies")){
-						specifies = true;
-						if(!courseUnitSpecifications.contains(courseUnitCode))
-								courseUnitSpecifications.add(courseUnitCode);
-					}
-				}
-				if(!specifies){
-					String querySpecification = "SELECT ?s WHERE {  ?s <" + StringUtils.namespaceEcts + "specifies> <" + StringUtils.namespaceEcts + courseUnitCode + ">}";
-					ResultSet specificationForInstance = OntologyUtils.execSelect(StringUtils.URLquery, querySpecification);
-					String courseUnitSpecification = "";
-					if (specificationForInstance.hasNext()){
-						courseUnitSpecification = specificationForInstance.next().get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
-						if(!courseUnitSpecifications.contains(courseUnitSpecification))
-								courseUnitSpecifications.add(courseUnitSpecification);
-					}
-				}
-			}
-		}
-
-		ArrayList<QueryResult> retVal1 = null;
-		ArrayList<String> courseUnitInstances = new ArrayList<>();
-
-
-		// get course specification data
-		for (String courseUnit : courseUnitSpecifications) {
-			System.out.println(courseUnit);
-			retVal1 = query(courseUnit, QueryType.SUBJECT);
-			courseUnitInstances = new ArrayList<>();
-			for (QueryResult queryResult2 : retVal1) {
-				System.out.println(queryResult2.getSubject());
-				System.out.println(queryResult2.getPredicate());
-				System.out.println(queryResult2.getObject());
-				if (queryResult2.getPredicate().equals("CourseUnitTitle"))
+			courseUnitCode = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
+			results = query(courseUnitCode, QueryType.SUBJECT);
+			for (QueryResult queryResult2 : results) {
+				if (queryResult2.getPredicate().equals("CourseUnitCode"))
+					courseUnitCode = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseUnitTitle"))
 					courseUnitTitle = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseUnitType"))
+					courseUnitType = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("CourseUnitLevel"))
 					courseUnitLevel = queryResult2.getObject();
-				else if (queryResult2.getPredicate().equals("Credit") && !queryResult2.getObject().equals(""))
-					credit = queryResult2.getObject().equals("")?-1:Double.parseDouble(queryResult2.getObject());
-				else if (queryResult2.getPredicate().equals("specifies")){
-					if (!courseUnitInstances.contains(queryResult2.getObject()))
-						courseUnitInstances.add(queryResult2.getObject());
-				}
+				else if (queryResult2.getPredicate().equals("Url"))
+					url = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("CourseCredit"))
+					credit = queryResult2.getObject().equals("")?-1.0:Double.valueOf(queryResult2.getObject());
 			}
-			// get course instance data
-			for (String courseUnitInstanceName : courseUnitInstances){
-				retVal1 = query(courseUnitInstanceName, QueryType.SUBJECT);
-				for(QueryResult queryResult2 : retVal1){
-
-					System.out.println(queryResult2.getSubject());
-					System.out.println(queryResult2.getPredicate());
-					System.out.println(queryResult2.getObject());
-					if (queryResult2.getPredicate().equals("CourseUnitCode"))
-						courseUnitCode = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("CourseUnitType"))
-						courseUnitType = queryResult2.getObject();
-					else if (queryResult2.getPredicate().equals("Url")){
-						url = queryResult2.getObject();
-					}
-				}
-				courses.add(new CourseUnit(courseUnitCode, courseUnitTitle, courseUnitType, courseUnitLevel, credit, url));	
-			}
+			courses.add(new CourseUnit(courseUnitCode, courseUnitTitle, courseUnitType, courseUnitLevel, credit, url));
 		}
 		return courses;
-
 	}
 }
