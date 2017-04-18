@@ -9,10 +9,8 @@ import com.ErasmusProject.model.ProgrammeSearch;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
-import com.ErasmusProject.util.ResponseCourseInstance;
 import com.ErasmusProject.util.ResponseCourseSpecification;
 import com.ErasmusProject.util.ResponseInstitution;
-import com.ErasmusProject.util.ResponseProgrammeInstance;
 import com.ErasmusProject.util.ResponseProgrammeSpecification;
 import com.ErasmusProject.util.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -240,10 +238,10 @@ public class EctsStore {
 	}
 
 	/*
-	 * Dodavanje specifikacije programa
+	 * Add degree programme
 	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/addProgrammeSpecification")
-	public ResponseProgrammeSpecification addProgrammeSpecification(  @RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+	@RequestMapping(method = RequestMethod.POST, value="/addDegreeProgramme")
+	public ResponseProgrammeSpecification addDegreeProgramme(  @RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
 			@RequestParam(value="degreeProgrammeTitle", required=true) String degreeProgrammeTitle,
 			@RequestParam(value="location", required=false, defaultValue="") String location,
 			@RequestParam(value="qualification", required=false, defaultValue="") String qualification,
@@ -251,20 +249,41 @@ public class EctsStore {
 			@RequestParam(value="credit", required=false, defaultValue="") String credit,
 			@RequestParam(value="degreeProgrammeAccessToFurtherStudies", required=false, defaultValue="") String degreeProgrammeAccessToFurtherStudies,
 			@RequestParam(value="degreeProgrammeEducationalAndProfessionalGoals", required=false, defaultValue="") String degreeProgrammeEducationalAndProfessionalGoals,
-			@RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram)
+			@RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram,
+			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+			@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
+			@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
+			@RequestParam(value="places", required=false, defaultValue="") String places,
+			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+			@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
+			@RequestParam(value="start", required=false, defaultValue="") String start,
+			@RequestParam(value="duration", required=false, defaultValue="") String duration,
+			@RequestParam(value="cost", required=false, defaultValue="") String cost)
+	
+	
+	
 	{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.addIndividual("DegreeProgrammeSpecification", model, StringUtils.namespaceEcts, degreeUnitCode);
+			model = OntologyUtils.addIndividual("DegreeProgrammeInstance", model, StringUtils.namespaceEcts, degreeUnitCode);
 			model = OntologyUtils.addDatatypeProperty("DegreeUnitCode", model, StringUtils.namespaceEcts, degreeUnitCode, degreeUnitCode);
 			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeTitle", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeTitle);
 			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, degreeUnitCode, location);
 			model = OntologyUtils.addDatatypeProperty("Qualification", model, StringUtils.namespaceEcts, degreeUnitCode, qualification);
 			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, degreeUnitCode, url);
-			model = OntologyUtils.addDatatypeProperty("Credit", model, StringUtils.namespaceEcts, degreeUnitCode, credit);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeCredit", model, StringUtils.namespaceEcts, degreeUnitCode, credit);
 			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeAccessToFurtherStudies", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeAccessToFurtherStudies);
 			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeEducationAndProfessionalGoals", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeEducationalAndProfessionalGoals);
 			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeStructureDiagram", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeStructureDiagram);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammePrerequisite", model, StringUtils.namespaceEcts, degreeUnitCode, prerequisite);
+			model = OntologyUtils.addDatatypeProperty("DepartmentalEctsCoordinator", model, StringUtils.namespaceEcts, degreeUnitCode, departmentalEctsCoordinator);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeFinalExamination", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeFinalExamination);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammePlaces", model, StringUtils.namespaceEcts, degreeUnitCode, places);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeLanguageOfInstruction", model, StringUtils.namespaceEcts, degreeUnitCode, languageOfInstruction);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeExaminationAndAssessmentRegulations", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeExaminationAndAssessmentRegulations);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeStart", model, StringUtils.namespaceEcts, degreeUnitCode, start);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeDuration", model, StringUtils.namespaceEcts, degreeUnitCode, duration);
+			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeCost", model, StringUtils.namespaceEcts, degreeUnitCode, cost);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
 			e.printStackTrace();
@@ -274,10 +293,10 @@ public class EctsStore {
 
 
 	/*
-	 * Modifikovanje specifikacije programa
+	 * modify degree programme
 	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/modifyProgrammeSpecification")
-	public ResponseProgrammeSpecification modifyProgrammeSpecification(@RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
+	@RequestMapping(method = RequestMethod.POST, value="/modifyDegreeProgramme")
+	public ResponseProgrammeSpecification modifyDegreeProgramme(@RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
 			@RequestParam(value="degreeProgrammeTitle", required=false, defaultValue="") String degreeProgrammeTitle,
 			@RequestParam(value="location", required=false, defaultValue="") String location,
 			@RequestParam(value="qualification", required=false, defaultValue="") String qualification,
@@ -285,7 +304,16 @@ public class EctsStore {
 			@RequestParam(value="credit", required=false, defaultValue="") String credit,
 			@RequestParam(value="degreeProgrammeAccessToFurtherStudies", required=false, defaultValue="") String degreeProgrammeAccessToFurtherStudies,
 			@RequestParam(value="degreeProgrammeEducationalAndProfessionalGoals", required=false, defaultValue="") String degreeProgrammeEducationalAndProfessionalGoals,
-			@RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram)
+			@RequestParam(value="degreeProgrammeStructureDiagram", required=false, defaultValue="") String degreeProgrammeStructureDiagram,
+			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+			@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
+			@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
+			@RequestParam(value="places", required=false, defaultValue="") String places,
+			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+			@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
+			@RequestParam(value="start", required=false, defaultValue="") String start,
+			@RequestParam(value="duration", required=false, defaultValue="") String duration,
+			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 	{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
@@ -295,10 +323,19 @@ public class EctsStore {
 			propertyValues.put("Location", location);
 			propertyValues.put("Qualification", qualification);
 			propertyValues.put("Url", url);
-			propertyValues.put("Credit", credit);
+			propertyValues.put("DegreeProgrammeCredit", credit);
 			propertyValues.put("DegreeProgrammeAccessToFurtherStudies", degreeProgrammeAccessToFurtherStudies);
 			propertyValues.put("DegreeProgrammeEducationAndProfessionalGoals", degreeProgrammeEducationalAndProfessionalGoals);
 			propertyValues.put("DegreeProgrammeStructureDiagram", degreeProgrammeStructureDiagram);
+			propertyValues.put("DegreeProgrammePrerequisite", prerequisite);
+			propertyValues.put("DepartmentalEctsCoordinator", departmentalEctsCoordinator);
+			propertyValues.put("DegreeProgrammeFinalExamination", degreeProgrammeFinalExamination);
+			propertyValues.put("DegreeProgrammePlaces", places);
+			propertyValues.put("DegreeProgrammeLanguageOfInstruction", languageOfInstruction);
+			propertyValues.put("DegreeProgrammeExaminationAndAssessmentRegulations", degreeProgrammeExaminationAndAssessmentRegulations);
+			propertyValues.put("DegreeProgrammeStart", start);
+			propertyValues.put("DegreeProgrammeDuration", duration);
+			propertyValues.put("DegreeProgrammeCost", cost);
 			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
@@ -310,110 +347,12 @@ public class EctsStore {
 
 
 	/**
-	 * Uklanjanje specifikacije programa
-	 * @param degreeUnitCode id specifikacije programa
-	 * @return status uspesnosti
+	 * Remove degree programme
+	 * @param degreeUnitCode degree programme id
+	 * @return status 
 	 */
-	@RequestMapping(method = RequestMethod.DELETE, value = "/removeDegreeSpecification")
-	public String removeDegreeSpecification(@RequestParam(value = "degreeUnitCode", required=true) String degreeUnitCode)
-	{
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.removeIndividual("DegreeProgrammeSpecification", model, StringUtils.namespaceEcts, degreeUnitCode);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return "Degree programme specification with id: " + degreeUnitCode + " is removed.";
-	}
-
-	/*
-	 * Dodavanje instance programa
-	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/addProgrammeInstance")
-	public ResponseProgrammeInstance addProgrammeInstance(  @RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
-			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
-			@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
-			@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
-			@RequestParam(value="location", required=false, defaultValue="") String location,
-			@RequestParam(value="url", required=false, defaultValue="") String url,
-			@RequestParam(value="places", required=false, defaultValue="") String places,
-			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
-			@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
-			@RequestParam(value="start", required=false, defaultValue="") String start,
-			@RequestParam(value="duration", required=false, defaultValue="") String duration,
-			@RequestParam(value="cost", required=false, defaultValue="") String cost)
-
-	{
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.addIndividual("DegreeProgrammeInstance", model, StringUtils.namespaceEcts, degreeUnitCode);
-			model = OntologyUtils.addDatatypeProperty("DegreeUnitCode", model, StringUtils.namespaceEcts, degreeUnitCode, degreeUnitCode);
-			model = OntologyUtils.addDatatypeProperty("Prerequisite", model, StringUtils.namespaceEcts, degreeUnitCode, prerequisite);
-			model = OntologyUtils.addDatatypeProperty("DepartmentalEctsCoordinator", model, StringUtils.namespaceEcts, degreeUnitCode, departmentalEctsCoordinator);
-			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeFinalExamination", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeFinalExamination);
-			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, degreeUnitCode, location);
-			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, degreeUnitCode, url);
-			model = OntologyUtils.addDatatypeProperty("Places", model, StringUtils.namespaceEcts, degreeUnitCode, places);
-			model = OntologyUtils.addDatatypeProperty("DegreeProgrammeExaminationAndAssessmentRegulations", model, StringUtils.namespaceEcts, degreeUnitCode, degreeProgrammeExaminationAndAssessmentRegulations);
-			model = OntologyUtils.addDatatypeProperty("Start", model, StringUtils.namespaceEcts, degreeUnitCode, start);
-			model = OntologyUtils.addDatatypeProperty("Duration", model, StringUtils.namespaceEcts, degreeUnitCode, duration);
-			model = OntologyUtils.addDatatypeProperty("Cost", model, StringUtils.namespaceEcts, degreeUnitCode, cost);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return new ResponseProgrammeInstance(degreeUnitCode);
-	}
-
-	/*
-	 * Modifikovanje instance programa
-	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/modifyProgrammeInstance")
-	public ResponseProgrammeInstance modifyProgrammeInstance(@RequestParam(value="degreeUnitCode", required=true) String degreeUnitCode,
-			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
-			@RequestParam(value="departmentalEctsCoordinator", required=false, defaultValue="") String departmentalEctsCoordinator,
-			@RequestParam(value="degreeProgrammeFinalExamination", required=false, defaultValue="") String degreeProgrammeFinalExamination,
-			@RequestParam(value="location", required=false, defaultValue="") String location,
-			@RequestParam(value="url", required=false, defaultValue="") String url,
-			@RequestParam(value="places", required=false, defaultValue="") String places,
-			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
-			@RequestParam(value="degreeProgrammeExaminationAndAssessmentRegulations", required=false, defaultValue="") String degreeProgrammeExaminationAndAssessmentRegulations,
-			@RequestParam(value="start", required=false, defaultValue="") String start,
-			@RequestParam(value="duration", required=false, defaultValue="") String duration,
-			@RequestParam(value="cost", required=false, defaultValue="") String cost)
-
-	{
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			Individual ind = model.getIndividual(StringUtils.namespaceEcts + degreeUnitCode);
-			HashMap<String, String> propertyValues = new HashMap<>();
-			propertyValues.put("Prerequisite", prerequisite);
-			propertyValues.put("DepartmentalEctsCoordinator", departmentalEctsCoordinator);
-			propertyValues.put("DegreeProgrammeFinalExamination", degreeProgrammeFinalExamination);
-			propertyValues.put("Location", location);
-			propertyValues.put("Url", url);
-			propertyValues.put("Places", places);
-			propertyValues.put("LanguageOfInstruction", languageOfInstruction);
-			propertyValues.put("DegreeProgrammeExaminationAndAssessmentRegulations", degreeProgrammeExaminationAndAssessmentRegulations);
-			propertyValues.put("Start", start);
-			propertyValues.put("Duration", duration);
-			propertyValues.put("Cost", cost);
-			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return new ResponseProgrammeInstance(degreeUnitCode);
-	}
-
-	/**
-	 * Uklanjanje instance programa
-	 * @param degreeUnitCode id instance programa
-	 * @return status uspesnosti
-	 */
-	@RequestMapping(method = RequestMethod.DELETE, value = "/removeDegreeInstance")
-	public String removeDegreeInstance(@RequestParam(value = "degreeUnitCode", required=true) String degreeUnitCode)
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeDegreeProgramme")
+	public String removeDegreeProgramme(@RequestParam(value = "degreeUnitCode", required=true) String degreeUnitCode)
 	{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
@@ -426,10 +365,10 @@ public class EctsStore {
 	}
 
 	/*
-	 * Dodavanje specifikacije kursa
+	 * Add course unit
 	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/addCourseSpecification")
-	public ResponseCourseSpecification addCourseSpecification(  @RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
+	@RequestMapping(method = RequestMethod.POST, value="/addCourseUnit")
+	public ResponseCourseSpecification addCourseUnit(  @RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
 			@RequestParam(value="courseUnitTitle", required=true) String courseUnitTitle,
 			@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
 			@RequestParam(value="courseUnitLevel", required=false, defaultValue="") String courseUnitLevel,
@@ -438,21 +377,46 @@ public class EctsStore {
 			@RequestParam(value="credit", required=false, defaultValue="") String credit,
 			@RequestParam(value="courseUnitContent", required=false, defaultValue="") String courseUnitContent,
 			@RequestParam(value="courseLocation", required=false, defaultValue="") String courseLocation,
-			@RequestParam(value="qualification", required=false, defaultValue="") String qualification)
+			@RequestParam(value="lecturer", required=false, defaultValue="") String lecturer,
+			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+			@RequestParam(value="places", required=false, defaultValue="") String places,
+			@RequestParam(value="courseUnitTermPattern", required=true, defaultValue="Semester") String courseUnitTermPattern,
+			@RequestParam(value="courseUnitCompetence", required=false, defaultValue="") String courseUnitCompetence,
+			@RequestParam(value="courseUnitLearningOutcome", required=false, defaultValue="") String courseUnitLearningOutcome,
+			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+			@RequestParam(value="courseUnitRecommendedReading", required=false, defaultValue="") String courseUnitRecommendedReading,
+			@RequestParam(value="courseUnitTeachingMethods", required=false, defaultValue="") String courseUnitTeachingMethods,
+			@RequestParam(value="courseUnitAssessmentMethods", required=false, defaultValue="") String courseUnitAssessmentMethods,
+			@RequestParam(value="start", required=false, defaultValue="") String start,
+			@RequestParam(value="duration", required=false, defaultValue="") String duration,
+			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 
 	{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.addIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
+			model = OntologyUtils.addIndividual("CourseUnitInstance", model, StringUtils.namespaceEcts, courseUnitCode);
 			model = OntologyUtils.addDatatypeProperty("CourseUnitCode", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitCode);
 			model = OntologyUtils.addDatatypeProperty("CourseUnitTitle", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTitle);
 			model = OntologyUtils.addDatatypeProperty("CourseUnitType", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitType);
 			model = OntologyUtils.addDatatypeProperty("CourseUnitLevel", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitLevel);
 			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, courseUnitCode, url);
-			model = OntologyUtils.addDatatypeProperty("Credit", model, StringUtils.namespaceEcts, courseUnitCode, credit);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitYearOfStudy", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitYearOfStudy);
+			model = OntologyUtils.addDatatypeProperty("CourseCredit", model, StringUtils.namespaceEcts, courseUnitCode, credit);
 			model = OntologyUtils.addDatatypeProperty("CourseUnitContent", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitContent);
 			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, courseUnitCode, courseLocation);
-			model = OntologyUtils.addDatatypeProperty("Qualification", model, StringUtils.namespaceEcts, courseUnitCode, qualification);
+			model = OntologyUtils.addDatatypeProperty("Lecturer", model, StringUtils.namespaceEcts, courseUnitCode, lecturer);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitLanguageOfInstruction", model, StringUtils.namespaceEcts, courseUnitCode, languageOfInstruction);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitPlaces", model, StringUtils.namespaceEcts, courseUnitCode, places);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitTermPattern", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTermPattern);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitCompetence", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitCompetence);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitLearningOutcome", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitLearningOutcome);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitPrerequisite", model, StringUtils.namespaceEcts, courseUnitCode, prerequisite);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitRecommendedReading", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitRecommendedReading);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitTeachingMethods", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTeachingMethods);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitAssessmentMethods", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitAssessmentMethods);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitStart", model, StringUtils.namespaceEcts, courseUnitCode, start);
+			model = OntologyUtils.addDatatypeProperty("CourseUnitDuration", model, StringUtils.namespaceEcts, courseUnitCode, duration);
+			model = OntologyUtils.addDatatypeProperty("CourseCost", model, StringUtils.namespaceEcts, courseUnitCode, cost);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
 			e.printStackTrace();
@@ -461,10 +425,10 @@ public class EctsStore {
 	}
 
 	/*
-	 * Modifikovanje specifikacije kursa
+	 * Modify course unit
 	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/modifyCourseSpecification")
-	public ResponseCourseSpecification modifyCourseSpecification(@RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
+	@RequestMapping(method = RequestMethod.POST, value="/modifyCourseUnit")
+	public ResponseCourseSpecification modifyCourseUnit(@RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
 			@RequestParam(value="courseUnitTitle", required=false, defaultValue="") String courseUnitTitle,
 			@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
 			@RequestParam(value="courseUnitLevel", required=false, defaultValue="") String courseUnitLevel,
@@ -473,7 +437,19 @@ public class EctsStore {
 			@RequestParam(value="credit", required=false, defaultValue="") String credit,
 			@RequestParam(value="courseUnitContent", required=false, defaultValue="") String courseUnitContent,
 			@RequestParam(value="courseLocation", required=false, defaultValue="") String courseLocation,
-			@RequestParam(value="qualification", required=false, defaultValue="") String qualification)
+			@RequestParam(value="lecturer", required=false, defaultValue="") String lecturer,
+			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
+			@RequestParam(value="places", required=false, defaultValue="") String places,
+			@RequestParam(value="courseUnitTermPattern", required=true, defaultValue="Semester") String courseUnitTermPattern,
+			@RequestParam(value="courseUnitCompetence", required=false, defaultValue="") String courseUnitCompetence,
+			@RequestParam(value="courseUnitLearningOutcome", required=false, defaultValue="") String courseUnitLearningOutcome,
+			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
+			@RequestParam(value="courseUnitRecommendedReading", required=false, defaultValue="") String courseUnitRecommendedReading,
+			@RequestParam(value="courseUnitTeachingMethods", required=false, defaultValue="") String courseUnitTeachingMethods,
+			@RequestParam(value="courseUnitAssessmentMethods", required=false, defaultValue="") String courseUnitAssessmentMethods,
+			@RequestParam(value="start", required=false, defaultValue="") String start,
+			@RequestParam(value="duration", required=false, defaultValue="") String duration,
+			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 
 	{
 		try{
@@ -485,10 +461,22 @@ public class EctsStore {
 			propertyValues.put("CourseUnitLevel", courseUnitLevel);
 			propertyValues.put("Url", url);
 			propertyValues.put("CourseUnitYearOfStudy", courseUnitYearOfStudy);
-			propertyValues.put("Credit", credit);
+			propertyValues.put("CourseCredit", credit);
 			propertyValues.put("CourseUnitContent", courseUnitContent);
 			propertyValues.put("Location", courseLocation);
-			propertyValues.put("Qualification", qualification);
+			propertyValues.put("Lecturer", lecturer);
+			propertyValues.put("CourseUnitLanguageOfInstruction", languageOfInstruction);
+			propertyValues.put("CourseUnitPlaces", places);
+			propertyValues.put("CourseUnitTermPattern", courseUnitTermPattern);
+			propertyValues.put("CourseUnitCompetence", courseUnitCompetence);
+			propertyValues.put("CourseUnitLearningOutcome", courseUnitLearningOutcome);
+			propertyValues.put("CourseUnitPrerequisite", prerequisite);
+			propertyValues.put("CourseUnitRecommendedReading", courseUnitRecommendedReading);
+			propertyValues.put("CourseUnitTeachingMethods", courseUnitTeachingMethods);
+			propertyValues.put("CourseUnitAssessmentMethods", courseUnitAssessmentMethods);
+			propertyValues.put("CourseUnitStart", start);
+			propertyValues.put("CourseUnitDuration", duration);
+			propertyValues.put("CourseCost", cost);
 			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
@@ -498,16 +486,16 @@ public class EctsStore {
 	}
 
 	/**
-	 * Uklanjanje specifikacije kursa
-	 * @param courseUnitCode id specifikacije kursa
-	 * @return status uspesnosti
+	 * Remove course unit
+	 * @param courseUnitCode course unit id
+	 * @return status
 	 */
-	@RequestMapping(method = RequestMethod.DELETE, value = "/removeCourseSpecification")
-	public String removeCourseSpecification(@RequestParam(value = "courseUnitCode", required=true) String courseUnitCode)
+	@RequestMapping(method = RequestMethod.DELETE, value = "/removeCourseUnit")
+	public String removeCourseUnit(@RequestParam(value = "courseUnitCode", required=true) String courseUnitCode)
 	{
 		try{
 			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.removeIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
+			model = OntologyUtils.removeIndividual("CourseUnitInstance", model, StringUtils.namespaceEcts, courseUnitCode);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){
 			e.printStackTrace();
@@ -515,126 +503,8 @@ public class EctsStore {
 		return "Degree course specification with id: " + courseUnitCode + " is removed.";
 	}
 
-	/*
-	 * Dodavanje instance kursa
-	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/addCourseInstance")
-	public ResponseCourseInstance addCourseSpecification(  @RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
-			@RequestParam(value="lecturer", required=false, defaultValue="") String lecturer,
-			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
-			@RequestParam(value="places", required=false, defaultValue="") String places,
-			@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
-			@RequestParam(value="url", required=false, defaultValue="") String url,
-			@RequestParam(value="courseUnitTermPattern", required=true, defaultValue="Semester") String courseUnitTermPattern,
-			@RequestParam(value="courseUnitCompetence", required=false, defaultValue="") String courseUnitCompetence,
-			@RequestParam(value="courseUnitLearningOutcome", required=false, defaultValue="") String courseUnitLearningOutcome,
-			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
-			@RequestParam(value="courseUnitRecommendedReading", required=false, defaultValue="") String courseUnitRecommendedReading,
-			@RequestParam(value="courseUnitTeachingMethods", required=false, defaultValue="") String courseUnitTeachingMethods,
-			@RequestParam(value="courseUnitAssessmentMethods", required=false, defaultValue="") String courseUnitAssessmentMethods,
-			@RequestParam(value="location", required=false, defaultValue="") String location,
-			@RequestParam(value="start", required=false, defaultValue="") String start,
-			@RequestParam(value="duration", required=false, defaultValue="") String duration,
-			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 
-	{
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.addIndividual("CourseUnitInstance", model, StringUtils.namespaceEcts, courseUnitCode);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitCode", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitCode);
-			model = OntologyUtils.addDatatypeProperty("Lecturer", model, StringUtils.namespaceEcts, courseUnitCode, lecturer);
-			model = OntologyUtils.addDatatypeProperty("LanguageOfInstruction", model, StringUtils.namespaceEcts, courseUnitCode, languageOfInstruction);
-			model = OntologyUtils.addDatatypeProperty("Places", model, StringUtils.namespaceEcts, courseUnitCode, places);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitType", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitType);
-			model = OntologyUtils.addDatatypeProperty("Url", model, StringUtils.namespaceEcts, courseUnitCode, url);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitTermPattern", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTermPattern);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitCompetence", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitCompetence);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitLearningOutcome", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitLearningOutcome);
-			model = OntologyUtils.addDatatypeProperty("Prerequisite", model, StringUtils.namespaceEcts, courseUnitCode, prerequisite);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitRecommendedReading", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitRecommendedReading);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitTeachingMethods", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitTeachingMethods);
-			model = OntologyUtils.addDatatypeProperty("CourseUnitAssessmentMethods", model, StringUtils.namespaceEcts, courseUnitCode, courseUnitAssessmentMethods);
-			model = OntologyUtils.addDatatypeProperty("Location", model, StringUtils.namespaceEcts, courseUnitCode, location);
-			model = OntologyUtils.addDatatypeProperty("Start", model, StringUtils.namespaceEcts, courseUnitCode, start);
-			model = OntologyUtils.addDatatypeProperty("Duration", model, StringUtils.namespaceEcts, courseUnitCode, duration);
-			model = OntologyUtils.addDatatypeProperty("Cost", model, StringUtils.namespaceEcts, courseUnitCode, cost);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return new ResponseCourseInstance(courseUnitCode);
-	}
-
-	/*
-	 * Modifikovanje instance kursa
-	 * */
-	@RequestMapping(method = RequestMethod.POST, value="/modifyCourseInstance")
-	public ResponseCourseInstance modifyCourseInstance(@RequestParam(value="courseUnitCode", required=true) String courseUnitCode,
-			@RequestParam(value="lecturer", required=false, defaultValue="") String lecturer,
-			@RequestParam(value="languageOfInstruction", required=false, defaultValue="") String languageOfInstruction,
-			@RequestParam(value="places", required=false, defaultValue="") String places,
-			@RequestParam(value="courseUnitType", required=false, defaultValue="") String courseUnitType,
-			@RequestParam(value="url", required=false, defaultValue="") String url,
-			@RequestParam(value="courseUnitTermPattern", required=true, defaultValue="Semester") String courseUnitTermPattern,
-			@RequestParam(value="courseUnitCompetence", required=false, defaultValue="") String courseUnitCompetence,
-			@RequestParam(value="courseUnitLearningOutcome", required=false, defaultValue="") String courseUnitLearningOutcome,
-			@RequestParam(value="prerequisite", required=false, defaultValue="") String prerequisite,
-			@RequestParam(value="courseUnitRecommendedReading", required=false, defaultValue="") String courseUnitRecommendedReading,
-			@RequestParam(value="courseUnitTeachingMethods", required=false, defaultValue="") String courseUnitTeachingMethods,
-			@RequestParam(value="courseUnitAssessmentMethods", required=false, defaultValue="") String courseUnitAssessmentMethods,
-			@RequestParam(value="location", required=false, defaultValue="") String location,
-			@RequestParam(value="start", required=false, defaultValue="") String start,
-			@RequestParam(value="duration", required=false, defaultValue="") String duration,
-			@RequestParam(value="cost", required=false, defaultValue="") String cost)
-
-	{	
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			Individual ind = model.getIndividual(StringUtils.namespaceEcts + courseUnitCode);
-			HashMap<String, String> propertyValues = new HashMap<>();
-			propertyValues.put("Lecturer", lecturer);
-			propertyValues.put("LanguageOfInstruction", languageOfInstruction);
-			propertyValues.put("Places", places);
-			propertyValues.put("CourseUnitType", courseUnitType);
-			propertyValues.put("Url", url);
-			propertyValues.put("CourseUnitTermPattern", courseUnitTermPattern);
-			propertyValues.put("CourseUnitCompetence", courseUnitCompetence);
-			propertyValues.put("CourseUnitLearningOutcome", courseUnitLearningOutcome);
-			propertyValues.put("Prerequisite", prerequisite);
-			propertyValues.put("CourseUnitRecommendedReading", courseUnitRecommendedReading);
-			propertyValues.put("CourseUnitTeachingMethods", courseUnitTeachingMethods);
-			propertyValues.put("CourseUnitAssessmentMethods", courseUnitAssessmentMethods);
-			propertyValues.put("Location", location);
-			propertyValues.put("Start", start);
-			propertyValues.put("Duration", duration);
-			propertyValues.put("Cost", cost);
-			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return new ResponseCourseInstance(courseUnitCode);
-	}
-
-	/**
-	 * Uklanjanje instance kursa
-	 * @param courseUnitCode id instance kursa
-	 * @return status uspesnosti
-	 */
-	@RequestMapping(method = RequestMethod.DELETE, value = "/removeCourseInstance")
-	public String removeCourseInstance(@RequestParam(value = "courseUnitCode", required=true) String courseUnitCode)
-	{
-		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			model = OntologyUtils.removeIndividual("CourseUnitSpecification", model, StringUtils.namespaceEcts, courseUnitCode);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		return "Degree course instance with id: " + courseUnitCode + " is removed.";
-	}
-
-
+	// generic query
 	@RequestMapping(method = RequestMethod.GET, value = "/query")
 	public ArrayList<QueryResult> query(@RequestParam("value") String val,
 			@RequestParam("type") QueryType type)
@@ -707,6 +577,11 @@ public class EctsStore {
 		return institutions;
 	}
 
+	/**
+	 * Get institution by institution code
+	 * @param institutionCode
+	 * @return institution
+	 */
 	@RequestMapping(method = RequestMethod.GET, value="/getInstitution")
 	public Institution getInstitution(@RequestParam("identifier")String institutionCode){
 		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
@@ -754,6 +629,8 @@ public class EctsStore {
 				institutionType = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("InstitutionAddress"))
 				institutionAddress = queryResult2.getObject();
+			else if (queryResult2.getPredicate().equals("Url"))
+				url = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("InstitutionalEctsCoordinator"))
 				institutionalECTScoordinator = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("InstitutionMainUniversityRegulations"))
