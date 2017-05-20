@@ -10,6 +10,7 @@ public class DegreeProgramme {
 	
 	private String degreeUnitCode;
 	private String degreeProgrammeTitle;
+	private String information;
 	private String language;
 	private String location;
 	private String qualification;
@@ -28,11 +29,12 @@ public class DegreeProgramme {
 	private String degreeProgrammeEducationalAndProfessionalGoals;
 	private String degreeProgrammeStructureDiagram;
 	
-	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String language, String location,
+	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String information, String language, String location,
 			String qualification, Double credit, String url) {
 		super();
 		this.degreeUnitCode = degreeUnitCode;
 		this.degreeProgrammeTitle = degreeProgrammeTitle;
+		this.setInformation(information);
 		this.language = language;
 		this.location = location;
 		this.qualification = qualification;
@@ -40,7 +42,7 @@ public class DegreeProgramme {
 		this.url = url;
 	}
 
-	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String language, String location,
+	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String information, String language, String location,
 			String qualification, Double credit, String url, String prerequisite, String departmentalECTScoordinator,
 			String degreeProgrammeFinalExamination, String places,
 			String degreeProgrammeExaminationAndAssessmentRegulations, String start, Integer duration, String cost,
@@ -49,6 +51,7 @@ public class DegreeProgramme {
 		super();
 		this.degreeUnitCode = degreeUnitCode;
 		this.degreeProgrammeTitle = degreeProgrammeTitle;
+		this.setInformation(information);
 		this.language = language;
 		this.location = location;
 		this.qualification = qualification;
@@ -227,31 +230,25 @@ public class DegreeProgramme {
 		this.degreeProgrammeStructureDiagram = degreeProgrammeStructureDiagram;
 	}
 
+	public String getInformation() {
+		return information;
+	}
+
+	public void setInformation(String information) {
+		this.information = information;
+	}
+
 	@Override
 	public String toString() {
 		return "DegreeProgramme [degreeUnitCode=" + degreeUnitCode + ", degreeProgrammeTitle=" + degreeProgrammeTitle
-				+ ", language=" + language + ", location=" + location + ", qualification=" + qualification + ", credit="
-				+ credit + ", url=" + url + ", prerequisite=" + prerequisite + ", departmentalECTScoordinator="
-				+ departmentalECTScoordinator + ", degreeProgrammeFinalExamination=" + degreeProgrammeFinalExamination
-				+ ", places=" + places + ", degreeProgrammeExaminationAndAssessmentRegulations="
+				+ ", information=" + information + ", language=" + language + ", location=" + location
+				+ ", qualification=" + qualification + ", credit=" + credit + ", url=" + url + ", prerequisite="
+				+ prerequisite + ", departmentalECTScoordinator=" + departmentalECTScoordinator
+				+ ", degreeProgrammeFinalExamination=" + degreeProgrammeFinalExamination + ", places=" + places
+				+ ", degreeProgrammeExaminationAndAssessmentRegulations="
 				+ degreeProgrammeExaminationAndAssessmentRegulations + ", start=" + start + ", duration=" + duration
 				+ ", cost=" + cost + ", degreeProgrammeAccessToFurtherStudies=" + degreeProgrammeAccessToFurtherStudies
-				+ ", degreeProgrammeEducationalAndProessionalGoals=" + degreeProgrammeEducationalAndProfessionalGoals
-				+ ", degreeProgrammeStructureDiagram=" + degreeProgrammeStructureDiagram + ", getDegreeUnitCode()="
-				+ getDegreeUnitCode() + ", getDegreeProgrammeTitle()=" + getDegreeProgrammeTitle() + ", getLanguage()="
-				+ getLanguage() + ", getLocation()=" + getLocation() + ", getQualification()=" + getQualification()
-				+ ", getCredit()=" + getCredit() + ", getUrl()=" + getUrl() + ", getPrerequisite()=" + getPrerequisite()
-				+ ", getDepartmentalECTScoordinator()=" + getDepartmentalECTScoordinator()
-				+ ", getDegreeProgrammeFinalExamination()=" + getDegreeProgrammeFinalExamination() + ", getPlaces()="
-				+ getPlaces() + ", getDegreeProgrammeExaminationAndAssessmentRegulations()="
-				+ getDegreeProgrammeExaminationAndAssessmentRegulations() + ", getStart()=" + getStart()
-				+ ", getDuration()=" + getDuration() + ", getCost()=" + getCost()
-				+ ", getDegreeProgrammeAccessToFurtherStudies()=" + getDegreeProgrammeAccessToFurtherStudies()
-				+ ", getDegreeProgrammeEducationalAndProessionalGoals()="
-				+ getDegreeProgrammeEducationalAndProessionalGoals() + ", getDegreeProgrammeStructureDiagram()="
-				+ getDegreeProgrammeStructureDiagram() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", degreeProgrammeEducationalAndProfessionalGoals=" + degreeProgrammeEducationalAndProfessionalGoals
+				+ ", degreeProgrammeStructureDiagram=" + degreeProgrammeStructureDiagram + "]";
 	}
-
-	
 }

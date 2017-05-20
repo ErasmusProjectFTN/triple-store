@@ -731,7 +731,7 @@ public class EctsStore {
 
 		ArrayList<DegreeProgramme> degreeProgrammes = new ArrayList<>();
 
-		String identifier="", title="", language="", location="", qualification="", url="";
+		String identifier="", title="", information = "", language="", location="", qualification="", url="";
 		Double credits = -1.0;
 		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
 
@@ -744,6 +744,8 @@ public class EctsStore {
 					identifier = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
 					title = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("DegreeProgrammeInformation"))
+					information = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("DegreeProgrammeLanguageOfInstruction"))
 					language = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Location"))
@@ -755,7 +757,7 @@ public class EctsStore {
 				else if (queryResult2.getPredicate().equals("DegreeProgrammeCredit"))
 					credits = queryResult2.getObject().equals("")?-1.0:Double.valueOf(queryResult2.getObject());
 			}
-			degreeProgrammes.add(new DegreeProgramme(identifier, title, language, location, qualification, credits, url));
+			degreeProgrammes.add(new DegreeProgramme(identifier, title, information, language, location, qualification, credits, url));
 		}
 
 		return degreeProgrammes;
@@ -775,6 +777,7 @@ public class EctsStore {
 		QuerySolution soln = result.nextSolution();
 		String degreeUnitCode = soln.get("s").toString().replaceAll(StringUtils.namespaceEcts, "");
 		String degreeProgrammeTitle = "";
+		String information = "";
 		String language = "";
 		String location = "";
 		String qualification = "";
@@ -799,6 +802,8 @@ public class EctsStore {
 				degreeUnitCode = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
 				degreeProgrammeTitle = queryResult2.getObject();
+			else if (queryResult2.getPredicate().equals("DegreeProgrammeInformation"))
+				information = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("DegreeProgrammeLanguageOfInstruction"))
 				language = queryResult2.getObject();
 			else if (queryResult2.getPredicate().equals("Location"))
@@ -832,7 +837,7 @@ public class EctsStore {
 			else if (queryResult2.getPredicate().equals("DegreeProgrammeStructureDiagram"))
 				degreeProgrammeStructureDiagram = queryResult2.getObject();
 		}
-		return new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language, location,
+		return new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, information, language, location,
 				qualification, credit, url, prerequisite, departmentalECTScoordinator,
 				degreeProgrammeFinalExamination, places,
 				degreeProgrammeExaminationAndAssessmentRegulations, start, duration, cost,
@@ -1122,7 +1127,7 @@ public class EctsStore {
 		System.out.println(query);
 		ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
 
-		String degreeUnitCode="", degreeProgrammeTitle="", language1="", location1="", qualification1="",url="";
+		String degreeUnitCode="", degreeProgrammeTitle="", information = "", language1="", location1="", qualification1="",url="";
 		Double credit = -1.0;
 		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
 		QuerySolution soln = null;
@@ -1137,6 +1142,8 @@ public class EctsStore {
 					degreeUnitCode = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("DegreeProgrammeTitle"))
 					degreeProgrammeTitle = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("DegreeProgrammeInformation"))
+					information = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("LanguageOfInstruction"))
 					language1 = queryResult2.getObject();
 				else if (queryResult2.getPredicate().equals("Location"))
@@ -1146,7 +1153,7 @@ public class EctsStore {
 				else if (queryResult2.getPredicate().equals("Url"))
 					url = queryResult2.getObject();
 			}
-			degreeProgrammes.add(new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, language1, location1, qualification1, credit, url));
+			degreeProgrammes.add(new DegreeProgramme(degreeUnitCode, degreeProgrammeTitle, information, language1, location1, qualification1, credit, url));
 		}
 		return degreeProgrammes;
 	}

@@ -1,4 +1,5 @@
 package com.ErasmusProject.rest;
+import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
 import com.ErasmusProject.util.*;
 import org.apache.jena.base.Sys;
 import org.apache.jena.ontology.OntModel;
@@ -33,6 +34,15 @@ public class StudentStore {
             Model ects = OntologyUtils.createOntModel(StringUtils.ectsFile);
             ects.add(student);
             OntologyUtils.reloadModel(ects,StringUtils.URL);
+            
+            // create similarity matrix
+            
+            DegreeProgrammeRecommendation dpr = new DegreeProgrammeRecommendation();
+            dpr.loadProgrammeData();
+            dpr.createTitlesMatrix();
+            dpr.createQualificationMatrix();
+            dpr.createInformationMatrix();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

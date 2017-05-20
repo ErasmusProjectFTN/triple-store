@@ -1122,32 +1122,8 @@ Typically the web page of the provider or course.</rdfs:comment>
 
     <owl:NamedIndividual rdf:about="&ects;degreeProgramme1">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
-        <DegreeProgrammeInformation>The study programme of the Undergraduate Academic Studies in Computing and Control Engineering in
-the field of Electrical and Computer Engineering is realized at the Department of Computing and Control
-Engineering of the Faculty of Technical Sciences, University of Novi Sad.
-The study programme of Computing and Control Engineering is developed within three basic engineering
-areas: automatic control and systems engineering, applied computer science and informatics and computer
-engineering and computer communications. The concept of the programme is defined in such a way that it
-educates future engineers who will possess the knowledge which is necessary for practical work and which
-at the same time enables them to continue education at the corresponding graduate or doctoral studies.
-The current state and, especially, trends in the development of electrical and computer engineering form
-the basis for defining the structure and content of the study programme. For that reason a number of
-subjects at the lower years of study is defined in such a way to provide the necessary general and
-theoretical knowledge which provide the foundation for understanding computing, system (especially
-engineering) control and automatic control based on principles of physics, mathematics, electrical
-engineering, computer science, computer engineering, theory of signals and systems. Upper years of study
-are devoted primarily to specialized courses which are aimed at providing professional and applied
-knowledge in the narrow fields of interest. The studies especially value independent work, encourage
-participation in practical professional and developmental projects within the laboratories and develop
-problem solving abilities. New, contemporary laboratories are established in cooperation with the
-renowned international companies: IBM, Cisco Systems, Allied Telesyn, Micronas, ABB, Philips, Sagem,
-OpenWave, AOL, Cirrus Logic, Danfoss, Nivelco, Feedback, Siemens, Leica, Schneider electric. In
-addition to the necessary theoretical and practical knowledge, all these activities provide the feeling of selfconfidence
-and completeness which is necessary for the successful integration in the professional
-environment.
-The wide area covered by the study programme and the inevitable need for specialization have led to the
-need for a large number of elective courses at the upper years while the interdisciplinary aspect is
-maintained through common core subjects.
+        <DegreeProgrammeInformation>The study programme of the Undergraduate Academic Studies in Computing and Control Engineering in the field of Electrical and Computer Engineering is realized at the Department of Computing and Control
+Engineering of the Faculty of Technical Sciences, University of Novi Sad. The study programme of Computing and Control Engineering is developed within three basic engineering areas: automatic control and systems engineering, applied computer science and informatics and computer engineering and computer communications. The concept of the programme is defined in such a way that it educates future engineers who will possess the knowledge which is necessary for practical work and which at the same time enables them to continue education at the corresponding graduate or doctoral studies. The current state and, especially, trends in the development of electrical and computer engineering form the basis for defining the structure and content of the study programme. For that reason a number of subjects at the lower years of study is defined in such a way to provide the necessary general and theoretical knowledge which provide the foundation for understanding computing, system (especially engineering) control and automatic control based on principles of physics, mathematics, electrical engineering, computer science, computer engineering, theory of signals and systems. Upper years of study are devoted primarily to specialized courses which are aimed at providing professional and applied knowledge in the narrow fields of interest. The studies especially value independent work, encourage participation in practical professional and developmental projects within the laboratories and develop problem solving abilities. New, contemporary laboratories are established in cooperation with the renowned international companies: IBM, Cisco Systems, Allied Telesyn, Micronas, ABB, Philips, Sagem, OpenWave, AOL, Cirrus Logic, Danfoss, Nivelco, Feedback, Siemens, Leica, Schneider electric. In addition to the necessary theoretical and practical knowledge, all these activities provide the feeling of self confidence and completeness which is necessary for the successful integration in the professional environment. The wide area covered by the study programme and the inevitable need for specialization have led to the need for a large number of elective courses at the upper years while the interdisciplinary aspect is maintained through common core subjects.
 </DegreeProgrammeInformation>
         <DegreeProgrammeTitle>Computing and Control Engineering
 </DegreeProgrammeTitle>
@@ -1165,27 +1141,7 @@ maintained through common core subjects.
 
     <owl:NamedIndividual rdf:about="&ects;degreeProgramme2">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
-        <DegreeProgrammeInformation>The study programme Power, Electronic and Telecommunications Engineering has been created on the
-basis of modern scientific knowledge in the field of Electrical and Computer Engineering, modeled after
-similar study programmes at the leading universities in the world and in accordance with the Bologna
-recommendations and technology strategy development of AP Vojvodina and Serbia.
-Lectures within the undergraduate academic studies last 4 years and a graduate thesis is planned for the
-eighth semester.
-Each year the study programme usually enrolls 200 students. Students who successfully complete this
-study programme obtain a diploma in Electrical and Computer Engineering with the title of the study
-programme Power, Electronic and Telecommunications Engineering, as well as information on particular
-competences that the students obtain during their studies.
-The study programme enables students to acquire necessary knowledge, skills and practical experience in
-the field of power systems, power electronics, electric machines, electronics, communication technologies,
-signal processing, as well as measurement systems. Acquired knowledge and skills enable graduate
-students to successfully answer the demands of the market and knowledge-based economy in the field of
-modern electrical and computer engineering.
-Lectures in professionally applied and scientific-professional subjects are carried out by teachers from the
-Department of the Power, Electronics and Telecommunications Engineering at the Faculty of Technical
-Sciences in Novi Sad, which is prime and responsible for the study programme. Lectures in theoreticalmethodological
-and academic-general educational subjects are carried out by teachers from other
-departments of the Faculty of Technical Sciences. The practical part of the lectures is carried out in modern
-and well equipped laboratories in which students are trained to solve practical engineering problems.</DegreeProgrammeInformation>
+        <DegreeProgrammeInformation>The study programme Power, Electronic and Telecommunications Engineering has been created on the basis of modern scientific knowledge in the field of Electrical and Computer Engineering, modeled after similar study programmes at the leading universities in the world and in accordance with the Bologna recommendations and technology strategy development of AP Vojvodina and Serbia. Lectures within the undergraduate academic studies last 4 years and a graduate thesis is planned for the eighth semester. Each year the study programme usually enrolls 200 students. Students who successfully complete this study programme obtain a diploma in Electrical and Computer Engineering with the title of the study programme Power, Electronic and Telecommunications Engineering, as well as information on particular competences that the students obtain during their studies. The study programme enables students to acquire necessary knowledge, skills and practical experience in the field of power systems, power electronics, electric machines, electronics, communication technologies, signal processing, as well as measurement systems. Acquired knowledge and skills enable graduate students to successfully answer the demands of the market and knowledge-based economy in the field of modern electrical and computer engineering. Lectures in professionally applied and scientific-professional subjects are carried out by teachers from the Department of the Power, Electronics and Telecommunications Engineering at the Faculty of Technical Sciences in Novi Sad, which is prime and responsible for the study programme. Lectures in theoreticalmethodological and academic-general educational subjects are carried out by teachers from other departments of the Faculty of Technical Sciences. The practical part of the lectures is carried out in modern and well equipped laboratories in which students are trained to solve practical engineering problems.</DegreeProgrammeInformation>
         <DegreeUnitCode>E1</DegreeUnitCode>
         <DegreeProgrammeTitle>Power, Electronic and Telecommunication Engineering
 </DegreeProgrammeTitle>
@@ -1206,37 +1162,7 @@ and well equipped laboratories in which students are trained to solve practical 
         <DegreeProgrammeTitle>Software Engineering and Information Technologies
 </DegreeProgrammeTitle>
         <Qualification>Bachelor with Honours in Electrical and Computer Engineering </Qualification>
-        <DegreeProgrammeInformation>Undergraduate study programme “Software Engineering and Information Technologies” has been
-recognized as a potential platform for integration of activities of almost all of the departments of Faculty of
-Technical Sciences, University of Novi Sad. As such it is implemented as a undergraduate study
-programme to which different departments of the Faculty contribute.
-Undergraduate study programme “Software engineering and information technologies”, at the Department
-of Computing and Control, is conceived to cover all important methodological aspects of complex software
-systems development, most notably software engineering and accompanying software technologies, as
-well as applications of software engineering in different domains – technical, business and social.
-This programme complies with recommendations given in the Software engineering curriculum SE2004,
-which has emerged as a result of a joint project of two international professional associations - ACM and
-IEEE.
-In accordance with these recommendations, courses in the first three years of study programme provide
-good basic knowledge and understanding in several areas of general education, such as mathematics, as
-well as deep insight in technological subjects (primarily software related) and theoretical and
-methodological knowledge in subjects recognized as professionally relevant in ACM/IEEE curriculum.
-The fourth year is dedicated to specialized courses, aimed at empowering students for competent and
-professional software development in certain domain of interests, applying previously adopted
-theoretical/methodological concepts of software engineering and up-to-date technologies and tools for
-software development. Throughout the course of a study, individual and independent work of a student is
-appreciated, and involvement in ongoing technical and development projects is encouraged. Special
-consideration is given to development of student’s problem solving capabilities.
-Faculty of Technical Sciences is equipped with a large number of computer laboratories, as well as other
-specialized laboratories for specific domains (transportation, robotics, telecommunications, electronics, civil
-engineering, environmental protection, process engineering, mechanics, industrial and business
-management, architecture, graphical engineering…). Clearly profiled area of software engineering on the
-one side, and a wide range of possible application on the other side, requires that future software
-engineers have good knowledge of one, or more, domains. This knowledge ensures good communications
-with domain experts and better understanding of problems that software is intended to cope with. Such a
-situation calls for substantial degree of freedom of choice, regarding subjects, on the fourth year of study,
-while the first three years are comprised of common subjects for the the general profile of software
-engineering.</DegreeProgrammeInformation>
+        <DegreeProgrammeInformation>Undergraduate study programme “Software Engineering and Information Technologies” has been recognized as a potential platform for integration of activities of almost all of the departments of Faculty of Technical Sciences, University of Novi Sad. As such it is implemented as a undergraduate study programme to which different departments of the Faculty contribute. Undergraduate study programme “Software engineering and information technologies”, at the Department of Computing and Control, is conceived to cover all important methodological aspects of complex software systems development, most notably software engineering and accompanying software technologies, as well as applications of software engineering in different domains – technical, business and social. This programme complies with recommendations given in the Software engineering curriculum SE2004, which has emerged as a result of a joint project of two international professional associations - ACM and IEEE. In accordance with these recommendations, courses in the first three years of study programme provide good basic knowledge and understanding in several areas of general education, such as mathematics, as well as deep insight in technological subjects (primarily software related) and theoretical and methodological knowledge in subjects recognized as professionally relevant in ACM/IEEE curriculum. The fourth year is dedicated to specialized courses, aimed at empowering students for competent and professional software development in certain domain of interests, applying previously adopted theoretical/methodological concepts of software engineering and up-to-date technologies and tools for software development. Throughout the course of a study, individual and independent work of a student is appreciated, and involvement in ongoing technical and development projects is encouraged. Special consideration is given to development of student’s problem solving capabilities. Faculty of Technical Sciences is equipped with a large number of computer laboratories, as well as other specialized laboratories for specific domains (transportation, robotics, telecommunications, electronics, civil engineering, environmental protection, process engineering, mechanics, industrial and business management, architecture, graphical engineering…). Clearly profiled area of software engineering on the one side, and a wide range of possible application on the other side, requires that future software engineers have good knowledge of one, or more, domains. This knowledge ensures good communications with domain experts and better understanding of problems that software is intended to cope with. Such a situation calls for substantial degree of freedom of choice, regarding subjects, on the fourth year of study, while the first three years are comprised of common subjects for the the general profile of software engineering.</DegreeProgrammeInformation>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
     
@@ -1248,22 +1174,9 @@ engineering.</DegreeProgrammeInformation>
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
         <DegreeProgrammeTitle>Clean Energy Technologies</DegreeProgrammeTitle>
         <Qualification>Bachelor with Honours in Energy Technologies</Qualification>
-        <DegreeUnitCode>CET</DegreeUnitCode>
-        <DegreeProgrammeInformation>Clean Energy Technologies are energy efficient technologies and renewable energy technology. These
-technologies reduce the use of energy from conventional sources (fossil fuels). Energy efficiency and
-renewable energy applications use very different technologies. Energy efficiency measures are related to
-the methods and means for reducing energy consumption by improving use of the device, improving
-service and maintenance, replacement management system and so on.
-Clean Energy Technologies falls into the category of energy efficiency and includes the combined
-production of heat and power, efficient lighting system, ventilation system, drives to drive pumps and fans,
-repair insulation, high-efficiency building envelope and windows, and other commercial technologies that
-are being developed.
-Academic program Clean Energy Technology is an integrative, interdisciplinary and global.
-Best Available Energy Technologies are technologies that offer newest solutions for environmental
-protection. Emissions from the process of these technologies are brought to a minimum. The Best
-Available Technology is defined by different protocols and the European Union have begun to be applied in
-our country.
+        <DegreeProgrammeInformation>Clean Energy Technologies are energy efficient technologies and renewable energy technology. These technologies reduce the use of energy from conventional sources (fossil fuels). Energy efficiency and renewable energy applications use very different technologies. Energy efficiency measures are related to the methods and means for reducing energy consumption by improving use of the device, improving service and maintenance, replacement management system and so on. Clean Energy Technologies falls into the category of energy efficiency and includes the combined production of heat and power, efficient lighting system, ventilation system, drives to drive pumps and fans, repair insulation, high-efficiency building envelope and windows, and other commercial technologies that are being developed. Academic program Clean Energy Technology is an integrative, interdisciplinary and global. Best Available Energy Technologies are technologies that offer newest solutions for environmental protection. Emissions from the process of these technologies are brought to a minimum. The Best Available Technology is defined by different protocols and the European Union have begun to be applied in our country.
 </DegreeProgrammeInformation>
+        <DegreeUnitCode>CET</DegreeUnitCode>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
     
@@ -1275,28 +1188,7 @@ our country.
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
         <Qualification>Bachelor with honours in Environmental Engineering</Qualification>
         <DegreeProgrammeTitle>Environmental Engineering</DegreeProgrammeTitle>
-        <DegreeProgrammeInformation>Program of undergraduate studies environmental engineering consists of educational research
-fields of engineering art, and they are formed of the actuating parts, which make the intersection of the discipline
-interdisciplinary nature of the program. In implementing the program, the study curricula from parts
-environmental protection, energy, electrical engineering, mechanical engineering, management, construction and
-basic scientific disciplines of mathematics, chemistry, physics, and the other, form a
-based multidisciplinary study program of environmental engineering.
-The universal phenomenon of global warming, acid rain, greenhouse effect, ozone holes,
-complete extinction and disappearance of species of plants and animals, changed living conditions,
-irrational use of natural resources and assets, in the global and local national
-level, becoming one of the most important world issues and factors to further sustainable development of human
-civilization. A particular problem in developing countries, uneven economic growth, the need for
-sustainable development, it is imperative seeking trained professionals who will in commercial and industrial
-systems, public enterprises and public institutions to be prepared and trained to deal
-accumulated complex problems in the field of environmental engineering. Right on
-interdisiciplinarnost study program of environmental engineering, which is the result
-technical and engineering expertise provides opportunities to educate environmental engineers
-who will be able to solve the accumulated problems in the system of environmental protection, but also in other
-industrial and economic systems.
-Environmental engineering is a program that was developed in response to industry needs,
-economy and institutions are facing environmental problems and where
-need engineers with interdisciplinary knowledge in the field of Environmental Engineering
-protection.</DegreeProgrammeInformation>
+        <DegreeProgrammeInformation>Program of undergraduate studies environmental engineering consists of educational research fields of engineering art, and they are formed of the actuating parts, which make the intersection of the discipline interdisciplinary nature of the program. In implementing the program, the study curricula from parts environmental protection, energy, electrical engineering, mechanical engineering, management, construction and basic scientific disciplines of mathematics, chemistry, physics, and the other, form a based multidisciplinary study program of environmental engineering. The universal phenomenon of global warming, acid rain, greenhouse effect, ozone holes, complete extinction and disappearance of species of plants and animals, changed living conditions, irrational use of natural resources and assets, in the global and local national level, becoming one of the most important world issues and factors to further sustainable development of human civilization. A particular problem in developing countries, uneven economic growth, the need for sustainable development, it is imperative seeking trained professionals who will in commercial and industrial systems, public enterprises and public institutions to be prepared and trained to deal accumulated complex problems in the field of environmental engineering. Right on interdisiciplinarnost study program of environmental engineering, which is the result technical and engineering expertise provides opportunities to educate environmental engineers who will be able to solve the accumulated problems in the system of environmental protection, but also in other industrial and economic systems. Environmental engineering is a program that was developed in response to industry needs, economy and institutions are facing environmental problems and where need engineers with interdisciplinary knowledge in the field of Environmental Engineering protection.</DegreeProgrammeInformation>
         <DegreeUnitCode>EE</DegreeUnitCode>
         <offeredAt rdf:resource="&ects;provider1"/>
     </owl:NamedIndividual>
@@ -1307,12 +1199,11 @@ protection.</DegreeProgrammeInformation>
 
     <owl:NamedIndividual rdf:about="&ects;degreeProgramme6">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
+        <DegreeProgrammeInformation>The purpose of the study programme is to educate students within the field of ecology and environmental protection and make them competent for work in laboratories of different industrial sectors as well as in research laboratories. The study programme structure with its general education, theoretical and methodological courses enables students to acquire fundamentals  of natural science disciplines. This knowledge is further improved by subject-related and applicable courses included in the programme. The competences and skills acquired at this level serve as the basis of fundamental knowledge necessary for continuing the educational process at master’s degree level in the field of ecology and other closely related disciplines. The objective of ECOLOGY study programme is to educate professionals in the field of ecology. Students should develop general skills for acquiring, analysing and synthetising fundamental concepts related to natural sciences, particularly to ecology. In addition, students develop skills for application of the gained knowledge as well as efficient laboratory skills. Upon completion of the course of study in ecology students are qualified for work in ecological laboratories of different industry branches and research laboratories. The knowledge gained during the course of study can be easily applied in everyday work as well as in research activities.
+</DegreeProgrammeInformation>
         <Qualification>Bachelor with Honours in Ecology</Qualification>
         <DegreeUnitCode>E</DegreeUnitCode>
         <DegreeProgrammeTitle>Ecology</DegreeProgrammeTitle>
-        <DegreeProgrammeInformation>The purpose of the study programme is to educate students within the field of ecology and environmental protection and make them competent for work in laboratories of different industrial sectors as well as in research laboratories. The study programme structure with its general education, theoretical and methodological courses enables students to acquire fundamentals  of natural science disciplines. This knowledge is further improved by subject-related and applicable courses included in the programme. The competences and skills acquired at this level serve as the basis of fundamental knowledge necessary for continuing the educational process at master’s degree level in the field of ecology and other closely related disciplines.
-The objective of ECOLOGY study programme is to educate professionals in the field of ecology. Students should develop general skills for acquiring, analysing and synthetising fundamental concepts related to natural sciences, particularly to ecology. In addition, students develop skills for application of the gained knowledge as well as efficient laboratory skills. Upon completion of the course of study in ecology students are qualified for work in ecological laboratories of different industry branches and research laboratories. The knowledge gained during the course of study can be easily applied in everyday work as well as in research activities.
-</DegreeProgrammeInformation>
         <offeredAt rdf:resource="&ects;provider2"/>
     </owl:NamedIndividual>
     
@@ -1478,24 +1369,7 @@ Main goals of the study programme Bachelor with Honours in Geography – Geoinfo
             <rdf:Description rdf:about="&ects;degreeProgramme6"/>
             <rdf:Description rdf:about="&ects;degreeProgramme7"/>
             <rdf:Description rdf:about="&ects;degreeProgramme8"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme9"/>
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>
@@ -1517,7 +1391,6 @@ Main goals of the study programme Bachelor with Honours in Geography – Geoinfo
             <rdf:Description rdf:about="&ects;degreeProgramme6"/>
             <rdf:Description rdf:about="&ects;degreeProgramme7"/>
             <rdf:Description rdf:about="&ects;degreeProgramme8"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme9"/>
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>
@@ -1574,6 +1447,24 @@ Main goals of the study programme Bachelor with Honours in Geography – Geoinfo
             <rdf:Description rdf:about="&ects;degreeProgramme5"/>
             <rdf:Description rdf:about="&ects;degreeProgramme6"/>
             <rdf:Description rdf:about="&ects;degreeProgramme7"/>
+            <rdf:Description rdf:about="&ects;provider1"/>
+            <rdf:Description rdf:about="&ects;provider2"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&ects;courseUnit1"/>
+            <rdf:Description rdf:about="&ects;courseUnit2"/>
+            <rdf:Description rdf:about="&ects;courseUnit3"/>
+            <rdf:Description rdf:about="&ects;courseUnit4"/>
+            <rdf:Description rdf:about="&ects;courseUnit5"/>
+            <rdf:Description rdf:about="&ects;courseUnit6"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>
