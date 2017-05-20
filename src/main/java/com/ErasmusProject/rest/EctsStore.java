@@ -6,6 +6,7 @@ import com.ErasmusProject.model.DegreeProgramme;
 import com.ErasmusProject.model.Institution;
 import com.ErasmusProject.model.InstitutionSearch;
 import com.ErasmusProject.model.ProgrammeSearch;
+import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
 import com.ErasmusProject.util.OntologyUtils;
 import com.ErasmusProject.util.QueryResult;
 import com.ErasmusProject.util.QueryType;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 
 /**
@@ -770,6 +773,20 @@ public class EctsStore {
 	@RequestMapping(method = RequestMethod.GET, value="/getProgramme")
 	public DegreeProgramme getProgramme(@RequestParam("identifier")String programmeCode)
 	{
+		
+		/** test
+		 * 
+		 */
+		LinkedHashMap<String, Double> similarProgrammes = DegreeProgrammeRecommendation.findSimilarProgrammes(programmeCode);
+		System.out.println(similarProgrammes);
+		Integer pos = similarProgrammes.size();
+		String recommendationCode1 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-1);
+		String recommendationCode2 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-2);
+		String recommendationCode3 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-3);
+		/**
+		 * 
+		 */
+		
 		ArrayList<QueryResult> results = new ArrayList<QueryResult>();
 
 		String query = "SELECT * WHERE{?s <" + StringUtils.namespaceEcts + "DegreeUnitCode> \"" + programmeCode + "\"}";
@@ -842,7 +859,7 @@ public class EctsStore {
 				degreeProgrammeFinalExamination, places,
 				degreeProgrammeExaminationAndAssessmentRegulations, start, duration, cost,
 				degreeProgrammeAccessToFurtherStudies, degreeProgrammeEducationalAndProfessionalGoals,
-				degreeProgrammeStructureDiagram);
+				degreeProgrammeStructureDiagram, recommendationCode1, recommendationCode2, recommendationCode3);
 	}
 
 	/**

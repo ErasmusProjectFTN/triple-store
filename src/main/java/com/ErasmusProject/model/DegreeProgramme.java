@@ -29,6 +29,74 @@ public class DegreeProgramme {
 	private String degreeProgrammeEducationalAndProfessionalGoals;
 	private String degreeProgrammeStructureDiagram;
 	
+	private String recommendationCode1;
+	private String recommendationCode2;
+	private String recommendationCode3;
+	
+	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String information, String language,
+			String location, String qualification, Double credit, String url, String prerequisite,
+			String departmentalECTScoordinator, String degreeProgrammeFinalExamination, String places,
+			String degreeProgrammeExaminationAndAssessmentRegulations, String start, Integer duration, String cost,
+			String degreeProgrammeAccessToFurtherStudies, String degreeProgrammeEducationalAndProfessionalGoals,
+			String degreeProgrammeStructureDiagram, String recommendationCode1, String recommendationCode2,
+			String recommendationCode3) {
+		super();
+		this.degreeUnitCode = degreeUnitCode;
+		this.degreeProgrammeTitle = degreeProgrammeTitle;
+		this.information = information;
+		this.language = language;
+		this.location = location;
+		this.qualification = qualification;
+		this.credit = credit;
+		this.url = url;
+		this.prerequisite = prerequisite;
+		this.departmentalECTScoordinator = departmentalECTScoordinator;
+		this.degreeProgrammeFinalExamination = degreeProgrammeFinalExamination;
+		this.places = places;
+		this.degreeProgrammeExaminationAndAssessmentRegulations = degreeProgrammeExaminationAndAssessmentRegulations;
+		this.start = start;
+		this.duration = duration;
+		this.cost = cost;
+		this.degreeProgrammeAccessToFurtherStudies = degreeProgrammeAccessToFurtherStudies;
+		this.degreeProgrammeEducationalAndProfessionalGoals = degreeProgrammeEducationalAndProfessionalGoals;
+		this.degreeProgrammeStructureDiagram = degreeProgrammeStructureDiagram;
+		this.recommendationCode1 = recommendationCode1;
+		this.recommendationCode2 = recommendationCode2;
+		this.recommendationCode3 = recommendationCode3;
+	}
+
+	public String getDegreeProgrammeEducationalAndProfessionalGoals() {
+		return degreeProgrammeEducationalAndProfessionalGoals;
+	}
+
+	public void setDegreeProgrammeEducationalAndProfessionalGoals(String degreeProgrammeEducationalAndProfessionalGoals) {
+		this.degreeProgrammeEducationalAndProfessionalGoals = degreeProgrammeEducationalAndProfessionalGoals;
+	}
+
+	public String getRecommendationCode1() {
+		return recommendationCode1;
+	}
+
+	public void setRecommendationCode1(String recommendationCode1) {
+		this.recommendationCode1 = recommendationCode1;
+	}
+
+	public String getRecommendationCode2() {
+		return recommendationCode2;
+	}
+
+	public void setRecommendationCode2(String recommendationCode2) {
+		this.recommendationCode2 = recommendationCode2;
+	}
+
+	public String getRecommendationCode3() {
+		return recommendationCode3;
+	}
+
+	public void setRecommendationCode3(String recommendationCode3) {
+		this.recommendationCode3 = recommendationCode3;
+	}
+
 	public DegreeProgramme(String degreeUnitCode, String degreeProgrammeTitle, String information, String language, String location,
 			String qualification, Double credit, String url) {
 		super();
@@ -249,6 +317,8 @@ public class DegreeProgramme {
 				+ degreeProgrammeExaminationAndAssessmentRegulations + ", start=" + start + ", duration=" + duration
 				+ ", cost=" + cost + ", degreeProgrammeAccessToFurtherStudies=" + degreeProgrammeAccessToFurtherStudies
 				+ ", degreeProgrammeEducationalAndProfessionalGoals=" + degreeProgrammeEducationalAndProfessionalGoals
-				+ ", degreeProgrammeStructureDiagram=" + degreeProgrammeStructureDiagram + "]";
+				+ ", degreeProgrammeStructureDiagram=" + degreeProgrammeStructureDiagram + ", recommendationCode1="
+				+ recommendationCode1 + ", recommendationCode2=" + recommendationCode2 + ", recommendationCode3="
+				+ recommendationCode3 + "]";
 	}
 }

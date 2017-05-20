@@ -1,5 +1,6 @@
 package com.ErasmusProject.rest;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
+import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation.SimilarityValue;
 import com.ErasmusProject.util.*;
 import org.apache.jena.base.Sys;
 import org.apache.jena.ontology.OntModel;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.IOException;
 
 /**
@@ -22,6 +24,9 @@ public class StudentStore {
 
     @Autowired
     private Conf conf;
+    
+    public static HashMap<String, SimilarityValue> similarityMatrix = new HashMap<>();
+
 
     @PostConstruct
     public void initFuseki()
@@ -38,10 +43,8 @@ public class StudentStore {
             // create similarity matrix
             
             DegreeProgrammeRecommendation dpr = new DegreeProgrammeRecommendation();
-            dpr.loadProgrammeData();
-            dpr.createTitlesMatrix();
-            dpr.createQualificationMatrix();
-            dpr.createInformationMatrix();
+            similarityMatrix = dpr.generateSimilarityMatrix();
+            System.out.println(similarityMatrix);
             
         } catch (IOException e) {
             e.printStackTrace();
