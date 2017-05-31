@@ -1186,11 +1186,13 @@ Engineering of the Faculty of Technical Sciences, University of Novi Sad. The st
 
     <owl:NamedIndividual rdf:about="&ects;degreeProgramme5">
         <rdf:type rdf:resource="&ects;DegreeProgrammeInstance"/>
-        <Qualification>Bachelor with honours in Environmental Engineering</Qualification>
-        <DegreeProgrammeTitle>Environmental Engineering</DegreeProgrammeTitle>
-        <DegreeProgrammeInformation>Program of undergraduate studies environmental engineering consists of educational research fields of engineering art, and they are formed of the actuating parts, which make the intersection of the discipline interdisciplinary nature of the program. In implementing the program, the study curricula from parts environmental protection, energy, electrical engineering, mechanical engineering, management, construction and basic scientific disciplines of mathematics, chemistry, physics, and the other, form a based multidisciplinary study program of environmental engineering. The universal phenomenon of global warming, acid rain, greenhouse effect, ozone holes, complete extinction and disappearance of species of plants and animals, changed living conditions, irrational use of natural resources and assets, in the global and local national level, becoming one of the most important world issues and factors to further sustainable development of human civilization. A particular problem in developing countries, uneven economic growth, the need for sustainable development, it is imperative seeking trained professionals who will in commercial and industrial systems, public enterprises and public institutions to be prepared and trained to deal accumulated complex problems in the field of environmental engineering. Right on interdisiciplinarnost study program of environmental engineering, which is the result technical and engineering expertise provides opportunities to educate environmental engineers who will be able to solve the accumulated problems in the system of environmental protection, but also in other industrial and economic systems. Environmental engineering is a program that was developed in response to industry needs, economy and institutions are facing environmental problems and where need engineers with interdisciplinary knowledge in the field of Environmental Engineering protection.</DegreeProgrammeInformation>
-        <DegreeUnitCode>EE</DegreeUnitCode>
-        <offeredAt rdf:resource="&ects;provider1"/>
+        <DegreeProgrammeTitle>Biology</DegreeProgrammeTitle>
+        <DegreeProgrammeInformation>The purpose of the study programme is to educate students within the field of biology and make them competent for work in biological laboratories of different industrial sectors as well as in research laboratories. The study programme structure with its general education, theoretical and methodological courses enables students to acquire fundamentals  of natural science disciplines. This knowledge is further improved by subject-related and applicable courses included in the programme. The competences and skills acquired at this level serve as the basis of fundamental knowledge necessary for continuing the educational process at master’s degree level in the field of biology and other closely related disciplines.
+The objective of BIOLOGY study programme is to educate professionals in the field of biology. Students should develop general skills for acquiring, analysing and synthesizing fundamental concepts related to natural sciences and biology. In addition, students develop skills for application of the gained knowledge and efficient laboratory skills. Upon completion of the course of study in biology students are qualified for work in sectors such as industry, agriculture, medicine and other sectors where biological knowledge and skills can be applied. They are also qualified for work in research and development laboratories as well as in institutions for nature conservation.
+</DegreeProgrammeInformation>
+        <Qualification>Bachelor with Honours in Biology</Qualification>
+        <DegreeUnitCode>B</DegreeUnitCode>
+        <offeredAt rdf:resource="&ects;provider2"/>
     </owl:NamedIndividual>
     
 
@@ -1365,106 +1367,28 @@ Main goals of the study programme Bachelor with Honours in Geography – Geoinfo
             <rdf:Description rdf:about="&ects;degreeProgramme2"/>
             <rdf:Description rdf:about="&ects;degreeProgramme3"/>
             <rdf:Description rdf:about="&ects;degreeProgramme4"/>
+            <rdf:Description rdf:about="&ects;provider1"/>
+            <rdf:Description rdf:about="&ects;provider2"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&ects;courseUnit1"/>
+            <rdf:Description rdf:about="&ects;courseUnit2"/>
+            <rdf:Description rdf:about="&ects;courseUnit3"/>
+            <rdf:Description rdf:about="&ects;courseUnit4"/>
+            <rdf:Description rdf:about="&ects;courseUnit5"/>
+            <rdf:Description rdf:about="&ects;courseUnit6"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
+            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
             <rdf:Description rdf:about="&ects;degreeProgramme5"/>
             <rdf:Description rdf:about="&ects;degreeProgramme6"/>
             <rdf:Description rdf:about="&ects;degreeProgramme7"/>
             <rdf:Description rdf:about="&ects;degreeProgramme8"/>
             <rdf:Description rdf:about="&ects;degreeProgramme9"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme7"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme8"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme6"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme7"/>
-            <rdf:Description rdf:about="&ects;provider1"/>
-            <rdf:Description rdf:about="&ects;provider2"/>
-        </owl:distinctMembers>
-    </rdf:Description>
-    <rdf:Description>
-        <rdf:type rdf:resource="&owl;AllDifferent"/>
-        <owl:distinctMembers rdf:parseType="Collection">
-            <rdf:Description rdf:about="&ects;courseUnit1"/>
-            <rdf:Description rdf:about="&ects;courseUnit2"/>
-            <rdf:Description rdf:about="&ects;courseUnit3"/>
-            <rdf:Description rdf:about="&ects;courseUnit4"/>
-            <rdf:Description rdf:about="&ects;courseUnit5"/>
-            <rdf:Description rdf:about="&ects;courseUnit6"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme1"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme2"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme3"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme4"/>
-            <rdf:Description rdf:about="&ects;degreeProgramme5"/>
             <rdf:Description rdf:about="&ects;provider1"/>
             <rdf:Description rdf:about="&ects;provider2"/>
         </owl:distinctMembers>

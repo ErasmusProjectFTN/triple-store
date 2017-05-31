@@ -118,6 +118,7 @@ public class DegreeProgrammeRecommendation {
 		programme.setInformation(programme.getInformation().replaceAll("[^a-zA-Z ]", "").toLowerCase());
 		programme.setDegreeProgrammeTitle(programme.getDegreeProgrammeTitle().replaceAll("[^a-zA-Z ]", "").toLowerCase());
 		programme.setQualification(programme.getQualification().replaceAll("[^a-zA-Z ]", "").toLowerCase());
+		System.out.println(programme);
 		return programme;
 	}
 	public DegreeProgramme stem(DegreeProgramme programme){
@@ -141,12 +142,12 @@ public class DegreeProgrammeRecommendation {
 		}
 		programme.setQualification(data);
 		
-		
+		System.out.println(programme);
 		return programme;
 	}
 	public DegreeProgramme removeStopwords(DegreeProgramme programme) throws FileNotFoundException, IOException{
 		String regex = "\\b(";
-		try(BufferedReader br = new BufferedReader(new FileReader("D:/predmeti/SW_OTIS/triple-store/src/main/java/com/ErasmusProject/recommendation/stopwords"))){
+		try(BufferedReader br = new BufferedReader(new FileReader("../recommendation/stopwords"))){
 			String line;
 			while((line = br.readLine())!=null){
 				regex += line + "|";
@@ -167,7 +168,7 @@ public class DegreeProgrammeRecommendation {
 		m = p.matcher(programme.getInformation());
 		s = m.replaceAll("");
 		programme.setInformation(s);		
-		
+		System.out.println(programme);
 		return programme;
 	}
 	
@@ -262,9 +263,10 @@ public class DegreeProgrammeRecommendation {
 			for(String term: programme.getInformation().split("\\s+")){
 					noOfDocsContainingTerm = calculateNoOfDocsContainingTerm(term, "information");
 					TFIDF = calculateTFIDF(programme.getInformation(), term, noOfDocsContainingTerm);
-					//if(TFIDF > 1.0 && TFIDF < 3.0){
+					System.out.println(TFIDF + "," + term);
+					if(TFIDF > 0.01){
 						termTfidf.put(term, TFIDF);
-					//}
+					}
 					docTermTfidf.put(programme.getDegreeUnitCode(), termTfidf);
 			}
 		}
@@ -299,6 +301,9 @@ public class DegreeProgrammeRecommendation {
 
 					Map<String, Double> sortedValues1 = new TreeMap<String, Double>(values1);
 					Map<String, Double> sortedValues2 = new TreeMap<String, Double>(values2);
+					
+					System.out.println(sortedValues1);
+					System.out.println(sortedValues2);
 					
 					double similarityByTitle = cosineSimilarity(sortedValues1.values(), sortedValues2.values());
 					SimilarityValue sv = new SimilarityValue();
