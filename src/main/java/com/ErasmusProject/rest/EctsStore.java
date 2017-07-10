@@ -780,9 +780,14 @@ public class EctsStore {
 		LinkedHashMap<String, Double> similarProgrammes = DegreeProgrammeRecommendation.findSimilarProgrammes(programmeCode);
 		System.out.println(similarProgrammes);
 		Integer pos = similarProgrammes.size();
-		String recommendationCode1 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-1);
-		String recommendationCode2 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-2);
-		String recommendationCode3 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-3);
+		String recommendationCode1 = "";
+		String recommendationCode2 = "";
+		String recommendationCode3 = "";
+		if (pos >= 3){
+			recommendationCode1 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-1);
+			recommendationCode2 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-2);
+			recommendationCode3 = new ArrayList<String>(similarProgrammes.keySet()).get(pos-3);
+		}
 		/**
 		 * 
 		 */
