@@ -1118,7 +1118,7 @@ public class EctsStore {
 		String qualification = ps.getQualification().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?qualification)), \""+ ps.getQualification().toLowerCase() +"\")";
 		String location = ps.getLocation().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?location)), \""+ ps.getLocation().toLowerCase() +"\")";
 		String cost = ps.getCost().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?cost)), \""+ ps.getCost().toString().toLowerCase() +"\")";
-		String credits = ps.getCredits().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?credit)), \""+ ps.getCredits().toString().toLowerCase() +"\")";
+		String credits = ps.getCredits().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?credit)), \""+ Math.round(ps.getCredits()) +"\")";
 		String duration = ps.getDuration().equals(-1)?"":"&& 		   CONTAINS(LCASE(STR(?duration)), \""+ ps.getDuration().toString().toLowerCase() +"\")";
 		String language = ps.getLanguage().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?language)), \""+ ps.getLanguage().toLowerCase() +"\")";
 		String prerequisite = ps.getPrerequisite().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?prerequisite)), \""+ ps.getPrerequisite().toLowerCase() +"\")";
@@ -1207,7 +1207,7 @@ public class EctsStore {
 		String type = cs.getType().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?type)), \""+ cs.getType().toLowerCase() +"\")";
 		String unitLevel = cs.getUnitLevel().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?level)), \""+ cs.getUnitLevel().toLowerCase() +"\")";
 		String yearOfStudy = cs.getYearOfStudy().equals(-1)?"":"&& 		   CONTAINS(LCASE(STR(?yearOfStudy)), \""+ cs.getYearOfStudy().toString().toLowerCase() +"\")";
-		String credits = cs.getCredits().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?credit)), \""+ cs.getCredits().toString().toLowerCase() +"\")";
+		String credits = cs.getCredits().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?credit)), \""+ Math.round(cs.getCredits()) +"\")";
 		String duration = cs.getDuration().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?duration)), \""+ cs.getDuration().toString().toLowerCase() +"\")";
 		String language = cs.getLanguage().equals("")?"":"&& 		   CONTAINS(LCASE(STR(?language)), \""+ cs.getLanguage().toLowerCase() +"\")";
 		String cost = cs.getCost().equals(-1.0)?"":"&& 		   CONTAINS(LCASE(STR(?cost)), \""+ cs.getCost().toString().toLowerCase() +"\")";
