@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.IOException;
+import java.util.UUID;
+
 
 /**
  * Created by Komp on 13.2.2017.
@@ -71,26 +73,50 @@ public class StudentStore {
                                @RequestParam("telephone") String tel,
                                @RequestParam("email") String email)
     {
-        try {
-            String indName = name + surname;
-            OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset, StringUtils.namespaceStudent);
-            model = OntologyUtils.addIndividual("Student", model, StringUtils.namespaceStudent, indName);
-            model = OntologyUtils.addDatatypeProperty("birthday", model, StringUtils.namespaceStudent, indName, dob);
-            model = OntologyUtils.addDatatypeProperty("countryOfBirth", model, StringUtils.namespaceStudent, indName, cob);
-            model = OntologyUtils.addDatatypeProperty("placeOfBirth", model, StringUtils.namespaceStudent, indName, pob);
-            model = OntologyUtils.addDatatypeProperty("gender", model, StringUtils.namespaceStudent, indName, gender);
-            model = OntologyUtils.addDatatypeProperty("citizenship", model, StringUtils.namespaceStudent, indName, nat);
-            model = OntologyUtils.addDatatypeProperty("streetAddress", model, StringUtils.namespaceStudent, indName, san);
-            model = OntologyUtils.addDatatypeProperty("postalCode", model, StringUtils.namespaceStudent, indName, pcode);
-            model = OntologyUtils.addDatatypeProperty("city", model, StringUtils.namespaceStudent, indName, city);
-            model = OntologyUtils.addDatatypeProperty("country", model, StringUtils.namespaceStudent, indName, cor);
-            model = OntologyUtils.addDatatypeProperty("telephone", model, StringUtils.namespaceStudent, indName, tel);
-            model = OntologyUtils.addDatatypeProperty("email", model, StringUtils.namespaceStudent, indName, email);
-            OntologyUtils.reloadModel(model, StringUtils.URL);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Response("Hello", "World");
+    	String token = UUID.randomUUID().toString();
+		String query = "PREFIX student: <" + StringUtils.namespaceStudent + ">"
+				+ "INSERT DATA"
+				+ "{"
+				+ " student:" + token + " student:birthday \"" + dob + "\" ;"
+				+ "						  student:countryOfBirth \"" + cob + "\" ;"
+				+ "						  student:placeOfBirth \"" + pob + "\" ;"
+				+ "						  student:gender \"" + gender + "\" ;"
+				+ "						  student:citizenship \"" + nat + "\" ;"
+				+ "						  student:streetAddress \"" + san + "\" ;"
+				+ "						  student:postalCode \"" + pcode + "\" ;"
+				+ "						  student:city \"" + city + "\" ;"
+				+ "						  student:country \"" + cor + "\" ;"
+				+ "						  student:telephone \"" + tel + "\" ;"
+				+ "						  student:email \"" + email + "\" ;"
+				+ "						  student:name \"" + name + "\" ;"
+				+ "						  student:surname \"" + surname + "\" ."
+				+ "}";
+
+		System.out.println(query);
+		try{
+			OntologyUtils.execUpdate(StringUtils.URLupdate, query);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		/*
+		String indName = name + surname;
+		OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset, StringUtils.namespaceStudent);
+		model = OntologyUtils.addIndividual("Student", model, StringUtils.namespaceStudent, indName);
+		model = OntologyUtils.addDatatypeProperty("birthday", model, StringUtils.namespaceStudent, indName, dob);
+		model = OntologyUtils.addDatatypeProperty("countryOfBirth", model, StringUtils.namespaceStudent, indName, cob);
+		model = OntologyUtils.addDatatypeProperty("placeOfBirth", model, StringUtils.namespaceStudent, indName, pob);
+		model = OntologyUtils.addDatatypeProperty("gender", model, StringUtils.namespaceStudent, indName, gender);
+		model = OntologyUtils.addDatatypeProperty("citizenship", model, StringUtils.namespaceStudent, indName, nat);
+		model = OntologyUtils.addDatatypeProperty("streetAddress", model, StringUtils.namespaceStudent, indName, san);
+		model = OntologyUtils.addDatatypeProperty("postalCode", model, StringUtils.namespaceStudent, indName, pcode);
+		model = OntologyUtils.addDatatypeProperty("city", model, StringUtils.namespaceStudent, indName, city);
+		model = OntologyUtils.addDatatypeProperty("country", model, StringUtils.namespaceStudent, indName, cor);
+		model = OntologyUtils.addDatatypeProperty("telephone", model, StringUtils.namespaceStudent, indName, tel);
+		model = OntologyUtils.addDatatypeProperty("email", model, StringUtils.namespaceStudent, indName, email);
+		OntologyUtils.reloadModel(model, StringUtils.URL);
+		**/
+        return new Response(token, name + " " + surname);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")

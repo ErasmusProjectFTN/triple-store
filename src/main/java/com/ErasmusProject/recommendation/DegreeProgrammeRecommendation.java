@@ -5,6 +5,7 @@ package com.ErasmusProject.recommendation;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -147,7 +148,9 @@ public class DegreeProgrammeRecommendation {
 	}
 	public DegreeProgramme removeStopwords(DegreeProgramme programme) throws FileNotFoundException, IOException{
 		String regex = "\\b(";
-		try(BufferedReader br = new BufferedReader(new FileReader("../recommendation/stopwords"))){
+		System.out.println("Working Directory = " +
+	              System.getProperty("user.dir"));
+		try(BufferedReader br = new BufferedReader(new FileReader("src/main/java/com/ErasmusProject/recommendation/stopwords"))){
 			String line;
 			while((line = br.readLine())!=null){
 				regex += line + "|";
