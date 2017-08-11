@@ -58,6 +58,7 @@ public class StudentStore {
         dataBinder.registerCustomEditor(QueryType.class, new QueryTypeConverter());
     }
 
+    // TODO: include password in the ontology
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public Response addStudent(@RequestParam("surname") String surname,
                                @RequestParam("name") String name,
@@ -71,7 +72,8 @@ public class StudentStore {
                                @RequestParam("city") String city,
                                @RequestParam("country") String cor,
                                @RequestParam("telephone") String tel,
-                               @RequestParam("email") String email)
+                               @RequestParam("email") String email,
+    						   @RequestParam("password") String password)
     {
     	String token = UUID.randomUUID().toString();
 		String query = "PREFIX student: <" + StringUtils.namespaceStudent + ">"
@@ -99,24 +101,15 @@ public class StudentStore {
 			e.printStackTrace();
 			return null;
 		}
-		/*
-		String indName = name + surname;
-		OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset, StringUtils.namespaceStudent);
-		model = OntologyUtils.addIndividual("Student", model, StringUtils.namespaceStudent, indName);
-		model = OntologyUtils.addDatatypeProperty("birthday", model, StringUtils.namespaceStudent, indName, dob);
-		model = OntologyUtils.addDatatypeProperty("countryOfBirth", model, StringUtils.namespaceStudent, indName, cob);
-		model = OntologyUtils.addDatatypeProperty("placeOfBirth", model, StringUtils.namespaceStudent, indName, pob);
-		model = OntologyUtils.addDatatypeProperty("gender", model, StringUtils.namespaceStudent, indName, gender);
-		model = OntologyUtils.addDatatypeProperty("citizenship", model, StringUtils.namespaceStudent, indName, nat);
-		model = OntologyUtils.addDatatypeProperty("streetAddress", model, StringUtils.namespaceStudent, indName, san);
-		model = OntologyUtils.addDatatypeProperty("postalCode", model, StringUtils.namespaceStudent, indName, pcode);
-		model = OntologyUtils.addDatatypeProperty("city", model, StringUtils.namespaceStudent, indName, city);
-		model = OntologyUtils.addDatatypeProperty("country", model, StringUtils.namespaceStudent, indName, cor);
-		model = OntologyUtils.addDatatypeProperty("telephone", model, StringUtils.namespaceStudent, indName, tel);
-		model = OntologyUtils.addDatatypeProperty("email", model, StringUtils.namespaceStudent, indName, email);
-		OntologyUtils.reloadModel(model, StringUtils.URL);
-		**/
         return new Response(token, name + " " + surname);
+    }
+    
+    // TODO: check if password and username are correct
+    @RequestMapping(method = RequestMethod.POST, value = "/signin")
+    public boolean checkIfExsists(@RequestParam("username") String username,
+	                               @RequestParam("password") String password)
+    {
+    	return true;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
