@@ -29,8 +29,11 @@ This repository is part of the FTN Erasmus student mobility project.
     <li>From triple-store project run TripleStoreServiceApplication.java which will start the spring app</li>
   </ul>
 
-The rest of the project can be found -> <a href = "https://github.com/ErasmusProjectFTN" > Here </a></li> 
+<h2>The rest of the project</h2>
+Can be found -> <a href = "https://github.com/ErasmusProjectFTN" > Here </a></li> 
 More specifically:
-File storage -> <a href = "https://github.com/ErasmusProjectFTN/file-storage" > Here </a></li> 
-Client side -> <a href = "https://github.com/ErasmusProjectFTN/Client" > Here </a></li>
-Microservice configuration -> <a href = "https://github.com/ErasmusProjectFTN/api-gateway-service" > Here </a></li>, <a href = "https://github.com/ErasmusProjectFTN/config-files" > here </a></li>, <a href = "https://github.com/ErasmusProjectFTN/service-registry" > here </a></li>, and <a href = "https://github.com/ErasmusProjectFTN/config-server" > here </a></li>
+<ul>
+  <li>File storage -> <a href = "https://github.com/ErasmusProjectFTN/file-storage" > Here </a></li>
+  <li>Client side -> <a href = "https://github.com/ErasmusProjectFTN/Client" > Here </a></li>
+  <li>Microservice configuration -> <a href = "https://github.com/ErasmusProjectFTN/api-gateway-service" > Here </a>, <a href = "https://github.com/ErasmusProjectFTN/config-files" > here </a>, <a href = "https://github.com/ErasmusProjectFTN/service-registry" > here </a>, and <a href = "https://github.com/ErasmusProjectFTN/config-server" > here </a></li>
+</ul>
