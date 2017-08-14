@@ -31,8 +31,8 @@ This repository is part of the FTN Erasmus student mobility project.
 
 <h2>The rest of the project</h2>
 
-Can be found -> <a href = "https://github.com/ErasmusProjectFTN" > Here </a>
-More specifically:
+<p>Can be found -> <a href = "https://github.com/ErasmusProjectFTN" > Here </a></p>
+<p>More specifically:</p>
 <ul>
   <li>File storage -> <a href = "https://github.com/ErasmusProjectFTN/file-storage" > Here </a></li>
   <li>Client side -> <a href = "https://github.com/ErasmusProjectFTN/Client" > Here </a></li>
