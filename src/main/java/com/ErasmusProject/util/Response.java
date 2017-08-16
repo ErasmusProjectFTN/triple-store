@@ -7,10 +7,15 @@ public class Response {
 
     private String name;
     private String surname;
+    
 
     public Response(String name, String surname) {
         this.name = name;
         this.surname = surname;
+    }
+    
+    public Response(String signInFlag){
+    	this.name = signInFlag;
     }
 
     public String getName() {

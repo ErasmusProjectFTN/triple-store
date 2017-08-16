@@ -2,6 +2,8 @@ package com.ErasmusProject.rest;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation.SimilarityValue;
 import com.ErasmusProject.util.*;
+import com.ErasmusProject.util.ResponseSignInFlag.Flag;
+
 import org.apache.jena.base.Sys;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
@@ -106,10 +108,10 @@ public class StudentStore {
     
     // TODO: check if password and username are correct
     @RequestMapping(method = RequestMethod.POST, value = "/signin")
-    public boolean checkIfExsists(@RequestParam("username") String username,
-	                               @RequestParam("password") String password)
+    public ResponseSignInFlag signIn(@RequestParam("username") String username,
+	                      @RequestParam("password") String password)
     {
-    	return true;
+    	return new ResponseSignInFlag(Flag.STUDENT);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
