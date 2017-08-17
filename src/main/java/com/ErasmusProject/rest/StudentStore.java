@@ -111,6 +111,8 @@ public class StudentStore {
     public ResponseSignInFlag signIn(@RequestParam("username") String username,
 	                      @RequestParam("password") String password)
     {
+    	if (username.equals("admin"))
+    		return new ResponseSignInFlag(Flag.ADMIN);
     	return new ResponseSignInFlag(Flag.STUDENT);
     }
 
