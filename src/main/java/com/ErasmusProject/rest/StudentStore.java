@@ -1,4 +1,5 @@
 package com.ErasmusProject.rest;
+import com.ErasmusProject.model.Institution;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation.SimilarityValue;
 import com.ErasmusProject.util.*;
@@ -6,6 +7,8 @@ import com.ErasmusProject.util.ResponseSignInFlag.Flag;
 
 import org.apache.jena.base.Sys;
 import org.apache.jena.ontology.OntModel;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
@@ -60,7 +63,6 @@ public class StudentStore {
         dataBinder.registerCustomEditor(QueryType.class, new QueryTypeConverter());
     }
 
-    // TODO: include password in the ontology
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public Response addStudent(@RequestParam("surname") String surname,
                                @RequestParam("name") String name,
@@ -92,6 +94,7 @@ public class StudentStore {
 				+ "						  student:country \"" + cor + "\" ;"
 				+ "						  student:telephone \"" + tel + "\" ;"
 				+ "						  student:email \"" + email + "\" ;"
+				+ "						  student:password \"" + password + "\" ;"
 				+ "						  student:name \"" + name + "\" ;"
 				+ "						  student:surname \"" + surname + "\" ."
 				+ "}";
@@ -109,11 +112,43 @@ public class StudentStore {
     // TODO: check if password and username are correct
     @RequestMapping(method = RequestMethod.POST, value = "/signin")
     public ResponseSignInFlag signIn(@RequestParam("username") String username,
-	                      @RequestParam("password") String password)
+	                      			@RequestParam("password") String password) throws Exception
     {
+    	String query = 
+    			"PREFIX student: <" + StringUtils.namespaceStudent + "> "
+    		+	"SELECT ?subject ?predicate ?object "
+    		+	"WHERE {"
+    		+	"  ?subject student:email \"" + username + "\""
+    		+	"}";
+    	
+    	System.out.println(query);
+    	
+		ResultSet retVal = OntologyUtils.execSelect(StringUtils.URLquery, query);
+
+    	System.out.println(retVal);
+    	ArrayList<QueryResult> results = new ArrayList<QueryResult>();
+		QuerySolution soln = null;
+		String studentId = "";
+		String pass = "";
+		
+		while (retVal.hasNext()) {
+			soln = retVal.next();
+			studentId = soln.get("subject").toString().replaceAll(StringUtils.namespaceStudent, "");
+			results = queryStudents(studentId, QueryType.SUBJECT);
+			for (QueryResult queryResult2 : results) {
+				System.out.println(queryResult2.getPredicate());
+				if (queryResult2.getPredicate().equals("password"))
+					pass = queryResult2.getObject();
+			}
+		}
+		
+		System.out.println(pass);
+    	
     	if (username.equals("admin"))
     		return new ResponseSignInFlag(Flag.ADMIN);
-    	return new ResponseSignInFlag(Flag.STUDENT);
+    	else if (pass.equals(password))
+    		return new ResponseSignInFlag(Flag.STUDENT);
+    	else throw new Exception("User does not exist");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/query")
