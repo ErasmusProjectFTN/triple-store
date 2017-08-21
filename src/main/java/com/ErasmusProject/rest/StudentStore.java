@@ -133,6 +133,7 @@ public class StudentStore {
 		String studentId = "";
 		String pass = "";
 		Student student = new Student();
+		student.setId(studentId);    	
 		while (retVal.hasNext()) {
 			soln = retVal.next();
 			studentId = soln.get("subject").toString().replaceAll(StringUtils.namespaceStudent, "");
@@ -169,7 +170,7 @@ public class StudentStore {
 					student.setNationality(queryResult2.getObject());
 			}
 		}
-    	
+		
     	if (username.equals("admin"))
     		return new ResponseSignInFlag(Flag.ADMIN);
     	else if (pass.equals(password)){
