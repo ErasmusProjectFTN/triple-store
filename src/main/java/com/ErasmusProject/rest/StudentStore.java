@@ -1,5 +1,6 @@
 package com.ErasmusProject.rest;
 import com.ErasmusProject.model.Institution;
+import com.ErasmusProject.model.Student;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation;
 import com.ErasmusProject.recommendation.DegreeProgrammeRecommendation.SimilarityValue;
 import com.ErasmusProject.util.*;
@@ -10,6 +11,7 @@ import org.apache.jena.ontology.OntModel;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.sparql.engine.QueryEngineRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -130,7 +132,7 @@ public class StudentStore {
 		QuerySolution soln = null;
 		String studentId = "";
 		String pass = "";
-		
+		Student student = new Student();
 		while (retVal.hasNext()) {
 			soln = retVal.next();
 			studentId = soln.get("subject").toString().replaceAll(StringUtils.namespaceStudent, "");
@@ -139,15 +141,42 @@ public class StudentStore {
 				System.out.println(queryResult2.getPredicate());
 				if (queryResult2.getPredicate().equals("password"))
 					pass = queryResult2.getObject();
+				else if (queryResult2.getPredicate().equals("surname"))
+					student.setSurname(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("name"))
+					student.setName(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("gender"))
+					student.setGender(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("country"))
+					student.setCountry(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("placeOfBirth"))
+					student.setPlaceOfBirth(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("countryOfBirth"))
+					student.setCountryOfBirth(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("city"))
+					student.setCity(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("telephone"))
+					student.setTelephoneNumber(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("email"))
+					student.setEmail(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("postalCode"))
+					student.setPostalCode(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("birthday"))
+					student.setDateOfBirth(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("streetAddress"))
+					student.setStreet(queryResult2.getObject());
+				else if (queryResult2.getPredicate().equals("citizenship"))
+					student.setNationality(queryResult2.getObject());
 			}
 		}
-		
-		System.out.println(pass);
     	
     	if (username.equals("admin"))
     		return new ResponseSignInFlag(Flag.ADMIN);
-    	else if (pass.equals(password))
-    		return new ResponseSignInFlag(Flag.STUDENT);
+    	else if (pass.equals(password)){
+    		ResponseSignInFlag rsf = new ResponseSignInFlag(Flag.STUDENT);
+    		rsf.setStudent(student);
+    		return rsf;
+    	}
     	else throw new Exception("User does not exist");
     }
 
