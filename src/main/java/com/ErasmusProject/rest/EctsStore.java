@@ -221,6 +221,9 @@ public class EctsStore {
 			propertyValues.put("GeneralInformationOnStudentAffairsOffice", generalInformationOnStudentAffairsOffice);
 			propertyValues.put("GeneralInformationOnStudentAssociations", generalInformationOnStudentAssociations);
 			propertyValues.put("GeneralInformationOnStudyFacilities", generalInformationOnStudyFacilities);
+			System.out.println(ind);
+			System.out.println(model);
+			System.out.println(propertyValues);
 			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
 			OntologyUtils.reloadModel(model, StringUtils.URL);
 		}catch(IOException e){

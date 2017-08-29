@@ -133,10 +133,10 @@ public class StudentStore {
 		String studentId = "";
 		String pass = "";
 		Student student = new Student();
-		student.setId(studentId);    	
 		while (retVal.hasNext()) {
 			soln = retVal.next();
 			studentId = soln.get("subject").toString().replaceAll(StringUtils.namespaceStudent, "");
+			student.setId(studentId);    	
 			results = queryStudents(studentId, QueryType.SUBJECT);
 			for (QueryResult queryResult2 : results) {
 				System.out.println(queryResult2.getPredicate());
