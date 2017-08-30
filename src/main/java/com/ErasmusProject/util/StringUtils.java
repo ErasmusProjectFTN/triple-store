@@ -16,10 +16,12 @@ public class StringUtils {
     public static String URLquery = "http://localhost:3030/inf/sparql";
     public static String namespaceStudent = "http://www.semanticweb.org/banevezilic/ontologies/2017/0/student#";
     public static String namespaceMlo = "http://www.semanticweb.org/nina/ontologies/2016/11/mlo#";
+    public static String namespaceApplication = "http://www.semanticweb.org/nina/ontologies/2016/11/application#";
     public static String namespaceEcts = "http://www.semanticweb.org/nina/ontologies/2016/11/ects#";
     public static String namespaceW3c = "^^http://www.w3.org/2001/XMLSchema#integer";
     public static String studentFile = "student.owl";
     public static String ectsFile = "ectsMloMerged_individuals.owl";
+    public static String applicationFile = "application.owl";
     public static String sparqlTemplate = "SELECT * WHERE{%s %s  %s FILTER(STRSTARTS(STR(%s), %s))}";
 
 

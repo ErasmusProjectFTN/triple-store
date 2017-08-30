@@ -46,7 +46,9 @@ public class StudentStore {
         try {
             Model student = OntologyUtils.createOntModel(StringUtils.studentFile);
             Model ects = OntologyUtils.createOntModel(StringUtils.ectsFile);
+            Model application = OntologyUtils.createOntModel(StringUtils.applicationFile);
             ects.add(student);
+            ects.add(application);
             OntologyUtils.reloadModel(ects,StringUtils.URL);
             
             // create similarity matrix
