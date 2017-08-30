@@ -22,7 +22,9 @@ public class ApplicationStore {
 	
 	@RequestMapping(method = RequestMethod.POST, value="/addApplication")
 	public String addApplication(@RequestParam(value="studentId", required=true) String studentId,
-								 @RequestParam(value="programmeId", required=true) String programmeId){
+								 @RequestParam(value="programmeId", required=true) String programmeId,
+								 @RequestParam(value="passport", required=true) String passport,
+								 @RequestParam(value="idCard", required=true) String idCard){
 		
 		String identifier = UUID.randomUUID().toString();
 		String query = "PREFIX application: <" + StringUtils.namespaceApplication + "> "
@@ -31,6 +33,8 @@ public class ApplicationStore {
 				+" application:" + identifier + " application:applicationId \"" + identifier.replaceAll("[\\t\\n\\r]","") + "\" ;"
 				+"								  application:studentId \""	 + studentId.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
 				+"								  application:degreeProgrammeId \"" + programmeId.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"								  application:passport \"" + passport.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"								  application:idCard \"" + idCard.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
 				+"								  application:status \"" + "Processing\"."	
 				+"}";
 		
