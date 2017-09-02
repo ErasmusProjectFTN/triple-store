@@ -157,7 +157,6 @@ public class EctsStore {
 	 * @param generalInformationOnStudyFacilities
 	 * @return
 	 */
-	//TODO: use query insted
 	@RequestMapping(method = RequestMethod.POST, value="/modifyInstitution")
 	public ResponseInstitution modifyInstitution(@RequestParam(value="identifier", required=true) String identifier,
 			@RequestParam(value="institutionName", required=false, defaultValue="") String institutionName,
@@ -189,45 +188,54 @@ public class EctsStore {
 			@RequestParam(value="generalInformationOnStudentAssociations", required=false, defaultValue="") String generalInformationOnStudentAssociations,
 			@RequestParam(value="generalInformationOnStudyFacilities", required=false, defaultValue="") String generalInformationOnStudyFacilities)
 	{
+		
+		String query = "PREFIX ects: <" + StringUtils.namespaceEcts + "> "
+				+"DELETE"
+				+"{?s ?p ?o}"
+				+"INSERT"
+				+"{" 
+				+"  ects:" + identifier + " ects:InstitutionCode \"" + identifier.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  						ects:InstitutionName \"" + institutionName.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionalEctsCoordinator \"" + institutionalECTScoordinator.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionStatus \"" + institutionStatus.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionType \"" + institutionType.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:Url \"" + url.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  						ects:Location \"" + institutionAddress.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionMainUniversityRegulations \"" + institutionMainUniversityRegulations.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionGeneralDescription \"" + institutionGeneralDescription.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionAcademicAuthorities \"" + institutionAcademicAuthorities.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionAcademicCalendar \"" + institutionAcademicCalendar.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:InstitutionAdmissionProcedures \"" + institutionAdmissionProcedures.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationForStudents \"" + generalInformationForStudents.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationForMobileStudents \"" + generalInformationForMobileStudents.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnAccommodation \"" + generalInformationOnAccommodation.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnCostOfLiving \"" + generalInformationOnCostOfLiving.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnExtraMuralAndLeisureFacilities \"" + generalInformationOnExtramuralAndLeisureFacilities.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnFacilitiesForStudentsWithSpecialNeeds \"" + generalInformationOnFacilitiesForStudentsWithSpecialNeeds + "\" ;"
+				+"  						ects:GeneralInformationOnFinancialSupport \"" + generalInformationOnFinancialSupport.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnInsurance \"" + generalInformationOnInsurance.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnInternationalProgrammes \"" + generalInformationOnInternationalProgrammes.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnInternships \"" + generalInformationOnInternships.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnLanguageCourses \"" + generalInformationOnLanguageCourses.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnMeals \"" + generalInformationOnMeals.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnMedicalFacilities \"" + generalInformationOnMedicalFacilities.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnSportsFacilities \"" + generalInformationOnSportsFacilities.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnStudentAffairsOffice \"" + generalInformationOnStudentAffairsOffice.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnStudentAssociations \"" + generalInformationOnStudentAssociations.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  						ects:GeneralInformationOnStudyFacilities \"" + generalInformationOnStudyFacilities.replaceAll("[\\t\\n\\r]"," ") + "\" ."
+				+"}"
+				+" WHERE"
+				+"{"
+				+"?s ?p ?o ."
+				+"FILTER (?s = ects:InstitutionCode)"
+				+"}";
+
+		System.out.println(query);
 		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			Individual ind = model.getIndividual(StringUtils.namespaceEcts + identifier);
-			HashMap<String, String> propertyValues = new HashMap<>();
-			propertyValues.put("InstitutionName", institutionName);
-			propertyValues.put("InstitutionalEctsCoordinator", institutionalECTScoordinator);
-			propertyValues.put("InstitutionStatus", institutionStatus);
-			propertyValues.put("InstitutionType", institutionType);
-			propertyValues.put("Url", url);
-			propertyValues.put("Location", institutionAddress);
-			propertyValues.put("InstitutionMainUniversityRegulations", institutionMainUniversityRegulations);
-			propertyValues.put("InstitutionGeneralDescription", institutionGeneralDescription);
-			propertyValues.put("InstitutionAcademicAuthorities", institutionAcademicAuthorities);
-			propertyValues.put("InstitutionAcademicCalendar", institutionAcademicCalendar);
-			propertyValues.put("InstitutionAdmissionProcedures", institutionAdmissionProcedures);
-			propertyValues.put("GeneralInformationForStudents", generalInformationForStudents);
-			propertyValues.put("GeneralInformationForMobileStudents", generalInformationForMobileStudents);
-			propertyValues.put("GeneralInformationOnAccommodation", generalInformationOnAccommodation);
-			propertyValues.put("GeneralInformationOnCostOfLiving", generalInformationOnCostOfLiving);
-			propertyValues.put("GeneralInformationOnExtraMuralAndLeisureFacilities", generalInformationOnExtramuralAndLeisureFacilities);
-			propertyValues.put("GeneralInformationOnFacilitiesForStudentsWithSpecialNeeds", generalInformationOnFacilitiesForStudentsWithSpecialNeeds);
-			propertyValues.put("GeneralInformationOnFinancialSupport", generalInformationOnFinancialSupport);
-			propertyValues.put("GeneralInformationOnInsurance", generalInformationOnInsurance);
-			propertyValues.put("GeneralInformationOnInternationalProgrammes", generalInformationOnInternationalProgrammes);
-			propertyValues.put("GeneralInformationOnInternships", generalInformationOnInternships);
-			propertyValues.put("GeneralInformationOnLanguageCourses", generalInformationOnLanguageCourses);
-			propertyValues.put("GeneralInformationOnMeals", generalInformationOnMeals);
-			propertyValues.put("GeneralInformationOnMedicalFacilities", generalInformationOnMedicalFacilities);
-			propertyValues.put("GeneralInformationOnSportsFacilities", generalInformationOnSportsFacilities);
-			propertyValues.put("GeneralInformationOnStudentAffairsOffice", generalInformationOnStudentAffairsOffice);
-			propertyValues.put("GeneralInformationOnStudentAssociations", generalInformationOnStudentAssociations);
-			propertyValues.put("GeneralInformationOnStudyFacilities", generalInformationOnStudyFacilities);
-			System.out.println(ind);
-			System.out.println(model);
-			System.out.println(propertyValues);
-			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
+			OntologyUtils.execUpdate(StringUtils.URLupdate, query);
+		}catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 		return new ResponseInstitution(identifier, institutionName);
 	}
@@ -334,30 +342,39 @@ public class EctsStore {
 			@RequestParam(value="duration", required=false, defaultValue="") String duration,
 			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 	{
+		String query = "PREFIX ects: <" + StringUtils.namespaceEcts + "> "
+				+"DELETE"
+				+"{?s ?p ?o}"
+				+"INSERT"
+				+"{" 
+				+"  ects:" + degreeUnitCode + " ects:DegreeUnitCode \"" + degreeUnitCode.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  							ects:DegreeProgrammeTitle \"" + degreeProgrammeTitle.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Location \"" + location.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Qualification \"" + qualification.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Url \"" + url.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  							ects:DegreeProgrammeCredit \"" + credit + "\" ;"
+				+"  							ects:DegreeProgrammeAccessToFurtherStudies \"" + degreeProgrammeAccessToFurtherStudies.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeEducationAndProfessionalGoals \"" + degreeProgrammeEducationalAndProfessionalGoals.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeStructureDiagram \"" + degreeProgrammeStructureDiagram.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammePrerequisite \"" + prerequisite.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DepartmentalEctsCoordinator \"" + departmentalEctsCoordinator.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeFinalExamination \"" + degreeProgrammeFinalExamination.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammePlaces \"" + places.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeLanguageOfInstruction \"" + languageOfInstruction.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeExaminationAndAssessmentRegulations \"" + degreeProgrammeExaminationAndAssessmentRegulations.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:DegreeProgrammeStart \"" + start + "\" ;"
+				+"  							ects:DegreeProgrammeDuration \"" + duration + "\" ;"
+				+"  							ects:DegreeProgrammeCost \"" + cost + "\" ."
+				+"}"
+				+" WHERE"
+				+"{"
+				+"?s ?p ?o ."
+				+"FILTER (?s = ects:DegreeUnitCode)"
+				+"}";
+
 		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			Individual ind = model.getIndividual(StringUtils.namespaceEcts + degreeUnitCode);
-			HashMap<String, String> propertyValues = new HashMap<>();
-			propertyValues.put("DegreeProgrammeTitle", degreeProgrammeTitle);
-			propertyValues.put("Location", location);
-			propertyValues.put("Qualification", qualification);
-			propertyValues.put("Url", url);
-			propertyValues.put("DegreeProgrammeCredit", credit);
-			propertyValues.put("DegreeProgrammeAccessToFurtherStudies", degreeProgrammeAccessToFurtherStudies);
-			propertyValues.put("DegreeProgrammeEducationAndProfessionalGoals", degreeProgrammeEducationalAndProfessionalGoals);
-			propertyValues.put("DegreeProgrammeStructureDiagram", degreeProgrammeStructureDiagram);
-			propertyValues.put("DegreeProgrammePrerequisite", prerequisite);
-			propertyValues.put("DepartmentalEctsCoordinator", departmentalEctsCoordinator);
-			propertyValues.put("DegreeProgrammeFinalExamination", degreeProgrammeFinalExamination);
-			propertyValues.put("DegreeProgrammePlaces", places);
-			propertyValues.put("DegreeProgrammeLanguageOfInstruction", languageOfInstruction);
-			propertyValues.put("DegreeProgrammeExaminationAndAssessmentRegulations", degreeProgrammeExaminationAndAssessmentRegulations);
-			propertyValues.put("DegreeProgrammeStart", start);
-			propertyValues.put("DegreeProgrammeDuration", duration);
-			propertyValues.put("DegreeProgrammeCost", cost);
-			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
+			OntologyUtils.execUpdate(StringUtils.URLupdate, query);
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseProgrammeSpecification(degreeUnitCode, degreeProgrammeTitle);
@@ -479,34 +496,44 @@ public class EctsStore {
 			@RequestParam(value="cost", required=false, defaultValue="") String cost)
 
 	{
+		String query = "PREFIX ects: <" + StringUtils.namespaceEcts + "> "
+				+"DELETE"
+				+"{?s ?p ?o}"
+				+"INSERT"
+				+"{" 
+				+"  ects:" + courseUnitCode + " ects:CourseUnitCode \"" + courseUnitCode.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  							ects:CourseUnitTitle \"" + courseUnitTitle.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitType \"" + courseUnitType.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitLevel \"" + courseUnitLevel.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Url \"" + url.replaceAll("[\\t\\n\\r]","") + "\" ;"
+				+"  							ects:CourseUnitYearOfStudy \"" + courseUnitYearOfStudy.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseCredit \"" + credit + "\" ;"
+				+"  							ects:CourseUnitContent \"" + courseUnitContent.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Location \"" + courseLocation.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:Lecturer \"" + lecturer.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitLanguageOfInstruction \"" + languageOfInstruction.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitPlaces \"" + places.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitTermPattern \"" + courseUnitTermPattern.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitCompetence \"" + courseUnitCompetence.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitLearningOutcome \"" + courseUnitLearningOutcome.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitPrerequisite \"" + prerequisite.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitRecommendedReading \"" + courseUnitRecommendedReading.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitTeachingMethods \"" + courseUnitTeachingMethods.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitAssessmentMethods \"" + courseUnitAssessmentMethods.replaceAll("[\\t\\n\\r]"," ") + "\" ;"
+				+"  							ects:CourseUnitStart \"" + start + "\" ;"
+				+"  							ects:CourseUnitDuration \"" + duration + "\" ;"
+				+"  							ects:CourseCost \"" + cost + "\" ."
+				+"}"
+				+" WHERE"
+				+"{"
+				+"?s ?p ?o ."
+				+"FILTER (?s = ects:CourseUnitCode)"
+				+"}";
+
+		System.out.println(query);
 		try{
-			OntModel model = OntologyUtils.loadOntModel(StringUtils.URLdataset,  StringUtils.namespaceEcts);
-			Individual ind = model.getIndividual(StringUtils.namespaceEcts + courseUnitCode);
-			HashMap<String, String> propertyValues = new HashMap<>();
-			propertyValues.put("CourseUnitTitle", courseUnitTitle);
-			propertyValues.put("CourseUnitType", courseUnitType);
-			propertyValues.put("CourseUnitLevel", courseUnitLevel);
-			propertyValues.put("Url", url);
-			propertyValues.put("CourseUnitYearOfStudy", courseUnitYearOfStudy);
-			propertyValues.put("CourseCredit", credit);
-			propertyValues.put("CourseUnitContent", courseUnitContent);
-			propertyValues.put("Location", courseLocation);
-			propertyValues.put("Lecturer", lecturer);
-			propertyValues.put("CourseUnitLanguageOfInstruction", languageOfInstruction);
-			propertyValues.put("CourseUnitPlaces", places);
-			propertyValues.put("CourseUnitTermPattern", courseUnitTermPattern);
-			propertyValues.put("CourseUnitCompetence", courseUnitCompetence);
-			propertyValues.put("CourseUnitLearningOutcome", courseUnitLearningOutcome);
-			propertyValues.put("CourseUnitPrerequisite", prerequisite);
-			propertyValues.put("CourseUnitRecommendedReading", courseUnitRecommendedReading);
-			propertyValues.put("CourseUnitTeachingMethods", courseUnitTeachingMethods);
-			propertyValues.put("CourseUnitAssessmentMethods", courseUnitAssessmentMethods);
-			propertyValues.put("CourseUnitStart", start);
-			propertyValues.put("CourseUnitDuration", duration);
-			propertyValues.put("CourseCost", cost);
-			model = OntologyUtils.modifyIndividual(ind, model, propertyValues);
-			OntologyUtils.reloadModel(model, StringUtils.URL);
-		}catch(IOException e){
+			OntologyUtils.execUpdate(StringUtils.URLupdate, query);
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseCourseSpecification(courseUnitCode, courseUnitTitle);
